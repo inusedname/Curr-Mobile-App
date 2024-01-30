@@ -2,6 +2,7 @@ package dev.vstd.shoppingcart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dev.keego.musicplayer.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

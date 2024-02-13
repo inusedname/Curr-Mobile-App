@@ -10,8 +10,8 @@ interface TodoItemDao {
     @Query("SELECT * FROM todoitem WHERE id = :id")
     suspend fun getById(id: Int): TodoItem
 
-    @Query("SELECT * FROM todoitem WHERE categoryId = :categoryId")
-    suspend fun getByCategoryId(categoryId: Int): List<TodoItem>
+    @Query("SELECT * FROM todoitem WHERE groupId = :categoryId")
+    suspend fun getByGroupId(categoryId: Int): List<TodoItem>
 
     @Insert
     suspend fun insert(todoItem: TodoItem)

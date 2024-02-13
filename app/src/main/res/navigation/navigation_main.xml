@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/groupsFragment">
+
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="dev.vstd.shoppingcart.ui.groups.GroupsFragment"
+        android:label="GroupsFragment" >
+        <action
+            android:id="@+id/action_groupsFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupDetailFragment"
+        android:name="dev.vstd.shoppingcart.ui.groupDetail.GroupDetailFragment"
+        android:label="GroupDetailFragment" />
+</navigation>

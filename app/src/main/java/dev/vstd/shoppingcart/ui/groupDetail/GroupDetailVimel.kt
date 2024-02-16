@@ -36,6 +36,20 @@ class GroupDetailVimel @Inject constructor(private val repository: TodoRepositor
         }
     }
 
+    fun deleteTodoItem(todo: TodoItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteTodoItem(todo)
+            todos.value = repository.getTodosByGroupId(group.value!!.id)
+        }
+    }
+
+    fun updateTodoItem(todo: TodoItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTodoItem(todo)
+            todos.value = repository.getTodosByGroupId(group.value!!.id)
+        }
+    }
+
     fun addTodoItem(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val groupId = group.value!!.id

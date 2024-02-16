@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import dev.keego.musicplayer.databinding.ItemTodoBinding
 import dev.vstd.shoppingcart.data.local.TodoItem
 
-class GroupDetailAdapter(private val onCheck: (TodoItem) -> Unit) :
+class GroupDetailAdapter(
+    private val onLongClickItem: (TodoItem) -> Unit,
+    private val onCheck: (TodoItem) -> Unit,
+) :
     ListAdapter<TodoItem, GroupDetailAdapter.GroupDetailVH>(MyDiffUtil()) {
 
     inner class GroupDetailVH(private val binding: ItemTodoBinding) : ViewHolder(binding.root) {
@@ -20,6 +23,10 @@ class GroupDetailAdapter(private val onCheck: (TodoItem) -> Unit) :
                     onCheck(item)
                 }
             }
+            binding.root.setOnLongClickListener {
+                onLongClickItem(item)
+                true
+            }
         }
     }
 
@@ -29,7 +36,13 @@ class GroupDetailAdapter(private val onCheck: (TodoItem) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupDetailVH {
-        return GroupDetailVH(ItemTodoBinding.inflate(LayoutInflater.from(parent.context)))
+        return GroupDetailVH(
+            ItemTodoBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: GroupDetailVH, position: Int) {

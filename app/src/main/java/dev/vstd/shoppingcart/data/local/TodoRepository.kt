@@ -8,4 +8,5 @@ class TodoRepository(private val todoGroupDao: TodoGroupDao, private val todoDao
     suspend fun getTodosByGroupId(groupId: Int) = todoDao.getByGroupId(groupId)
     suspend fun getGroupById(groupId: Int) = todoGroupDao.getById(groupId)
     suspend fun updateTodoItem(todoItem: TodoItem) = todoDao.update(todoItem)
+    suspend fun deleteTodoItem(todoItem: TodoItem) = todoDao.delete(todoItem)
 }

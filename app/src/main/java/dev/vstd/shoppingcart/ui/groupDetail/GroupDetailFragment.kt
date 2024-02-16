@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.musicplayer.R
 import dev.keego.musicplayer.databinding.FragmentGroupDetailBinding
 import dev.keego.musicplayer.databinding.LayoutTextInputBinding
+import dev.vstd.shoppingcart.data.local.TodoItem
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,15 +28,24 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
     override fun onViewCreated(binding: FragmentGroupDetailBinding) {
         val groupId = requireArguments().getInt("groupId")
         vimel.setGroup(groupId)
-        val adapter = GroupDetailAdapter {
-            vimel.toggleDoneUndone(it)
-        }.also { binding.rvTodoList.adapter = it }
+        val adapter = GroupDetailAdapter(
+            onLongClickItem = { todoItem ->
+                showModifyTodoDialog(
+                    todoItem,
+                    onSave = { vimel.updateTodoItem(it) },
+                    onMoveToTrash = { vimel.deleteTodoItem(todoItem) }
+                )
+            },
+            onCheck = {
+                vimel.toggleDoneUndone(it)
+            }
+        ).also { binding.rvTodoList.adapter = it }
 
         binding.toolbar.setupWithNavController(findNavController())
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionNewGroup -> {
-                    showCreateNewGroupDialog()
+                    showCreateNewTodoDialog()
                     true
                 }
 
@@ -45,7 +56,46 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
         observeData(adapter, binding.toolbar)
     }
 
-    private fun showCreateNewGroupDialog() {
+    private fun showModifyTodoDialog(
+        todoItem: TodoItem,
+        onSave: (TodoItem) -> Unit,
+        onMoveToTrash: () -> Unit,
+    ) {
+        val builder = AlertDialog.Builder(requireContext())
+        val context = builder.context
+        val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
+
+        binding.etName.setText(todoItem.title)
+
+        builder
+            .setTitle("Update Todo")
+            .setPositiveButton("Update") { _, _ ->
+                // Create new group
+                val name = binding.etName.text.toString()
+                if (name.isNotBlank() && name != todoItem.title) {
+                    onSave(todoItem.copy(title = name))
+                } else {
+                    // Show error
+                    Toast.makeText(context, "Name cannot be empty", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .setNeutralButton("Move to trash") { _, _ ->
+                onMoveToTrash()
+            }
+            .setNeutralButtonIcon(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_delete,
+                    null
+                )
+            )
+            .setView(binding.root)
+            .create()
+            .show()
+    }
+
+    private fun showCreateNewTodoDialog() {
         val builder = AlertDialog.Builder(requireContext())
         val context = builder.context
         val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))

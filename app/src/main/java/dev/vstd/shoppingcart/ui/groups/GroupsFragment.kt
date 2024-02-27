@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.keego.musicplayer.R
-import dev.keego.musicplayer.databinding.FragmentGroupsBinding
-import dev.keego.musicplayer.databinding.LayoutTextInputBinding
+import dev.keego.shoppingcart.R
+import dev.keego.shoppingcart.databinding.FragmentGroupsBinding
+import dev.keego.shoppingcart.databinding.LayoutTextInputBinding
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

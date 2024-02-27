@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import dev.keego.musicplayer.R
+import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.ui.payment.PaymentActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import dev.keego.musicplayer.databinding.ItemTodoBinding
+import dev.keego.shoppingcart.databinding.ItemTodoBinding
 import dev.vstd.shoppingcart.data.local.TodoItem
 
 class GroupDetailAdapter(

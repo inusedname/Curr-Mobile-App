@@ -13,7 +13,7 @@ plugins {
 }
 
 android {
-    namespace 'dev.keego.musicplayer'
+    namespace 'dev.keego.shoppingcart'
     compileSdk 34
 
     defaultConfig {

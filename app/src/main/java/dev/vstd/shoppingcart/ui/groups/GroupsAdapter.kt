@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.keego.musicplayer.databinding.ItemGroupsBinding
+import dev.keego.shoppingcart.databinding.ItemGroupsBinding
 import dev.vstd.shoppingcart.data.local.TodoGroup
 
 class GroupsAdapter(private val onClick: (TodoGroup) -> Unit): ListAdapter<TodoGroup, GroupsAdapter.ViewHolder>(MyDiffUtil) {

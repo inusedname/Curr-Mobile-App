@@ -11,8 +11,6 @@ import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.EventNote
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +21,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import dev.vstd.shoppingcart.ui.payment.checkout.destinations.select_address_Destination
 import dev.vstd.shoppingcart.ui.payment.ui.theme.startPadding
 
 @RootNavGraph(start = true)
 @Destination
 @Composable
-fun checkout_() {
+fun checkout_(navigator: DestinationsNavigator) {
     val products = listOf(Product.getFakeProduct())
     Scaffold(topBar = topBar(onBack = {/*TODO*/ })) {
         Box(
@@ -38,7 +38,9 @@ fun checkout_() {
         ) {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 _shipping_address(text = "Nguyễn Viết Quang | (+84) 111 111 222\nChung cư New Skyline\nPhường Văn Quán, Quận Hà Đông, Hà Nội",
-                    onClick = { /*TODO*/ })
+                    onClick = {
+                        navigator.navigate(select_address_Destination)
+                    })
 
                 _purchasing_list(products = products)
 
@@ -94,7 +96,12 @@ private fun _total_summary(tienHang: String, tienVanChuyen: String, tongThanhToa
 
 @Composable
 private fun _voucher_and_purchase_option(onClick: () -> Unit) {
-    Row(Modifier.clickable(onClick = onClick).padding(startPadding), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        Modifier
+            .clickable(onClick = onClick)
+            .padding(startPadding),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(imageVector = Icons.Rounded.MonetizationOn, contentDescription = null)
         Text(text = "Phương thức thanh toán", modifier = Modifier.padding(start = 8.dp))
         Spacer(Modifier.weight(1f))

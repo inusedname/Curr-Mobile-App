@@ -94,10 +94,6 @@ android {
     lint {
         disable += "ComposableNaming"
     }
-
-    buildFeatures{
-        viewBinding = true
-    }
 }
 
 dependencies {

@@ -17,6 +17,7 @@ import dev.keego.shoppingcart.databinding.FragmentGroupDetailBinding
 import dev.keego.shoppingcart.databinding.LayoutTextInputBinding
 import dev.vstd.shoppingcart.data.local.TodoItem
 import dev.vstd.shoppingcart.ui.base.BaseFragment
+import dev.vstd.shoppingcart.utils.dialogs.EditTextAlertDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -96,26 +97,12 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
     }
 
     private fun showCreateNewTodoDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        val context = builder.context
-        val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
-
-        builder
-            .setTitle("Create New Todo")
-            .setPositiveButton("Create") { _, _ ->
-                // Create new group
-                val name = binding.etName.text.toString()
-                if (name.isNotBlank()) {
-                    vimel.addTodoItem(name)
-                } else {
-                    // Show error
-                    Toast.makeText(context, "Name cannot be empty", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel") { _, _ -> }
-            .setView(binding.root)
-            .create()
-            .show()
+        val context = requireContext()
+        EditTextAlertDialog.create(
+            _context = context,
+            title = context.getString(R.string.create_new_todo),
+            onCreateClicked = vimel::addTodoItem
+        ).show()
     }
 
     private fun observeData(

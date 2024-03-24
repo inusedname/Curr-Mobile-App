@@ -3,7 +3,6 @@ package dev.vstd.shoppingcart.ui.groupDetail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentGroupDetailBinding
@@ -62,7 +62,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
         onSave: (TodoItem) -> Unit,
         onMoveToTrash: () -> Unit,
     ) {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = MaterialAlertDialogBuilder(requireContext())
         val context = builder.context
         val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
 
@@ -89,7 +89,9 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
                     resources,
                     R.drawable.ic_delete,
                     null
-                )
+                )?.apply {
+                    setBounds(0, 0, 24, 24)
+                }
             )
             .setView(binding.root)
             .create()

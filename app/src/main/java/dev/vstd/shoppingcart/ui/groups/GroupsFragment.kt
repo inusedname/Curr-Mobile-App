@@ -65,6 +65,7 @@ class GroupsFragment : BaseFragment<FragmentGroupsBinding>() {
         EditTextAlertDialog.create(
             _context = context,
             title = context.getString(R.string.create_new_group),
+            scanable = false,
             onCreateClicked = vimel::addGroup
         ).show()
     }

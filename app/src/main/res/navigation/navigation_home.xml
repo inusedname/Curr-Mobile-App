@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_home"
+    app:startDestination="@id/groupsFragment">
+
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="dev.vstd.shoppingcart.ui.groups.GroupsFragment"
+        android:label="GroupsFragment" />
+    <fragment
+        android:id="@+id/comparingFragment"
+        android:name="dev.vstd.shoppingcart.ui.compare.ComparingFragment"
+        android:label="ComparingFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="dev.vstd.shoppingcart.ui.setting.SettingFragment"
+        android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="dev.vstd.shoppingcart.ui.order.OrdersFragment"
+        android:label="OrdersFragment" />
+</navigation>

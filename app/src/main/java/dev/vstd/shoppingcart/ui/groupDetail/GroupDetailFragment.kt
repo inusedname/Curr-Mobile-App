@@ -89,9 +89,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
                     resources,
                     R.drawable.ic_delete,
                     null
-                )?.apply {
-                    setBounds(0, 0, 24, 24)
-                }
+                )
             )
             .setView(binding.root)
             .create()

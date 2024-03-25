@@ -3,7 +3,6 @@ package dev.vstd.shoppingcart.ui.groupDetail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,12 +10,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentGroupDetailBinding
 import dev.keego.shoppingcart.databinding.LayoutTextInputBinding
 import dev.vstd.shoppingcart.data.local.TodoItem
 import dev.vstd.shoppingcart.ui.base.BaseFragment
+import dev.vstd.shoppingcart.utils.dialogs.EditTextAlertDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -61,7 +62,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
         onSave: (TodoItem) -> Unit,
         onMoveToTrash: () -> Unit,
     ) {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = MaterialAlertDialogBuilder(requireContext())
         val context = builder.context
         val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
 
@@ -96,26 +97,12 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
     }
 
     private fun showCreateNewTodoDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        val context = builder.context
-        val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
-
-        builder
-            .setTitle("Create New Todo")
-            .setPositiveButton("Create") { _, _ ->
-                // Create new group
-                val name = binding.etName.text.toString()
-                if (name.isNotBlank()) {
-                    vimel.addTodoItem(name)
-                } else {
-                    // Show error
-                    Toast.makeText(context, "Name cannot be empty", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel") { _, _ -> }
-            .setView(binding.root)
-            .create()
-            .show()
+        val context = requireContext()
+        EditTextAlertDialog.create(
+            _context = context,
+            title = context.getString(R.string.create_new_todo),
+            onCreateClicked = vimel::addTodoItem
+        ).show()
     }
 
     private fun observeData(

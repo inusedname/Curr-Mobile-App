@@ -18,11 +18,11 @@ class GroupDetailAdapter(
         fun bind(item: TodoItem) {
             binding.checkBox.apply {
                 isChecked = item.isCompleted
-                text = item.title
                 setOnClickListener {
                     onCheck(item)
                 }
             }
+            binding.title.text = item.title
             binding.root.setOnLongClickListener {
                 onLongClickItem(item)
                 true

@@ -5,4 +5,7 @@
     <string name="price_check">Price check</string>
     <string name="orders">Orders</string>
     <string name="setting">Setting</string>
+    <string name="checkout">Checkout</string>
+    <string name="create_new_group">Create New Group</string>
+    <string name="create_new_todo">Create New Todo</string>
 </resources>

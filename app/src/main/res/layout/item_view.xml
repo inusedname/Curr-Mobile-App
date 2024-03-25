@@ -12,14 +12,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:contentDescription="@string/search"
                 android:scaleType="fitCenter"
-                android:src="@drawable/anhdienthoai"
+                android:src="@drawable/image_phone"
                 android:adjustViewBounds="true"
                 android:background="@drawable/rounded_field_10dp"
                 android:clipToOutline="true"/>
@@ -27,27 +28,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Dien thoai xin" />
+                android:layout_marginStart="10dp"
+                android:text="Điện thoại iPhone 15 128GB"
+                android:textSize="16sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="17.999.000 đ"
                 android:layout_marginTop="10dp"
-                android:text="17.999.000"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/raleway_black"
                 android:textStyle="bold"
+                android:textSize="15sp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:src="@drawable/ic_outline_shopping_cart"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Dien thoai xin"/>
+                    android:text="Có 161 nơi bán"
+                    android:layout_marginStart="5dp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/raleway_medium"
+                    />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

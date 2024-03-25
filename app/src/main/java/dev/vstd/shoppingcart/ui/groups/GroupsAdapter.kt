@@ -24,7 +24,13 @@ class GroupsAdapter(private val onClick: (TodoGroup) -> Unit): ListAdapter<TodoG
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemGroupsBinding.inflate(LayoutInflater.from(parent.context)))
+        return ViewHolder(
+            ItemGroupsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

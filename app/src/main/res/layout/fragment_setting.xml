@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp">
@@ -311,26 +312,6 @@
                     android:textColor="@color/black"
                     android:layout_below="@id/text_name" />
             </LinearLayout>
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolBar"
-        style="@style/Widget.Material3.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Setting">
-
-    </com.google.android.material.appbar.MaterialToolbar>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp">
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

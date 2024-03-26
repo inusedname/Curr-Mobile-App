@@ -8,11 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.keego.shoppingcart.R
 
-class ItemAdapter(private val dataList : ArrayList<ItemDataClass>): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
+class ItemAdapter(private val dataList: List<ItemDataClass>) :
+    RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_purchase_order_list,parent,false)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_layout_purchase_order_list, parent, false)
         return ViewHolderClass(itemView)
     }
 

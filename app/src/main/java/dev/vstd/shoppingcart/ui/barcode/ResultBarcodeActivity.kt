@@ -1,11 +1,8 @@
 package dev.vstd.shoppingcart.ui.barcode
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dev.keego.shoppingcart.databinding.ActivityResultBarcodeBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ResultBarcodeActivity : AppCompatActivity() {
 
@@ -19,11 +16,7 @@ class ResultBarcodeActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.btnBack.setOnClickListener {
-            GlobalScope.launch {
-                Intent(this@ResultBarcodeActivity, BarcodeActivity::class.java).also {
-                    startActivity(it)
-                }
-            }
+            finish()
         }
     }
 

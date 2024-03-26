@@ -1,5 +1,6 @@
 package dev.vstd.shoppingcart.ui.barcode
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -8,12 +9,19 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import dev.keego.shoppingcart.databinding.ActivityBarcodeBinding
-import dev.vstd.shoppingcart.MainActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
 class BarcodeActivity : AppCompatActivity() {
+    companion object {
+        fun start(context: Context) {
+            Intent(context, ResultBarcodeActivity::class.java).also {
+                context.startActivity(it)
+            }
+        }
+    }
+
     private lateinit var binding: ActivityBarcodeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,16 +29,13 @@ class BarcodeActivity : AppCompatActivity() {
         initBinding()
         initViews()
     }
+
     private fun initViews() {
         binding.btnBack.setOnClickListener {
-            GlobalScope.launch {
-                Intent(this@BarcodeActivity, MainActivity::class.java).also {
-                    startActivity(it)
-                }
-            }
+            finish()
         }
 
-        binding.btnScan.setOnClickListener{
+        binding.btnScan.setOnClickListener {
             GlobalScope.launch {
                 Intent(this@BarcodeActivity, ResultBarcodeActivity::class.java).also {
                     startActivity(it)
@@ -51,7 +56,7 @@ class BarcodeActivity : AppCompatActivity() {
         if (result.contents == null) {
             Toast.makeText(baseContext, "Cancelled", Toast.LENGTH_SHORT).show()
         } else {
-            binding.textResult .setText(result.contents)
+            binding.textResult.setText(result.contents)
             binding.textFormat.setText(result.formatName)
         }
     }

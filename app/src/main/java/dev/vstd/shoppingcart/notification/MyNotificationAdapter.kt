@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.Notification
+package dev.vstd.shoppingcart.notification
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import dev.keego.shoppingcart.R
 
-class MyNotificationAdapter(private val newList: ArrayList<NewNotification>) :
+class MyNotificationAdapter(private var newList: List<NewNotification>) :
     RecyclerView.Adapter<MyNotificationAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,7 +23,7 @@ class MyNotificationAdapter(private val newList: ArrayList<NewNotification>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var currentItem = newList[position]
+        val currentItem = newList[position]
         holder.titleImage.setImageResource(currentItem.titleImage)
         holder.tvHeading.text = currentItem.heading
         holder.tvContent.text = currentItem.content
@@ -36,9 +36,8 @@ class MyNotificationAdapter(private val newList: ArrayList<NewNotification>) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newList: ArrayList<NewNotification>) {
-        this.newList.clear()
-        this.newList.addAll(newList)
+    fun updateList(newList: List<NewNotification>) {
+        this.newList = newList
         notifyDataSetChanged()
     }
 }

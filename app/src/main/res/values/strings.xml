@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ShoppingCart</string>
     <string name="title_activity_payment">PaymentActivity</string>
+    <string name="search">Search</string>
+    <string name="submit">Submit</string>
+
+    <string name="item_image">item_image</string>
     <string name="checklist">Checklist</string>
     <string name="price_check">Price check</string>
     <string name="orders">Orders</string>
@@ -8,4 +12,6 @@
     <string name="checkout">Checkout</string>
     <string name="create_new_group">Create New Group</string>
     <string name="create_new_todo">Create New Todo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

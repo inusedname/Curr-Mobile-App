@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.purchaseOrderList.adapter
+package dev.vstd.shoppingcart.ui.order.adapter
 
 import android.view.LayoutInflater
 import android.view.View

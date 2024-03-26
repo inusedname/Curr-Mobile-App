@@ -1,15 +1,15 @@
-package dev.vstd.shoppingcart.ui.purchaseOrderList.adapter
+package dev.vstd.shoppingcart.ui.order.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.CancelledFragment
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.DeliveredFragment
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.ReturnedFragment
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.WaitConfirmFragment
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.WaitDeliveryFragment
-import dev.vstd.shoppingcart.ui.purchaseOrderList.fragment.WaitReceiveFragment
+import dev.vstd.shoppingcart.ui.order.fragment.CancelledFragment
+import dev.vstd.shoppingcart.ui.order.fragment.DeliveredFragment
+import dev.vstd.shoppingcart.ui.order.fragment.ReturnedFragment
+import dev.vstd.shoppingcart.ui.order.fragment.WaitConfirmFragment
+import dev.vstd.shoppingcart.ui.order.fragment.WaitDeliveryFragment
+import dev.vstd.shoppingcart.ui.order.fragment.WaitReceiveFragment
 
 class FragmentPageAdapter(
     fragmentManager: FragmentManager,

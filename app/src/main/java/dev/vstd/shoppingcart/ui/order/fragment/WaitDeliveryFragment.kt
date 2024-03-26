@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.purchaseOrderList.fragment
+package dev.vstd.shoppingcart.ui.order.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.keego.shoppingcart.R
-import dev.keego.shoppingcart.databinding.FragmentWaitConfirmBinding
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemAdapter
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemDataClass
+import dev.keego.shoppingcart.databinding.FragmentWaitDeliveryBinding
+import dev.vstd.shoppingcart.ui.order.adapter.ItemAdapter
+import dev.vstd.shoppingcart.ui.order.adapter.ItemDataClass
 
+class WaitDeliveryFragment : Fragment() {
 
-class WaitConfirmFragment : Fragment() {
-
-
-    private lateinit var binding: FragmentWaitConfirmBinding
+    private lateinit var binding: FragmentWaitDeliveryBinding
     lateinit var dataImageList: List<Int>
     lateinit var titleList: List<String>
     lateinit var nameList: List<String>
@@ -23,14 +21,14 @@ class WaitConfirmFragment : Fragment() {
     lateinit var priceList: List<String>
     lateinit var newListItem: MutableList<ItemDataClass>
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentWaitConfirmBinding.inflate(inflater, container, false)
+        binding = FragmentWaitDeliveryBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,11 +57,10 @@ class WaitConfirmFragment : Fragment() {
 
         val itemAdapter = ItemAdapter(newListItem)
         binding.recycleView.apply {
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
             adapter = itemAdapter
         }
     }
-
 
 
 }

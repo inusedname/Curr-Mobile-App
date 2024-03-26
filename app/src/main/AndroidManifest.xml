@@ -20,6 +20,15 @@
         android:theme="@style/Theme.ShoppingCart"
         tools:targetApi="31">
         <activity
+            android:name="dev.vstd.shoppingcart.ui.purchaseOrderList.PurchaseOrderListActivity"
+            android:exported="false" />
+        <activity
+            android:name="dev.vstd.shoppingcart.ui.barcode.ResultBarcodeActivity"
+            android:exported="false" />
+        <activity
+            android:name="dev.vstd.shoppingcart.ui.addItem.AddItemActivity"
+            android:exported="false" />
+        <activity
             android:name="dev.vstd.shoppingcart.ui.barcode.BarcodeActivity"
             android:exported="false" />
         <activity

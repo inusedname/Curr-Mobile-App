@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import dev.keego.shoppingcart.databinding.ActivityBarcodeBinding
+import dev.vstd.shoppingcart.MainActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class BarcodeActivity : AppCompatActivity() {
@@ -20,12 +22,26 @@ class BarcodeActivity : AppCompatActivity() {
         initViews()
     }
     private fun initViews() {
+        binding.btnBack.setOnClickListener {
+            GlobalScope.launch {
+                Intent(this@BarcodeActivity, MainActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+
         binding.btnScan.setOnClickListener{
-            val options = ScanOptions()
-            options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
-            options.setPrompt("Scan a barcode")
-            options.setBarcodeImageEnabled(true)
-            barcodeLauncher.launch(options)
+            GlobalScope.launch {
+                Intent(this@BarcodeActivity, ResultBarcodeActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+
+//            val options = ScanOptions()
+//            options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
+//            options.setPrompt("Scan a barcode")
+//            options.setBarcodeImageEnabled(true)
+//            barcodeLauncher.launch(options)
         }
     }
 

@@ -29,6 +29,16 @@
             android:textStyle="bold"
             android:textSize="25sp"/>
 
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
+            android:text="Make notification"
+            android:gravity="center"
+            />
+
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -38,7 +48,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="8dp">
-<!--            Personal-->
+            <!--            Personal-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -289,6 +299,14 @@
                 android:textSize="15sp"
                 android:textColor="@color/red_blink"
                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete My Account"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/red_blink"
+                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp">

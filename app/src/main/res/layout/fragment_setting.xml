@@ -1,32 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolBar"
-        style="@style/Widget.Material3.Toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Setting">
+        android:layout_height="70dp">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="42dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_back"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            >
 
+        </androidx.appcompat.widget.AppCompatButton>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:layout_marginStart="65dp"
+            android:text="Settings"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true"
+            android:text="Make notification"
+            android:gravity="center"
+            />
+
+    </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingHorizontal="8dp">
+            <!--            Personal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Personal"
+                    android:textSize="20sp"
+                    android:layout_marginStart="10dp"
+                    android:gravity=""
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Profile"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Shipping Address"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Payment methods"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--Shop-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Shop"
+                    android:textSize="20sp"
+                    android:layout_marginStart="10dp"
+                    android:gravity=""
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Country"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Currentcy"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Sizes"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Terms and Conditions"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--Account-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Account"
+                    android:textSize="20sp"
+                    android:layout_marginStart="10dp"
+                    android:gravity=""
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Language"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="About Slada"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:background="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp">
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete My Account"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/red_blink"
+               />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete My Account"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/red_blink"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+
+                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Slada"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    android:gravity="left"
+                    ></androidx.appcompat.widget.AppCompatButton>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Version 1.0 April"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/text_name" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

@@ -23,9 +23,6 @@
             android:name="dev.vstd.shoppingcart.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.purchaseOrderList.PurchaseOrderListActivity"
-            android:exported="false" />
-        <activity
             android:name="dev.vstd.shoppingcart.ui.barcode.ResultBarcodeActivity"
             android:exported="false" />
         <activity

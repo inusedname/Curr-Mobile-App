@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.purchaseOrderList.fragment
+package dev.vstd.shoppingcart.ui.order.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.keego.shoppingcart.R
-import dev.keego.shoppingcart.databinding.FragmentWaitDeliveryBinding
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemAdapter
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemDataClass
+import dev.keego.shoppingcart.databinding.FragmentReturnedBinding
+import dev.vstd.shoppingcart.ui.order.adapter.ItemAdapter
+import dev.vstd.shoppingcart.ui.order.adapter.ItemDataClass
 
-class WaitDeliveryFragment : Fragment() {
+class ReturnedFragment : Fragment() {
 
-    private lateinit var binding: FragmentWaitDeliveryBinding
+    private lateinit var binding: FragmentReturnedBinding
     lateinit var dataImageList: List<Int>
     lateinit var titleList: List<String>
     lateinit var nameList: List<String>
@@ -25,10 +25,9 @@ class WaitDeliveryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentWaitDeliveryBinding.inflate(inflater, container, false)
+        binding = FragmentReturnedBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +41,7 @@ class WaitDeliveryFragment : Fragment() {
         descriptionList = List(10) { "Hộp 250g" }
         priceList = List(10) { "đ17.000" }
 
-        newListItem = arrayListOf<ItemDataClass>()
+        newListItem = mutableListOf()
 
         for (i in dataImageList.indices) {
             val item = ItemDataClass(
@@ -61,6 +60,5 @@ class WaitDeliveryFragment : Fragment() {
             adapter = itemAdapter
         }
     }
-
 
 }

@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.purchaseOrderList.fragment
+package dev.vstd.shoppingcart.ui.order.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentCancelledBinding
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemAdapter
-import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.ItemDataClass
+import dev.vstd.shoppingcart.ui.order.adapter.ItemAdapter
+import dev.vstd.shoppingcart.ui.order.adapter.ItemDataClass
 
 
 class CancelledFragment : Fragment() {

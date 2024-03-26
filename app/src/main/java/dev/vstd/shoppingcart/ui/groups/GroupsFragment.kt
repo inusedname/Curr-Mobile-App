@@ -7,8 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentGroupsBinding
@@ -20,10 +19,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class GroupsFragment : BaseFragment<FragmentGroupsBinding>() {
     private val vimel by viewModels<GroupsVimel>()
-    private var parentNavController: NavController? = null
 
     override fun onViewCreated(binding: FragmentGroupsBinding) {
-        parentNavController = Navigation.findNavController(requireActivity(), R.id.container_main)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionNewGroup -> {
@@ -37,8 +34,8 @@ class GroupsFragment : BaseFragment<FragmentGroupsBinding>() {
             }
         }
         val adapter = GroupsAdapter {
-            parentNavController?.navigate(
-                R.id.action_navBarFragment_to_groupDetailFragment,
+            findNavController().navigate(
+                R.id.action_groupsFragment_to_groupDetailFragment,
                 Bundle().apply {
                     putInt("groupId", it.id)
                 }

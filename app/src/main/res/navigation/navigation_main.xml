@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/navBarFragment">
-    <fragment
-        android:id="@+id/navBarFragment"
-        android:name="dev.vstd.shoppingcart.ui.home.NavBarFragment"
-        android:label="HomeFragment">
-        <action
-            android:id="@+id/action_navBarFragment_to_barcodeActivity"
-            app:destination="@id/barcodeActivity" />
-        <action
-            android:id="@+id/action_navBarFragment_to_paymentActivity"
-            app:destination="@id/paymentActivity" />
-        <action
-            android:id="@+id/action_navBarFragment_to_groupDetailFragment"
-            app:destination="@id/groupDetailFragment" />
-    </fragment>
-    <activity
-        android:id="@+id/barcodeActivity"
-        android:name="dev.vstd.shoppingcart.ui.barcode.BarcodeActivity"
-        android:label="activity_barcode"
-        tools:layout="@layout/activity_barcode" />
-    <activity
-        android:id="@+id/paymentActivity"
-        android:name="dev.vstd.shoppingcart.ui.payment.PaymentActivity"
-        android:label="PaymentActivity" />
+    app:startDestination="@id/groupsFragment">
     <fragment
         android:id="@+id/groupDetailFragment"
         android:name="dev.vstd.shoppingcart.ui.groupDetail.GroupDetailFragment"
         android:label="GroupDetailFragment" />
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="dev.vstd.shoppingcart.ui.groups.GroupsFragment"
+        android:label="GroupsFragment">
+        <action
+            android:id="@+id/action_groupsFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_comparingFragment"
+            app:destination="@id/comparingFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/comparingFragment"
+        android:name="dev.vstd.shoppingcart.ui.compare.ComparingFragment"
+        android:label="ComparingFragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="dev.vstd.shoppingcart.ui.order.OrdersFragment"
+        android:label="OrdersFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="dev.vstd.shoppingcart.ui.setting.SettingFragment"
+        android:label="SettingFragment" />
 </navigation>

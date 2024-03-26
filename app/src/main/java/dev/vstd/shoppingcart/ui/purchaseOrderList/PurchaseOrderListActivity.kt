@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import dev.keego.shoppingcart.databinding.ActivityPurchaseOrderListBinding
+import dev.vstd.shoppingcart.MainActivity
 import dev.vstd.shoppingcart.ui.purchaseOrderList.adapter.FragmentPageAdapter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

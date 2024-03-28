@@ -1,6 +1,5 @@
 package dev.vstd.shoppingcart.ui.auth
 
-import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,8 +14,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.vstd.shoppingcart.utils.toast
+import dev.vstd.shoppingcart.data.APIErrorUtil
+import dev.vstd.shoppingcart.data.remote.user.SignupRequest
+import dev.vstd.shoppingcart.data.remote.user.UserService
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AuthNavGraph
 @Destination
@@ -42,9 +45,10 @@ fun signup_(navigator: DestinationsNavigator) {
 private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val userService = (context as AuthActivity).userService
 
     var email by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var reconfirmPassword by remember { mutableStateOf("") }
 
@@ -53,7 +57,7 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
             Icon(imageVector = Icons.Default.Close, contentDescription = "Close")
         }
         TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
+        TextField(value = username, onValueChange = { username = it }, label = { Text("Username") })
         TextField(
             value = password,
             visualTransformation = PasswordVisualTransformation(),
@@ -69,9 +73,9 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
             label = { Text("Reconfirm Password") }
         )
         Button(onClick = {
-            val result = SignUpValidator.validate(name, email, password, reconfirmPassword)
+            val result = SignUpValidator.validate(username, email, password, reconfirmPassword)
             if (result.success) {
-                signup(context, email, password)
+                signup(userService, email = email, username = username, password)
             } else {
                 scope.launch { hostState.showSnackbar(result.message) }
             }
@@ -81,6 +85,20 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
     }
 }
 
-private fun signup(context: Context, username: String, password: String) {
-    context.toast("Sign up successful")
+private fun signup(userService: UserService, email: String, username: String, password: String) {
+    GlobalScope.launch {
+        val resp = userService.signup(
+            SignupRequest(
+                email = email,
+                username = username,
+                password = password
+            )
+        )
+        if (resp.isSuccessful) {
+            Timber.d("Signup successful: ${resp.body()}")
+        } else {
+            val error = APIErrorUtil.getAPIError(resp)
+            Timber.e("Signup failed: ${error.status} ${error.message}")
+        }
+    }
 }

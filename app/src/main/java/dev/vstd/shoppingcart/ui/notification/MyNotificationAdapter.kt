@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.notification
+package dev.vstd.shoppingcart.ui.notification
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

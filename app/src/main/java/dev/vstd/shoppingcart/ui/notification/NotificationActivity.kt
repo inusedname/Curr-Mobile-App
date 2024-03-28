@@ -1,11 +1,9 @@
-package dev.vstd.shoppingcart
+package dev.vstd.shoppingcart.ui.notification
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.notification.MyNotificationAdapter
-import dev.vstd.shoppingcart.notification.NewNotification
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var newRecyclerView: RecyclerView

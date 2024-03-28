@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart
+package dev.vstd.shoppingcart.ui.notification
 
 import androidx.fragment.app.Fragment
 

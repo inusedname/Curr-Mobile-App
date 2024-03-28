@@ -22,7 +22,7 @@ import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import dev.vstd.shoppingcart.ui.payment.checkout.destinations.select_address_Destination
+import dev.vstd.shoppingcart.ui.destinations.select_address_Destination
 import dev.vstd.shoppingcart.ui.payment.ui.theme.startPadding
 
 @RootNavGraph(start = true)

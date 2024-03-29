@@ -1,5 +1,6 @@
 package dev.vstd.shoppingcart.data.remote
 
+import dev.vstd.shoppingcart.data.remote.user.CreditCard
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

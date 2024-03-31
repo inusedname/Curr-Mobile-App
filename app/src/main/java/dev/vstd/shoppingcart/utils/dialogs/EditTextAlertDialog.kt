@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.keego.shoppingcart.databinding.LayoutTextInputBinding
+import dev.vstd.shoppingcart.ui.barcode.BarcodeActivity
 import dev.vstd.shoppingcart.utils.beGone
 
 object EditTextAlertDialog {
@@ -23,7 +24,7 @@ object EditTextAlertDialog {
         if (!scanable) binding.btnScan.beGone()
 
         binding.btnScan.setOnClickListener {
-            // TODO: Implement button click listener
+            BarcodeActivity.start(context)
         }
 
         builder

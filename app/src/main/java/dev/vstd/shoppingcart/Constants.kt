@@ -1,5 +1,5 @@
 package dev.vstd.shoppingcart
 
 object Constants {
-    const val baseUrl = "localhost:8000"
+    const val baseUrl = "http://localhost:8000"
 }

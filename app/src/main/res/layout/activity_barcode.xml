@@ -7,62 +7,80 @@
     android:layout_height="match_parent"
     tools:context="dev.vstd.shoppingcart.ui.barcode.BarcodeActivity">
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:backgroundTint="@color/black"
-        android:foreground="?attr/selectableItemBackground"
-        android:padding="15dp"
-        android:text="Back"
-        app:icon="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layout_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_qr_scan" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
         <TextView
-            android:id="@+id/textResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:text="Barcode: " />
 
-        <TextView
-            android:id="@+id/textFormat"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textBarcode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:text="Not found in database!" />
+
+            <Button
+                android:id="@+id/btnCopy"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:contentDescription="Copy"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                app:icon="@drawable/ic_link" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSearchInInternet"
+            android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            app:icon="@drawable/ic_globe"
+            android:text="Search in Internet" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnScan"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabScanNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="@color/black"
-        android:foreground="?attr/selectableItemBackground"
-        android:text="Scan"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Scan Now"
+        app:icon="@drawable/ic_qr_scan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

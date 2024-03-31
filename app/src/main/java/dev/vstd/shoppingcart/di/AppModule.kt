@@ -6,10 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.vstd.shoppingcart.data.local.AppDatabase
-import dev.vstd.shoppingcart.data.local.TodoGroupDao
-import dev.vstd.shoppingcart.data.local.TodoItemDao
-import dev.vstd.shoppingcart.data.local.TodoRepository
+import dev.vstd.shoppingcart.data.local.*
 import dev.vstd.shoppingcart.data.remote.CheckoutRepository
 import dev.vstd.shoppingcart.data.remote.CheckoutService
 import dev.vstd.shoppingcart.data.remote.PaymentRepository
@@ -22,9 +19,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.createDatabase(context)
-    }
+    fun provideAppDatabase(@ApplicationContext context: Context) =
+        AppDatabase.createDatabase(context)
 
     @Provides
     @Singleton
@@ -38,32 +34,33 @@ class AppModule {
     @Singleton
     fun providesTodoRepository(
         todoGroupDao: TodoGroupDao,
-        todoItemDao: TodoItemDao
-    ): TodoRepository {
-        return TodoRepository(todoGroupDao, todoItemDao)
-    }
+        todoItemDao: TodoItemDao,
+    ) = TodoRepository(todoGroupDao, todoItemDao)
 
     @Provides
     @Singleton
-    fun providesCheckoutService(): CheckoutService {
-        return CheckoutService.build()
-    }
+    fun providesBarcodeItemDao(appDatabase: AppDatabase) = appDatabase.barcodeItemDao
 
     @Provides
     @Singleton
-    fun providesCheckoutRepository(checkoutService: CheckoutService): CheckoutRepository {
-        return CheckoutRepository(checkoutService)
-    }
+    fun providesBarcodeRepository(barcodeItemDao: BarcodeItemDao) =
+        BarcodeRepository(barcodeItemDao)
 
     @Provides
     @Singleton
-    fun providesPaymentService(): PaymentService {
-        return PaymentService.build()
-    }
+    fun providesCheckoutService() = CheckoutService.build()
 
     @Provides
     @Singleton
-    fun providesPaymentRepository(paymentService: PaymentService): PaymentRepository {
-        return PaymentRepository(paymentService)
-    }
+    fun providesCheckoutRepository(checkoutService: CheckoutService) =
+        CheckoutRepository(checkoutService)
+
+    @Provides
+    @Singleton
+    fun providesPaymentService() = PaymentService.build()
+
+    @Provides
+    @Singleton
+    fun providesPaymentRepository(paymentService: PaymentService) =
+        PaymentRepository(paymentService)
 }

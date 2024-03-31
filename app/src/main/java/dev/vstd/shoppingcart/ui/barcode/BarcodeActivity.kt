@@ -5,64 +5,91 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanIntentResult
-import com.journeyapps.barcodescanner.ScanOptions
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import dev.keego.shoppingcart.databinding.ActivityBarcodeBinding
-import kotlinx.coroutines.GlobalScope
+import dev.vstd.shoppingcart.utils.Clipboard
+import dev.vstd.shoppingcart.utils.toast
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class BarcodeActivity : AppCompatActivity() {
-    companion object {
-        fun start(context: Context) {
-            Intent(context, ResultBarcodeActivity::class.java).also {
-                context.startActivity(it)
-            }
-        }
-    }
-
     private lateinit var binding: ActivityBarcodeBinding
+    private val barcode = MutableStateFlow<String?>("8938508475056")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
-        initViews()
+        binding = ActivityBarcodeBinding.inflate(layoutInflater)
+
+        setOnClicks()
+        observeStates()
+        setContentView(binding.root)
     }
 
-    private fun initViews() {
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
-
-        binding.btnScan.setOnClickListener {
-            GlobalScope.launch {
-                Intent(this@BarcodeActivity, ResultBarcodeActivity::class.java).also {
-                    startActivity(it)
+    private fun observeStates() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                barcode.collect { barcode ->
+                    binding.textBarcode.text = barcode ?: "Not found in database"
+                    binding.btnSearchInInternet.isEnabled = barcode != null
                 }
             }
-
-//            val options = ScanOptions()
-//            options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
-//            options.setPrompt("Scan a barcode")
-//            options.setBarcodeImageEnabled(true)
-//            barcodeLauncher.launch(options)
         }
     }
 
-    private val barcodeLauncher = registerForActivityResult<ScanOptions, ScanIntentResult>(
-        ScanContract()
-    ) { result: ScanIntentResult ->
-        if (result.contents == null) {
-            Toast.makeText(baseContext, "Cancelled", Toast.LENGTH_SHORT).show()
-        } else {
-            binding.textResult.setText(result.contents)
-            binding.textFormat.setText(result.formatName)
+    private fun setOnClicks() {
+        binding.apply {
+            fabScanNow.setOnClickListener {
+                val options = GmsBarcodeScannerOptions.Builder()
+                    .setBarcodeFormats(
+                        Barcode.FORMAT_ALL_FORMATS
+                    )
+                    .build()
+                val scanner = GmsBarcodeScanning.getClient(this@BarcodeActivity, options)
+                scanner.startScan()
+                    .addOnSuccessListener { barcode ->
+                        if (barcode.valueType != Barcode.TYPE_PRODUCT) {
+                            Timber.d("Barcode not from product: value=${barcode.rawValue} valueType=${barcode.valueType}")
+                            this@BarcodeActivity.toast("This barcode is not from a product")
+                            return@addOnSuccessListener
+                        }
+                        this@BarcodeActivity.barcode.value = barcode.rawValue
+                    }
+                    .addOnCanceledListener {
+                        Timber.d("Barcode scanning canceled")
+                    }
+                    .addOnFailureListener { e ->
+                        Timber.e(e, "Barcode scanning failed")
+                    }
+            }
+            btnCopy.setOnClickListener {
+                barcode.value?.let {
+                    Clipboard.copyToClipboard(this@BarcodeActivity, it)
+                    Toast.makeText(this@BarcodeActivity, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                }
+            }
+            btnSearchInInternet.setOnClickListener {
+                barcode.value?.let {
+                    FindBarcodeActivity.start(this@BarcodeActivity, it)
+                }
+            }
+            appBar.setNavigationOnClickListener {
+                finish()
+            }
         }
     }
 
-    private fun initBinding() {
-        binding = ActivityBarcodeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    companion object {
+        fun start(context: Context) {
+            Intent(context, BarcodeActivity::class.java).also {
+                context.startActivity(it)
+            }
+        }
     }
 }

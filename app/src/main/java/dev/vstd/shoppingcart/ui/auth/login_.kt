@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -38,19 +39,31 @@ import timber.log.Timber
 @Destination
 @Composable
 fun login_(navigator: DestinationsNavigator) {
-    Scaffold() { paddingValues ->
+    val hostState = remember { SnackbarHostState() }
+    Scaffold(snackbarHost = {
+        SnackbarHost(hostState) {
+            Snackbar(
+                snackbarData = it,
+                containerColor = MaterialTheme.colorScheme.error,
+                contentColor = Color.White
+            )
+        }
+    }) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
-            body_(navigator)
+            body_(navigator, hostState)
         }
     }
 }
 
 @Composable
-private fun body_(navigator: DestinationsNavigator) {
+private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     val context = LocalContext.current
     val userService = (context as AuthActivity).userService
+    val scope = rememberCoroutineScope()
+
     Box {
         Image(
             painter = rememberAsyncImagePainter(model = R.drawable.bg_login),
@@ -92,7 +105,15 @@ private fun body_(navigator: DestinationsNavigator) {
                 label = { Text(text = "Password") }
             )
             InuFullWidthButton(
-                onClick = { login(userService, email, password) },
+                onClick = {
+                    val result =
+                        LoginValidator.validate(email, password)
+                    if (result.success) {
+                        login(userService, email, password)
+                    } else {
+                        scope.launch { hostState.showSnackbar(result.message) }
+                    }
+                },
                 modifier = Modifier.padding(top = 24.dp)
             ) {
                 Text(text = "Login", fontSize = 20.sp)

@@ -5,10 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TodoGroup::class, TodoItem::class], version = 1, exportSchema = false)
+@Database(entities = [
+    TodoGroup::class, TodoItem::class, BarcodeItem::class
+], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract val todoGroupDao: TodoGroupDao
     abstract val todoItemDao: TodoItemDao
+    abstract val barcodeItemDao: BarcodeItemDao
 
     companion object {
         fun createDatabase(context: Context): AppDatabase {

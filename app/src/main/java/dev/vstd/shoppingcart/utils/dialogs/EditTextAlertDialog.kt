@@ -12,22 +12,25 @@ object EditTextAlertDialog {
     @Suppress("LocalVariableName")
     fun create(
         _context: Context,
-        title: String,
+        dialogTitle: String,
         scanable: Boolean = true,
+        editTextValue: String? = null,
         onCreateClicked: (String) -> Unit,
+        onBarcodeIconClick: () -> Unit
     ): AlertDialog {
         val builder = MaterialAlertDialogBuilder(_context)
         val context = builder.context
         val binding = LayoutTextInputBinding.inflate(LayoutInflater.from(context))
 
         if (!scanable) binding.btnScan.beGone()
+        if (editTextValue != null) binding.etName.setText(editTextValue)
 
         binding.btnScan.setOnClickListener {
-            // TODO: Implement button click listener
+            onBarcodeIconClick()
         }
 
         builder
-            .setTitle(title)
+            .setTitle(dialogTitle)
             .setPositiveButton("Create") { _, _ ->
                 // Create new group
                 val name = binding.etName.text.toString()

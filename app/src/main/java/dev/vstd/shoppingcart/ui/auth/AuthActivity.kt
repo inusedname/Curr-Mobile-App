@@ -7,8 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dev.vstd.shoppingcart.data.remote.user.UserService
+import dev.vstd.shoppingcart.theme.ShoppingCartTheme
 import dev.vstd.shoppingcart.ui.NavGraphs
-import dev.vstd.shoppingcart.ui.payment.ui.theme.ShoppingCartTheme
 
 /**
  * Login, signup

@@ -11,14 +11,25 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.ActivityFindBarcodeBinding
 import dev.keego.shoppingcart.databinding.BotSheetBarcodeSearchBinding
+import dev.vstd.shoppingcart.data.local.BarcodeItem
+import dev.vstd.shoppingcart.data.local.BarcodeRepository
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class FindBarcodeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFindBarcodeBinding
     private lateinit var barcode: String
+
+    @Inject
+    lateinit var barcodeRepo: BarcodeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +80,13 @@ class FindBarcodeActivity : AppCompatActivity() {
             }
         }
         binding.btnShowSaveBotSheet.setOnClickListener {
-            AddBarcodeBottomSheet { name, price ->
-                // Save barcode to database
-                Toast.makeText(this, "Saved $name with price $price", Toast.LENGTH_SHORT).show()
+            AddBarcodeBottomSheet { name, note ->
+                val barcodeItem = BarcodeItem(barcode = barcode, name = name, note = note)
+                Timber.d("Insert BarcodeItem to database: $barcodeItem")
+                lifecycleScope.launch {
+                    barcodeRepo.insert(barcodeItem)
+                    finish()
+                }
             }.show(supportFragmentManager, "add_barcode")
         }
     }

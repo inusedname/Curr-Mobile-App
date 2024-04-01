@@ -61,9 +61,10 @@ class GroupsFragment : BaseFragment<FragmentGroupsBinding>() {
         val context = requireContext()
         EditTextAlertDialog.create(
             _context = context,
-            title = context.getString(R.string.create_new_group),
+            dialogTitle = context.getString(R.string.create_new_group),
             scanable = false,
-            onCreateClicked = vimel::addGroup
+            onCreateClicked = vimel::addGroup,
+            onBarcodeIconClick = {}
         ).show()
     }
 

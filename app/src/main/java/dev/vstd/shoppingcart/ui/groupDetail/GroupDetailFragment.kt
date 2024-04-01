@@ -1,8 +1,11 @@
 package dev.vstd.shoppingcart.ui.groupDetail
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,13 +19,29 @@ import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentGroupDetailBinding
 import dev.keego.shoppingcart.databinding.LayoutTextInputBinding
 import dev.vstd.shoppingcart.data.local.TodoItem
+import dev.vstd.shoppingcart.ui.barcode.BarcodeActivity
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import dev.vstd.shoppingcart.utils.dialogs.EditTextAlertDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
+    private var barcodeDialog: WeakReference<AlertDialog>? = null
+    private val barcodeActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == BarcodeActivity.RESULT_OK) {
+                val barcode = result.data?.getStringExtra(BarcodeActivity.EXTRA_BARCODE_DESCRIPTION)
+                barcodeDialog?.run {
+                    get()?.let {
+                        it.dismiss()
+                        showCreateNewTodoDialog(editTextValue = barcode)
+                    }
+                }
+            }
+        }
+
 
     private val vimel by viewModels<GroupDetailVimel>()
 
@@ -96,13 +115,19 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
             .show()
     }
 
-    private fun showCreateNewTodoDialog() {
+    private fun showCreateNewTodoDialog(editTextValue: String? = null) {
         val context = requireContext()
-        EditTextAlertDialog.create(
+        val dialog = EditTextAlertDialog.create(
             _context = context,
-            title = context.getString(R.string.create_new_todo),
-            onCreateClicked = vimel::addTodoItem
-        ).show()
+            dialogTitle = context.getString(R.string.create_new_todo),
+            onCreateClicked = vimel::addTodoItem,
+            editTextValue = editTextValue,
+            onBarcodeIconClick = {
+                barcodeActivityLauncher.launch(Intent(context, BarcodeActivity::class.java))
+            }
+        )
+        barcodeDialog = WeakReference(dialog)
+        dialog.show()
     }
 
     private fun observeData(

@@ -14,4 +14,10 @@
     <string name="create_new_todo">Create New Todo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="copy">Copy</string>
+    <string name="not_found_in_database">Not found in database!</string>
+    <string name="search_in_internet">Search in Internet</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="use_this_barcode">Use this barcode</string>
+    <string name="barcode">Barcode</string>
 </resources>

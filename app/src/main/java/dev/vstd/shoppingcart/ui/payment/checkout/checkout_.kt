@@ -18,19 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.theme.startPadding
-import dev.vstd.shoppingcart.ui.destinations.select_address_Destination
 
-@RootNavGraph(start = true)
-@Destination
 @Composable
-fun checkout_(navigator: DestinationsNavigator) {
+fun checkout_(navController: NavController) {
     val products = listOf(Product.getFakeProduct())
-    Scaffold(topBar = topBar(onBack = {/*TODO*/ })) {
+    Scaffold(topBar = topBar(onBack = navController::navigateUp)) {
         Box(
             Modifier
                 .padding(it)
@@ -39,7 +35,7 @@ fun checkout_(navigator: DestinationsNavigator) {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 _shipping_address(text = "Nguyễn Viết Quang | (+84) 111 111 222\nChung cư New Skyline\nPhường Văn Quán, Quận Hà Đông, Hà Nội",
                     onClick = {
-                        navigator.navigate(select_address_Destination)
+                        navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
                     })
 
                 _purchasing_list(products = products)

@@ -27,9 +27,9 @@ import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.data.APIErrorUtil
 import dev.vstd.shoppingcart.data.remote.user.LoginRequest
 import dev.vstd.shoppingcart.data.remote.user.UserService
+import dev.vstd.shoppingcart.ui.auth.destinations.signup_Destination
 import dev.vstd.shoppingcart.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.ui.base.InuTextField
-import dev.vstd.shoppingcart.ui.destinations.signup_Destination
 import dev.vstd.shoppingcart.utils.toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

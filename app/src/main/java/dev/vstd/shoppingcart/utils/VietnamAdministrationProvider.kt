@@ -2,37 +2,46 @@ package dev.vstd.shoppingcart.utils
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import java.io.BufferedReader
 
-class VietnamAdministrationProvider {
+class VietnamAdministrationProvider(private val context: Context) {
     private val gson = GsonBuilder().create()
+    private val cities: List<City>
 
-    fun getCities(context: Context): List<City> {
+    init {
         val jsonArray = gson.fromJson(
             context.assets.open("cities.json").bufferedReader().use(BufferedReader::readText),
-            JsonArray::class.java
+            JsonObject::class.java
         )
-
-        return jsonArray.map {
+        cities = jsonArray.entrySet().map {
             City(
-                it.asJsonObject.get("id").asInt,
-                it.asJsonObject.get("name").asString
+                it.key.toInt(),
+                it.value.asJsonObject["fullName"].asString
             )
         }
     }
 
-    fun getDistricts(context: Context, cityId: Int): List<District> {
+    fun getCities(): List<String> {
+        return cities.map { it.displayName }
+    }
+
+    fun getDistricts(cityName: String): List<String>? {
+        val city = cities.find { it.displayName == cityName } ?: return null
+        return getDistricts(city.id).map { it.displayName }
+    }
+
+    private fun getDistricts(cityId: Int): List<District> {
         val jsonArray = gson.fromJson(
-            context.assets.open(String.format("%02d.json", cityId)).bufferedReader()
+            context.assets.open(String.format("districts/%02d.json", cityId)).bufferedReader()
                 .use(BufferedReader::readText),
-            JsonArray::class.java
+            JsonObject::class.java
         )
 
-        return jsonArray.map {
+        return jsonArray.entrySet().map {
             District(
-                it.asJsonObject.get("id").asInt,
-                it.asJsonObject.get("name").asString
+                it.key.toInt(),
+                it.value.asJsonObject["fullName"].asString
             )
         }
     }

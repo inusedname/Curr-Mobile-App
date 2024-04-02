@@ -174,4 +174,5 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
     implementation 'androidx.webkit:webkit:1.10.0'
+    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.3'
 }

@@ -35,5 +35,13 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="dev.vstd.shoppingcart.ui.setting.SettingFragment"
-        android:label="SettingFragment" />
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_updateAddressFragment"
+            app:destination="@id/updateAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateAddressFragment"
+        android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
+        android:label="UpdateAddressFragment" />
 </navigation>

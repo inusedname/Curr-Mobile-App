@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_payment"
+    app:startDestination="@id/checkoutFragment">
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="dev.vstd.shoppingcart.ui.payment.checkout.CheckoutFragment"
+        android:label="CheckoutFragment" >
+        <action
+            android:id="@+id/action_checkoutFragment_to_updateAddressFragment2"
+            app:destination="@id/updateAddressFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateAddressFragment2"
+        android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
+        android:label="UpdateAddressFragment" />
+</navigation>

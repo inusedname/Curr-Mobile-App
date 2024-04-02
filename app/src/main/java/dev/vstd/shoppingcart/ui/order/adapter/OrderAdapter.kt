@@ -1,5 +1,6 @@
 package dev.vstd.shoppingcart.ui.order.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.keego.shoppingcart.R
 
-class ItemAdapter(private val dataList: List<ItemDataClass>) :
-    RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
+class OrderAdapter(private var dataList: List<Order> = emptyList()) :
+    RecyclerView.Adapter<OrderAdapter.ViewHolderClass>() {
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: List<Order>) {
+        dataList = newList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView = LayoutInflater.from(parent.context)
@@ -24,7 +30,7 @@ class ItemAdapter(private val dataList: List<ItemDataClass>) :
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem =dataList[position]
-        holder.imageViewItemLayout.setImageResource(currentItem.dataImage)
+        holder.imageViewItemLayout.setImageResource(currentItem.image)
         holder.tvTitleItemLayout.text = currentItem.title
         holder.tvNameItemLayout.text = currentItem.name
         holder.tvDescriptionItemLayout.text = currentItem.description

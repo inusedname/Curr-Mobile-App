@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="dev.vstd.shoppingcart.ui.setting.SettingFragment"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -92,6 +93,7 @@
                     >
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnShipAddress"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Shipping Address"

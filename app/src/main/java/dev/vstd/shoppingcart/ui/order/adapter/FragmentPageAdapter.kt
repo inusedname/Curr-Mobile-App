@@ -4,12 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import dev.vstd.shoppingcart.ui.order.fragment.CancelledFragment
-import dev.vstd.shoppingcart.ui.order.fragment.DeliveredFragment
-import dev.vstd.shoppingcart.ui.order.fragment.ReturnedFragment
-import dev.vstd.shoppingcart.ui.order.fragment.WaitConfirmFragment
-import dev.vstd.shoppingcart.ui.order.fragment.WaitDeliveryFragment
-import dev.vstd.shoppingcart.ui.order.fragment.WaitReceiveFragment
+import dev.keego.shoppingcart.R
+import dev.vstd.shoppingcart.ui.order.fragment.OrderListFragment
 
 class FragmentPageAdapter(
     fragmentManager: FragmentManager,
@@ -20,14 +16,24 @@ class FragmentPageAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> WaitConfirmFragment()
-            1 -> WaitReceiveFragment()
-            2 -> WaitDeliveryFragment()
-            3 -> DeliveredFragment()
-            4 -> CancelledFragment()
-            else -> ReturnedFragment()
-        }
+        val fragment = OrderListFragment()
+        fragment.setOrders(getFakeOrders())
+        return fragment
     }
 
+    private fun getFakeOrders(): List<Order> {
+        val orders = mutableListOf<Order>()
+        for (i in 1..10) {
+            orders.add(
+                Order(
+                    image = R.drawable.image,
+                    title = "TỔNG KHO LINH ĐÀM",
+                    name = "Bột thông cống cực mạnh",
+                    description = "Hộp 250g",
+                    price = "đ17.000"
+                )
+            )
+        }
+        return orders
+    }
 }

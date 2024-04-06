@@ -25,7 +25,7 @@ interface UserService {
     companion object {
         fun build(): UserService {
             val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
+                .baseUrl(Constants.backendUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return retrofit.create(UserService::class.java)

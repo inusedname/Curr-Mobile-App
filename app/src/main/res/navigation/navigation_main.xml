@@ -27,7 +27,11 @@
     <fragment
         android:id="@+id/comparingFragment"
         android:name="dev.vstd.shoppingcart.ui.compare.ComparingFragment"
-        android:label="ComparingFragment" />
+        android:label="ComparingFragment" >
+        <action
+            android:id="@+id/action_comparingFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ordersFragment"
         android:name="dev.vstd.shoppingcart.ui.order.OrdersFragment"
@@ -44,4 +48,8 @@
         android:id="@+id/updateAddressFragment"
         android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="dev.vstd.shoppingcart.ui.compare.SellersFragment"
+        android:label="DetailFragment" />
 </navigation>

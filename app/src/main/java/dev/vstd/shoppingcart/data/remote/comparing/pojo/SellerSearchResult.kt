@@ -1,7 +1,8 @@
-package dev.vstd.shoppingcart.domain.pojo
+package dev.vstd.shoppingcart.data.remote.comparing.pojo
 
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
+import dev.vstd.shoppingcart.data.remote.comparing.model.SellerInfo
 
 class SellerSearchResult(val data: Data) {
     class Data(private val stores: List<JsonObject>) {
@@ -9,9 +10,9 @@ class SellerSearchResult(val data: Data) {
             val parsedStores = mutableListOf<Store>()
 
             stores.forEach { storeItem ->
-                var productStore: String = ""
-                var productPrice: String = ""
-                var productStoreUrl: String = ""
+                var productStore = ""
+                var productPrice = ""
+                var productStoreUrl = ""
                 storeItem.entrySet().forEach { (key, value) ->
                     when (key) {
                         "product_store" -> productStore = value.asString
@@ -35,6 +36,10 @@ class SellerSearchResult(val data: Data) {
             val price: String,
             @SerializedName("product_store_url")
             val url: String,
-        )
+        ) {
+            fun toSellerInfo(): SellerInfo {
+                return SellerInfo(name = storeName, price = price, url = url)
+            }
+        }
     }
 }

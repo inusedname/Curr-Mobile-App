@@ -1,6 +1,7 @@
-package dev.vstd.shoppingcart.domain.pojo
+package dev.vstd.shoppingcart.data.remote.comparing.pojo
 
 import com.google.gson.annotations.SerializedName
+import dev.vstd.shoppingcart.data.remote.comparing.model.ComparingProduct
 
 data class ProductSearchResult(
     val data: List<PojoProduct>,
@@ -14,5 +15,12 @@ data class ProductSearchResult(
         val image: String,
         @SerializedName("product_lowest_price")
         val lowestPrice: Int,
-    )
+    ) {
+        fun toComparingProduct() = ComparingProduct(
+            id = id,
+            title = title,
+            image = image,
+            lowestPrice = lowestPrice,
+        )
+    }
 }

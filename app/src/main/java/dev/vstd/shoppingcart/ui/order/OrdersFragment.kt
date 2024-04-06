@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import dev.keego.shoppingcart.databinding.FragmentOrdersBinding
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import dev.vstd.shoppingcart.ui.order.adapter.FragmentPageAdapter
+import dev.vstd.shoppingcart.ui.payment.PaymentActivity
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     private lateinit var adapter: FragmentPageAdapter
@@ -48,6 +49,11 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
             }
         })
+        binding.fabCheckout.setOnClickListener {
+            context?.let {
+                PaymentActivity.start(requireContext())
+            }
+        }
     }
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentOrdersBinding

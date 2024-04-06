@@ -11,6 +11,7 @@ import dev.vstd.shoppingcart.data.remote.CheckoutRepository
 import dev.vstd.shoppingcart.data.remote.CheckoutService
 import dev.vstd.shoppingcart.data.remote.PaymentRepository
 import dev.vstd.shoppingcart.data.remote.PaymentService
+import dev.vstd.shoppingcart.dataMock.MockBackendDatabase
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -63,4 +64,9 @@ class AppModule {
     @Singleton
     fun providesPaymentRepository(paymentService: PaymentService) =
         PaymentRepository(paymentService)
+
+    @Provides
+    @Singleton
+    fun createBackendDatabase(@ApplicationContext context: Context) =
+        MockBackendDatabase.create(context)
 }

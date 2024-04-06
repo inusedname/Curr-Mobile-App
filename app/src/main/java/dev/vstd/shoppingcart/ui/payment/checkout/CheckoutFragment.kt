@@ -31,6 +31,11 @@ class CheckoutFragment: Fragment() {
                     R.id.action_checkoutFragment_to_updateAddressFragment2 -> {
                         findNavController().navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
                     }
+
+                    R.id.action_checkoutFragment_to_paymentMethodsFragment -> {
+                        findNavController().navigate(R.id.action_checkoutFragment_to_paymentMethodsFragment)
+                    }
+
                     else -> {
                         super.navigate(resId)
                     }

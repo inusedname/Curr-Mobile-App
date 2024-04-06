@@ -9,26 +9,24 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="42dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_back"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            >
-
-        </androidx.appcompat.widget.AppCompatButton>
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_back" />
 
         <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:gravity="center"
-            android:layout_marginStart="65dp"
-            android:text="Settings"
-            android:textStyle="bold"
-            android:textSize="25sp"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/btnBack"
+            android:text="Settings" />
 
         <Button
             android:id="@+id/button3"
@@ -37,8 +35,7 @@
             android:layout_marginEnd="15dp"
             android:layout_alignParentEnd="true"
             android:text="Make notification"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
     </RelativeLayout>
     <ScrollView
@@ -57,6 +54,7 @@
                 >
 
                 <TextView
+                    android:fontFamily="@font/raleway_bold"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Personal"
@@ -69,10 +67,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Profile"
@@ -82,17 +80,18 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
+
                         android:id="@+id/btnShipAddress"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -103,17 +102,18 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
+
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Payment methods"
@@ -123,8 +123,7 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
             </LinearLayout>
 
@@ -142,16 +141,16 @@
                     android:textSize="20sp"
                     android:layout_marginStart="10dp"
                     android:gravity=""
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/raleway_bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Country"
@@ -161,17 +160,17 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Currentcy"
@@ -181,17 +180,17 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Sizes"
@@ -201,17 +200,17 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Terms and Conditions"
@@ -221,8 +220,7 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
             </LinearLayout>
 
@@ -236,6 +234,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/raleway_bold"
                     android:text="Account"
                     android:textSize="20sp"
                     android:layout_marginStart="10dp"
@@ -246,10 +245,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="Language"
@@ -259,17 +258,17 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    >
+                    android:layout_marginStart="10dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <Button
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="About Slada"
@@ -279,8 +278,7 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:paddingRight="20dp"></Button>
                 </LinearLayout>
             </LinearLayout>
             <RelativeLayout
@@ -314,7 +312,8 @@
                     android:layout_height="30dp">
 
                 </RelativeLayout>
-                <androidx.appcompat.widget.AppCompatButton
+
+                <Button
                     android:id="@+id/text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -322,8 +321,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:background="@null"
-                    android:gravity="left"
-                    ></androidx.appcompat.widget.AppCompatButton>
+                    android:gravity="left"></Button>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

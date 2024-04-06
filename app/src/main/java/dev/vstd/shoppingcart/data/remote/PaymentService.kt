@@ -1,17 +1,11 @@
 package dev.vstd.shoppingcart.data.remote
 
-import dev.vstd.shoppingcart.data.remote.user.CreditCard
-import retrofit2.Response
+import dev.vstd.shoppingcart.Constants.baseUrl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 interface PaymentService {
-    suspend fun createCreditCard(): Response<CreditCard>
-    fun getCreditCards(): Response<List<CreditCard>>
-
     companion object {
-        private const val baseUrl = "https://api.stripe.com"
-
         fun build(): PaymentService {
             val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)

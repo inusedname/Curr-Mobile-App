@@ -13,19 +13,26 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
+import dev.vstd.shoppingcart.pref.AppPreferences
 import dev.vstd.shoppingcart.theme.startPadding
 
 @Composable
 fun checkout_(navController: NavController) {
     val products = listOf(Product.getFakeProduct())
+    val address by remember { mutableStateOf(AppPreferences.userCredential) }
+
     Scaffold(topBar = topBar(onBack = navController::navigateUp)) {
         Box(
             Modifier
@@ -33,10 +40,11 @@ fun checkout_(navController: NavController) {
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                _shipping_address(text = "Nguyễn Viết Quang | (+84) 111 111 222\nChung cư New Skyline\nPhường Văn Quán, Quận Hà Đông, Hà Nội",
-                    onClick = {
-                        navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
-                    })
+                _shipping_address(
+                    text = address ?: stringResource(R.string.no_ship_address_available)
+                ) {
+                    navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
+                }
 
                 _purchasing_list(products = products)
 
@@ -44,7 +52,7 @@ fun checkout_(navController: NavController) {
 
 
                 _voucher_and_purchase_option {
-                    // TODO
+                    navController.navigate(R.id.action_checkoutFragment_to_paymentMethodsFragment)
                 }
 
                 _total_summary("28.000d", "15.000d", "43.000d")
@@ -162,7 +170,7 @@ private fun _purchasing_list(products: List<Product>) {
 }
 
 @Composable
-private fun _shipping_address(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+private fun _shipping_address(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Row(
         modifier = modifier
             .clickable(onClick = onClick)

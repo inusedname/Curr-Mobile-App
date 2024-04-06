@@ -9,26 +9,41 @@ class MockUserService : UserService {
         AppPreferences.userCredential = "mock-user"
         return Response.success(
             LoginResponse(
-                message = "Login successfully!",
                 token = "1",
                 username = "mock-user"
             )
         )
     }
 
-    override suspend fun signup(signupRequest: SignupRequest): Response<SignupResponse> {
+    override suspend fun signup(signupRequest: SignupRequest): Response<Unit> {
+        return Response.success(Unit)
+    }
+
+    override suspend fun addPaymentMethod(): Response<PaymentMethod> {
         return Response.success(
-            SignupResponse(
-                message = "Signup successfully!"
+            PaymentMethod(
+                id = 1,
+                name = "Momo",
+                imageAvatar = "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png",
+                imageCover = null,
+                cardId = null,
+                description = "Số dư: 1.232đ"
             )
         )
     }
 
-    override suspend fun getCard(): Response<CreditCard> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun addCard(): Response<CreditCard> {
-        TODO("Not yet implemented")
+    override suspend fun getPaymentMethods(): Response<List<PaymentMethod>> {
+        return Response.success(
+            listOf(
+                PaymentMethod(
+                    id = 1,
+                    name = "Momo",
+                    imageAvatar = "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png",
+                    imageCover = null,
+                    cardId = null,
+                    description = "Số dư: 1.232đ"
+                )
+            )
+        )
     }
 }

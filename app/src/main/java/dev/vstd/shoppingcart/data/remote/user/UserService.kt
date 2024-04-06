@@ -14,13 +14,13 @@ interface UserService {
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @POST("/user/signup")
-    suspend fun signup(@Body signupRequest: SignupRequest): Response<SignupResponse>
+    suspend fun signup(@Body signupRequest: SignupRequest): Response<Unit>
 
-    @GET("/user/card")
-    suspend fun getCard(): Response<CreditCard>
+    @GET("/user/payments")
+    suspend fun getPaymentMethods(): Response<List<PaymentMethod>>
 
-    @POST("/user/card")
-    suspend fun addCard(): Response<CreditCard>
+    @POST("/user/payments")
+    suspend fun addPaymentMethod(): Response<PaymentMethod>
 
     companion object {
         fun build(): UserService {

@@ -94,6 +94,14 @@ android {
     lint {
         disable += "ComposableNaming"
     }
+
+    def apikeyPropertiesFile = rootProject.file(".env")
+    def apikeyProperties = new Properties()
+    apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'APIKEY_PRICECOMPARE', apikeyProperties['apikey_comparision']
+    }
 }
 
 dependencies {

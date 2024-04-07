@@ -9,11 +9,13 @@ class SellerSearchResult(val data: Data) {
         fun getStores(): List<Store> {
             val parsedStores = mutableListOf<Store>()
 
-            stores.forEach { storeItem ->
+            for (storeItem in stores) {
                 var productStore = ""
                 var productPrice = ""
                 var productStoreUrl = ""
-                storeItem.entrySet().forEach { (key, value) ->
+                val tmp = storeItem.entrySet().toList()[0]
+                if (tmp.value.isJsonArray) continue
+                tmp.value.asJsonObject.entrySet().forEach { (key, value) ->
                     when (key) {
                         "product_store" -> productStore = value.asString
                         "product_price" -> productPrice = value.asString

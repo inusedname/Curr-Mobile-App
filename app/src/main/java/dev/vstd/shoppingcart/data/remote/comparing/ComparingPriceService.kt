@@ -4,6 +4,7 @@ import dev.keego.shoppingcart.BuildConfig
 import dev.vstd.shoppingcart.Constants
 import dev.vstd.shoppingcart.data.remote.comparing.pojo.ProductSearchResult
 import dev.vstd.shoppingcart.data.remote.comparing.pojo.SellerSearchResult
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,23 +13,23 @@ import retrofit2.http.Query
 
 interface ComparingPriceService {
 
-    @GET("/search")
+    @GET("search")
     suspend fun searchProduct(
         @Query("product", encoded = true) productName: String,
         @Query("api_key") apiKey: String = BuildConfig.APIKEY_PRICECOMPARE,
     ): Response<ProductSearchResult>
 
-    @GET("/detail")
+    @GET("detail")
     suspend fun getProductSeller(
         @Query("id", encoded = true) productId: String,
         @Query("api_key") apiKey: String = BuildConfig.APIKEY_PRICECOMPARE,
     ): Response<SellerSearchResult>
 
     companion object {
-        // TODO: Enable cache
-        fun build(): ComparingPriceService {
+        fun build(okHttpClient: OkHttpClient): ComparingPriceService {
             val retrofit = Retrofit.Builder()
                 .baseUrl(Constants.comparingServiceUrl)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return retrofit.create(ComparingPriceService::class.java)

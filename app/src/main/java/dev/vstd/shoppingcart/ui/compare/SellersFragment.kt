@@ -13,6 +13,7 @@ import dev.keego.shoppingcart.databinding.FragmentSellersBinding
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import dev.vstd.shoppingcart.ui.compare.adapter.SellerAdapter
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class SellersFragment : BaseFragment<FragmentSellersBinding>() {
@@ -44,6 +45,7 @@ class SellersFragment : BaseFragment<FragmentSellersBinding>() {
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     comparingVimel.sellers.collect {
+                        Timber.d("Sellers: ${it.size}")
                         (binding.rvSellers.adapter as SellerAdapter).setData(it)
                     }
                 }

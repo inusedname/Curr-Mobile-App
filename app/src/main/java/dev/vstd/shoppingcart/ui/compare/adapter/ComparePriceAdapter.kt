@@ -12,7 +12,7 @@ class ComparePriceAdapter(
     private val onBuyClick: (ComparingProduct) -> Unit
 ) : RecyclerView.Adapter<ComparePriceAdapter.MyViewHolder>() {
     private val products: MutableList<ComparingProduct> = mutableListOf()
-    class MyViewHolder(private val binding: ItemCardViewVerticalBinding) :
+    inner class MyViewHolder(private val binding: ItemCardViewVerticalBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: ComparingProduct) {
             binding.apply {
@@ -21,6 +21,9 @@ class ComparePriceAdapter(
                     .into(binding.compareItemImageView)
                 binding.compareItemNameView.text = product.title
                 binding.compareItemPriceView.text = product.lowestPrice.toString() + "USD"
+                binding.btnCheckSeller.setOnClickListener {
+                    onBuyClick(product)
+                }
             }
         }
     }

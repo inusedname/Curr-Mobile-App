@@ -58,7 +58,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
         binding.searchView.setOnQueryTextListener(object: OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrBlank()) return false
-                comparingVimel.searchProduct(query ?: "")
+                comparingVimel.searchProduct(query)
                 return true
             }
 

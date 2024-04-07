@@ -3,6 +3,7 @@ package dev.vstd.shoppingcart.ui.compare
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -51,6 +52,20 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
                 }
             }
         }
+        binding.searchView.setOnSearchClickListener {
+            comparingVimel.searchProduct(binding.searchView.query.toString())
+        }
+        binding.searchView.setOnQueryTextListener(object: OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query.isNullOrBlank()) return false
+                comparingVimel.searchProduct(query ?: "")
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
     }
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentComparingBinding

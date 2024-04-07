@@ -13,6 +13,7 @@ class SellerSearchResult(val data: Data) {
                 var productStore = ""
                 var productPrice = ""
                 var productStoreUrl = ""
+                var productStoreLogoUrl = ""
                 val tmp = storeItem.entrySet().toList()[0]
                 if (tmp.value.isJsonArray) continue
                 tmp.value.asJsonObject.entrySet().forEach { (key, value) ->
@@ -20,10 +21,11 @@ class SellerSearchResult(val data: Data) {
                         "product_store" -> productStore = value.asString
                         "product_price" -> productPrice = value.asString
                         "product_store_url" -> productStoreUrl = value.asString
+                        "product_store_logo" -> productStoreLogoUrl = value.asString
                     }
                 }
-                if (productStore.isNotBlank() && productPrice.isNotBlank() && productStoreUrl.isNotBlank()) {
-                    val store = Store(productStore, productPrice, productStoreUrl)
+                if (productStore.isNotBlank()) {
+                    val store = Store(productStore, productPrice, productStoreUrl, productStoreLogoUrl)
                     parsedStores.add(store)
                 }
             }
@@ -38,9 +40,16 @@ class SellerSearchResult(val data: Data) {
             val price: String,
             @SerializedName("product_store_url")
             val url: String,
+            @SerializedName("product_store_logo")
+            val storeUrl: String,
         ) {
             fun toSellerInfo(): SellerInfo {
-                return SellerInfo(name = storeName, price = price, url = url)
+                return SellerInfo(
+                    name = storeName,
+                    price = price,
+                    url = url,
+                    sellerLogo = storeUrl
+                )
             }
         }
     }

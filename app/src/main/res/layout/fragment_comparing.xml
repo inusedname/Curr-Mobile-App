@@ -24,8 +24,6 @@
                 android:textAlignment="center" />
         </RelativeLayout>
 
-        <include layout="@layout/compare_item_image_detail" />
-
         <include android:id="@+id/mainContent" layout="@layout/fragment_price_compare_tab"/>
     </LinearLayout>
 

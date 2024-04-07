@@ -46,7 +46,7 @@ class SellersFragment : BaseFragment<FragmentSellersBinding>() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     comparingVimel.sellers.collect {
                         Timber.d("Sellers: ${it.size}")
-                        (binding.rvSellers.adapter as SellerAdapter).setData(it)
+                        (binding.rvSellers.adapter as SellerAdapter).setData(it, comparingVimel.searchingProductImageUrl)
                     }
                 }
             }

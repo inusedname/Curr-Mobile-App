@@ -4,14 +4,19 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import dev.keego.shoppingcart.databinding.ItemSellerBinding
 import dev.vstd.shoppingcart.data.remote.comparing.model.SellerInfo
 
-class SellerAdapter(private val onClick: (SellerInfo) -> Unit): RecyclerView.Adapter<SellerAdapter.ViewHolder>() {
+class SellerAdapter(
+    private val onClick: (SellerInfo) -> Unit
+): RecyclerView.Adapter<SellerAdapter.ViewHolder>() {
     private val sellers = mutableListOf<SellerInfo>()
+    private var productLogo: String? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(sellers: List<SellerInfo>) {
+    fun setData(sellers: List<SellerInfo>, productLogo: String?) {
+        this.productLogo = productLogo
         this.sellers.clear()
         this.sellers.addAll(sellers)
         notifyDataSetChanged()
@@ -22,6 +27,14 @@ class SellerAdapter(private val onClick: (SellerInfo) -> Unit): RecyclerView.Ada
             binding.price.text = sellerInfo.price
             binding.root.setOnClickListener {
                 onClick(sellerInfo)
+            }
+            Glide.with(binding.root)
+                .load(sellerInfo.sellerLogo)
+                .into(binding.ivSeller)
+            productLogo?.let {
+                Glide.with(binding.root)
+                    .load(it)
+                    .into(binding.ivProduct)
             }
         }
     }

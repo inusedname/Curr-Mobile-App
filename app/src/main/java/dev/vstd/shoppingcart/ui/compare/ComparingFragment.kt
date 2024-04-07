@@ -27,7 +27,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
 
     private fun initAdapters(binding: FragmentComparingBinding) {
         binding.mainContent.comparePriceRecyclerView.adapter = ComparePriceAdapter {
-            comparingVimel.getSellers(it.id)
+            comparingVimel.getSellers(it)
             findNavController().navigate(R.id.action_comparingFragment_to_detailFragment)
         }
     }

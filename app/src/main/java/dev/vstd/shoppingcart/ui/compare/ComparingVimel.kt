@@ -18,6 +18,8 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
     private val compareRepo = ComparingPriceRepository(ComparingPriceService.build(okHttpClient))
     val products = MutableStateFlow(listOf<ComparingProduct>())
     private var searchingProductId: String? = null
+    var searchingProductImageUrl: String? = null
+        private set
     val sellers = MutableStateFlow(listOf<SellerInfo>())
 
     fun searchProduct(productName: String) {
@@ -30,10 +32,11 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
         }
     }
 
-    fun getSellers(productId: String) {
-        searchingProductId = productId
+    fun getSellers(product: ComparingProduct) {
+        searchingProductId = product.id
+        searchingProductImageUrl = product.image
         viewModelScope.launch(Dispatchers.IO) {
-            compareRepo.getProductSeller(productId).let {
+            compareRepo.getProductSeller(product.id).let {
                 if (it.isSuccessful) {
                     sellers.value = it.body()!!
                 }

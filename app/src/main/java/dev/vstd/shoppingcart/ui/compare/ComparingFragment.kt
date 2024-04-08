@@ -1,49 +1,70 @@
 package dev.vstd.shoppingcart.ui.compare
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
+import android.widget.SearchView.OnQueryTextListener
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentComparingBinding
 import dev.vstd.shoppingcart.ui.base.BaseFragment
+import dev.vstd.shoppingcart.ui.compare.adapter.ComparePriceAdapter
+import dev.vstd.shoppingcart.ui.payment.PaymentActivity
+import kotlinx.coroutines.launch
 
 class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
-    private lateinit var tabLayout : TabLayout
-    private lateinit var viewPager2 : ViewPager2
-    private lateinit var adapter : FragmentPageAdapter
+    private val comparingVimel by activityViewModels<ComparingVimel>()
 
     override fun onViewCreated(binding: FragmentComparingBinding) {
-        tabLayout = binding.tabLayout
-        viewPager2 = binding.viewPager2
+        initAdapters(binding)
+        setOnClicks(binding)
+        observeStates(binding)
+    }
 
-        adapter = FragmentPageAdapter(childFragmentManager, lifecycle)
-        viewPager2.adapter = adapter
+    private fun initAdapters(binding: FragmentComparingBinding) {
+        binding.mainContent.comparePriceRecyclerView.adapter = ComparePriceAdapter {
+            comparingVimel.getSellers(it)
+            findNavController().navigate(R.id.action_comparingFragment_to_detailFragment)
+        }
+    }
 
-        tabLayout.addTab(tabLayout.newTab().setText("Price"))
-        tabLayout.addTab(tabLayout.newTab().setText("Detail"))
-        tabLayout.addTab(tabLayout.newTab().setText("Specs"))
+    private fun observeStates(binding: FragmentComparingBinding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    comparingVimel.products.collect {
+                        (binding.mainContent.comparePriceRecyclerView.adapter as ComparePriceAdapter).setData(it)
+                    }
+                }
+            }
+        }
+    }
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) viewPager2.currentItem = tab.position
+    private fun setOnClicks(binding: FragmentComparingBinding) {
+        binding.fabCheckout.setOnClickListener {
+            context?.let {
+                Intent(it, PaymentActivity::class.java).apply {
+                    startActivity(this)
+                }
+            }
+        }
+        binding.searchView.setOnSearchClickListener {
+            comparingVimel.searchProduct(binding.searchView.query.toString())
+        }
+        binding.searchView.setOnQueryTextListener(object: OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query.isNullOrBlank()) return false
+                comparingVimel.searchProduct(query)
+                return true
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
             }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
-
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                tabLayout.selectTab(tabLayout.getTabAt(position))
-            }
-
         })
     }
 

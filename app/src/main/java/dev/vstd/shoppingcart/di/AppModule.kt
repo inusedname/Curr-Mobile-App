@@ -11,6 +11,8 @@ import dev.vstd.shoppingcart.data.remote.CheckoutRepository
 import dev.vstd.shoppingcart.data.remote.CheckoutService
 import dev.vstd.shoppingcart.data.remote.PaymentRepository
 import dev.vstd.shoppingcart.data.remote.PaymentService
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -63,4 +65,13 @@ class AppModule {
     @Singleton
     fun providesPaymentRepository(paymentService: PaymentService) =
         PaymentRepository(paymentService)
+
+    @Provides
+    @Singleton
+    fun providesOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+        val cache = context.cacheDir
+        return OkHttpClient.Builder()
+            .cache(Cache(cache, 10 * 1024 * 1024))
+            .build()
+    }
 }

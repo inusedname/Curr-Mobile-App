@@ -10,22 +10,22 @@ import retrofit2.http.POST
 
 interface UserService {
 
-    @POST("/user/login")
+    @POST("user/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
-    @POST("/user/signup")
+    @POST("user/signup")
     suspend fun signup(@Body signupRequest: SignupRequest): Response<SignupResponse>
 
-    @GET("/user/card")
+    @GET("user/card")
     suspend fun getCard(): Response<CreditCard>
 
-    @POST("/user/card")
+    @POST("user/card")
     suspend fun addCard(): Response<CreditCard>
 
     companion object {
         fun build(): UserService {
             val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
+                .baseUrl(Constants.backendUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return retrofit.create(UserService::class.java)

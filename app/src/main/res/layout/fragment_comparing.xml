@@ -11,8 +11,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray">
+            android:layout_height="wrap_content">
 
             <android.widget.SearchView
                 android:id="@+id/search_view"
@@ -25,21 +24,7 @@
                 android:textAlignment="center" />
         </RelativeLayout>
 
-        <include layout="@layout/compare_item_image_detail" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.viewpager2.widget.ViewPager2>
+        <include android:id="@+id/mainContent" layout="@layout/fragment_price_compare_tab"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

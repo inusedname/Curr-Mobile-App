@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="dev.vstd.shoppingcart.ui.order.fragment.OrderListFragment">
+    tools:context="dev.vstd.shoppingcart.shopping.ui.order.fragment.OrderListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOrders"

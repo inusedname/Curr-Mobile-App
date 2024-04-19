@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/checkoutFragment"
-        android:name="dev.vstd.shoppingcart.ui.payment.checkout.CheckoutFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.payment.checkout.CheckoutFragment"
         android:label="CheckoutFragment">
         <action
             android:id="@+id/action_checkoutFragment_to_updateAddressFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateAddressFragment"
-        android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
+        android:name="dev.vstd.shoppingcart.setting.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
     <include app:graph="@navigation/nav_payment_method" />
 </navigation>

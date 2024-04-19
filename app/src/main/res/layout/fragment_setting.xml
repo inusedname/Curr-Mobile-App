@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="dev.vstd.shoppingcart.ui.setting.SettingFragment">
+    tools:context="dev.vstd.shoppingcart.setting.SettingFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

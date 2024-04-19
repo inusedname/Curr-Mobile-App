@@ -5,11 +5,11 @@
     app:startDestination="@id/groupsFragment">
     <fragment
         android:id="@+id/groupDetailFragment"
-        android:name="dev.vstd.shoppingcart.ui.groupDetail.GroupDetailFragment"
+        android:name="dev.vstd.shoppingcart.checklist.ui.groupDetail.GroupDetailFragment"
         android:label="GroupDetailFragment" />
     <fragment
         android:id="@+id/groupsFragment"
-        android:name="dev.vstd.shoppingcart.ui.groups.GroupsFragment"
+        android:name="dev.vstd.shoppingcart.checklist.ui.groups.GroupsFragment"
         android:label="GroupsFragment">
         <action
             android:id="@+id/action_groupsFragment_to_groupDetailFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/comparingFragment"
-        android:name="dev.vstd.shoppingcart.ui.compare.ComparingFragment"
+        android:name="dev.vstd.shoppingcart.pricecompare.ui.ComparingFragment"
         android:label="ComparingFragment" >
         <action
             android:id="@+id/action_comparingFragment_to_detailFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="dev.vstd.shoppingcart.ui.setting.SettingFragment"
+        android:name="dev.vstd.shoppingcart.setting.SettingFragment"
         android:label="SettingFragment" >
         <action
             android:id="@+id/action_settingFragment_to_updateAddressFragment"
@@ -42,15 +42,15 @@
     </fragment>
     <fragment
         android:id="@+id/updateAddressFragment"
-        android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
+        android:name="dev.vstd.shoppingcart.setting.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="dev.vstd.shoppingcart.ui.compare.SellersFragment"
+        android:name="dev.vstd.shoppingcart.pricecompare.ui.SellersFragment"
         android:label="DetailFragment" />
     <fragment
         android:id="@+id/shoppingFragment"
-        android:name="dev.vstd.shoppingcart.ui.shopping.ShoppingFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.shopping.ShoppingFragment"
         android:label="ShoppingFragment" >
         <action
             android:id="@+id/action_shoppingFragment_to_paymentActivity"
@@ -67,15 +67,15 @@
     </fragment>
     <activity
         android:id="@+id/paymentActivity"
-        android:name="dev.vstd.shoppingcart.ui.payment.PaymentActivity"
+        android:name="dev.vstd.shoppingcart.shopping.ui.payment.PaymentActivity"
         android:label="PaymentActivity" />
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="dev.vstd.shoppingcart.ui.order.OrdersFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.order.OrdersFragment"
         android:label="OrdersFragment" />
     <fragment
         android:id="@+id/personalInfoFragment"
-        android:name="dev.vstd.shoppingcart.ui.shopping.PersonalInfoFragment"
+        android:name="dev.vstd.shoppingcart.setting.PersonalInfoFragment"
         android:label="PersonalInfoFragment" >
         <action
             android:id="@+id/action_personalInfoFragment_to_nav_payment_method"
@@ -83,7 +83,7 @@
     </fragment>
     <activity
         android:id="@+id/authActivity"
-        android:name="dev.vstd.shoppingcart.ui.auth.AuthActivity"
+        android:name="dev.vstd.shoppingcart.auth.ui.AuthActivity"
         android:label="AuthActivity" />
     <include app:graph="@navigation/nav_payment_method" />
 </navigation>

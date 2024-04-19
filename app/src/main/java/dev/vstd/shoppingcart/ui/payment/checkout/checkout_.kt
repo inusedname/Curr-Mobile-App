@@ -45,7 +45,7 @@ fun checkout_(navController: NavController) {
                 _shipping_address(
                     text = address ?: stringResource(R.string.no_ship_address_available)
                 ) {
-                    navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
+                    navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment)
                 }
 
                 _purchasing_list(products = products)
@@ -54,7 +54,7 @@ fun checkout_(navController: NavController) {
 
 
                 _voucher_and_purchase_option {
-                    navController.navigate(R.id.action_checkoutFragment_to_paymentMethodsFragment)
+                    navController.navigate(R.id.action_checkoutFragment_to_nav_payment_method)
                 }
 
                 _total_summary("28.000d", "15.000d", "43.000d")

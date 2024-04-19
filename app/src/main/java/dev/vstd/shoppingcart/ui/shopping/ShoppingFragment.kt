@@ -16,6 +16,8 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
     override fun onViewCreated(binding: FragmentShoppingBinding) {
         setOnClicks(binding)
         observeStates(binding)
+
+        binding.greetings.text = "Good afternoon, ${Session.userEntity.value?.username ?: "Guest"}!"
     }
 
     private fun observeStates(binding: FragmentShoppingBinding) {

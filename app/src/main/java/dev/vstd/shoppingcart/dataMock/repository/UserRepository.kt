@@ -6,7 +6,6 @@ import dev.vstd.shoppingcart.dataMock.entity.CardEntity
 import dev.vstd.shoppingcart.dataMock.entity.UserEntity
 import dev.vstd.shoppingcart.domain.UserCredential
 import dev.vstd.shoppingcart.domain.UserInfo
-import java.util.UUID
 
 class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
     suspend fun login(email: String, password: String): Response<UserCredential> {
@@ -49,18 +48,9 @@ class UserRepository(private val userDao: UserDao, private val cardDao: CardDao)
         return cards
     }
 
-    suspend fun registerCard(userId: Long, cardHolder: CardEntity.CardHolder): Response<Unit> {
-        val existedCard = cardDao.getCard(userId)
-        if (existedCard != null) {
-            return Response.Failed("Card already registered")
-        }
-        cardDao.insert(CardEntity(
-            userId = userId,
-            cardHolder = cardHolder,
-            cardNumber = UUID.randomUUID().toString().take(12),
-            expirationDate = "12/25",
-            cvv = "123"
-        ))
+    suspend fun registerCard(cardEntity: CardEntity): Response<Unit> {
+        if (cardDao.getCard(cardEntity.userId) != null) return Response.Failed("Card already exists")
+        cardDao.insert(cardEntity)
         return Response.Success(Unit)
     }
 }

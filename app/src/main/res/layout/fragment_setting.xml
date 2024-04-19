@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dev.vstd.shoppingcart.ui.setting.SettingFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="dev.vstd.shoppingcart.ui.setting.SettingFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/btnBack"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_back" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
 
         <TextView
             style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/btnBack"
             android:text="Settings" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_alignParentEnd="true"
-            android:text="Make notification"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Make notification" />
 
-    </RelativeLayout>
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,80 +46,79 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
-                    android:fontFamily="@font/raleway_bold"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/raleway_bold"
+                    android:gravity=""
                     android:text="Personal"
                     android:textSize="20sp"
-                    android:layout_marginStart="10dp"
-                    android:gravity=""
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp"
                         android:text="Profile"
-                        android:drawableRight="@drawable/ic_right_next"
-                        android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
                         android:textAllCaps="false"
-                        android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
-                        style="@style/Widget.Material3.Button.TextButton"
-
                         android:id="@+id/btnShipAddress"
+
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Shipping Address"
+                        android:background="@color/white"
                         android:drawableRight="@drawable/ic_right_next"
                         android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
-                        android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:paddingRight="20dp"
+                        android:text="Shipping Address"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
 
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Payment methods"
+                        android:background="@color/white"
                         android:drawableRight="@drawable/ic_right_next"
                         android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
-                        android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:paddingRight="20dp"
+                        android:text="Payment methods"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -131,96 +126,95 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="Shop"
-                    android:textSize="20sp"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="@font/raleway_bold"
                     android:gravity=""
-                    android:fontFamily="@font/raleway_bold" />
+                    android:text="Shop"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp"
                         android:text="Country"
-                        android:drawableRight="@drawable/ic_right_next"
-                        android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
                         android:textAllCaps="false"
-                        android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp"
                         android:text="Currentcy"
-                        android:drawableRight="@drawable/ic_right_next"
-                        android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
                         android:textAllCaps="false"
-                        android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:drawableRight="@drawable/ic_right_next"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical|start"
+                        android:paddingRight="20dp"
                         android:text="Sizes"
-                        android:drawableRight="@drawable/ic_right_next"
-                        android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
                         android:textAllCaps="false"
-                        android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Terms and Conditions"
+                        android:background="@color/white"
                         android:drawableRight="@drawable/ic_right_next"
                         android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
-                        android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:paddingRight="20dp"
+                        android:text="Terms and Conditions"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -228,107 +222,96 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/raleway_bold"
+                    android:gravity=""
                     android:text="Account"
                     android:textSize="20sp"
-                    android:layout_marginStart="10dp"
-                    android:gravity=""
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="Language"
+                        android:background="@color/white"
                         android:drawableRight="@drawable/ic_right_next"
                         android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
-                        android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:paddingRight="20dp"
+                        android:text="Language"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
 
                     <Button
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="About Slada"
+                        android:background="@color/white"
                         android:drawableRight="@drawable/ic_right_next"
                         android:drawablePadding="3dp"
-                        android:background="@color/white"
-                        android:textSize="15sp"
-                        android:textAllCaps="false"
                         android:gravity="center_vertical|start"
-                        android:paddingRight="20dp"></Button>
+                        android:paddingRight="20dp"
+                        android:text="About Slada"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
                 </LinearLayout>
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete My Account"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="@color/red_blink"
-               />
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Delete My Account"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
                     android:textColor="@color/red_blink"
-                    />
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp">
-
-                </RelativeLayout>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Slada"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:background="@null"
-                    android:gravity="left"></Button>
+                    android:gravity="left"
+                    android:text="Slada"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/text_name"
                     android:text="Version 1.0 April"
-                    android:textSize="15sp"
                     android:textColor="@color/black"
-                    android:layout_below="@id/text_name" />
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

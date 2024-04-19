@@ -9,18 +9,15 @@
         android:name="dev.vstd.shoppingcart.ui.payment.checkout.CheckoutFragment"
         android:label="CheckoutFragment">
         <action
-            android:id="@+id/action_checkoutFragment_to_updateAddressFragment2"
-            app:destination="@id/updateAddressFragment2" />
+            android:id="@+id/action_checkoutFragment_to_updateAddressFragment"
+            app:destination="@id/updateAddressFragment" />
         <action
-            android:id="@+id/action_checkoutFragment_to_paymentMethodsFragment"
-            app:destination="@id/paymentMethodsFragment" />
+            android:id="@+id/action_checkoutFragment_to_nav_payment_method"
+            app:destination="@id/nav_payment_method" />
     </fragment>
     <fragment
-        android:id="@+id/updateAddressFragment2"
+        android:id="@+id/updateAddressFragment"
         android:name="dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
-    <fragment
-        android:id="@+id/paymentMethodsFragment"
-        android:name="dev.vstd.shoppingcart.ui.shopping.PaymentMethodsFragment"
-        android:label="PaymentMethodsFragment" />
+    <include app:graph="@navigation/nav_payment_method" />
 </navigation>

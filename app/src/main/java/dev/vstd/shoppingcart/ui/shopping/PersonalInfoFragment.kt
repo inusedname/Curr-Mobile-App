@@ -3,7 +3,6 @@ package dev.vstd.shoppingcart.ui.shopping
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -12,17 +11,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentPersonalInfoBinding
 import dev.vstd.shoppingcart.Session
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PersonalInfoFragment: BaseFragment<FragmentPersonalInfoBinding>() {
-    private val vimel by viewModels<PersonalInfoVimel>()
+    @Inject
+    lateinit var userRepository: UserRepository
 
     override fun onViewCreated(binding: FragmentPersonalInfoBinding) {
         loadInfo(binding)
         binding.btnSeePayments.setOnClickListener {
-            findNavController().navigate(R.id.action_personalInfoFragment_to_paymentMethodsFragment2)
+            findNavController().navigate(R.id.action_personalInfoFragment_to_nav_payment_method)
         }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -32,7 +34,7 @@ class PersonalInfoFragment: BaseFragment<FragmentPersonalInfoBinding>() {
     private fun loadInfo(binding: FragmentPersonalInfoBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val user = vimel.userRepository.getUserInfo(Session.userEntity.value!!.id)
+                val user = userRepository.getUserInfo(Session.userEntity.value!!.id)
                 if (user == null) {
                     Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
                 } else {

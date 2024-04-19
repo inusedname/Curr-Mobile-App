@@ -9,14 +9,11 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
-import dev.keego.shoppingcart.R
+import androidx.navigation.findNavController
 import dev.vstd.shoppingcart.theme.ShoppingCartTheme
 import dev.vstd.shoppingcart.ui.setting.UpdateAddressFragment
 
 class CheckoutFragment : Fragment() {
-    private lateinit var navControllerImpl: NavController
     private val vimel by viewModels<CheckoutVimel>()
 
     override fun onCreateView(
@@ -24,28 +21,6 @@ class CheckoutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        navControllerImpl = object : NavController(requireContext()) {
-            override fun navigateUp(): Boolean {
-                activity?.finish()
-                return true
-            }
-
-            override fun navigate(resId: Int) {
-                when (resId) {
-                    R.id.action_checkoutFragment_to_updateAddressFragment2 -> {
-                        findNavController().navigate(R.id.action_checkoutFragment_to_updateAddressFragment2)
-                    }
-
-                    R.id.action_checkoutFragment_to_paymentMethodsFragment -> {
-                        findNavController().navigate(R.id.action_checkoutFragment_to_paymentMethodsFragment)
-                    }
-
-                    else -> {
-                        super.navigate(resId)
-                    }
-                }
-            }
-        }
 
         setFragmentResultListener(UpdateAddressFragment.RESULT_OK) { _, bundle ->
             val address = bundle.getString(UpdateAddressFragment.EXTRA_FULL_ADDRESS)
@@ -57,7 +32,7 @@ class CheckoutFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setContent {
                     ShoppingCartTheme {
-                        checkout_(navController = navControllerImpl)
+                        checkout_(navController = findNavController())
                     }
                 }
             }

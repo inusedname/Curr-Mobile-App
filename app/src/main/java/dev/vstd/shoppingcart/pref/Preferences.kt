@@ -3,6 +3,7 @@ package dev.vstd.shoppingcart.pref
 import android.content.Context
 import kotlin.reflect.KClass
 
+@Suppress("StaticFieldLeak")
 open class Preferences(
     private val name: String,
 ) {

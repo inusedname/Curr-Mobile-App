@@ -4,17 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import dev.vstd.shoppingcart.dataMock.entity.User
+import dev.vstd.shoppingcart.dataMock.entity.UserEntity
 
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user WHERE email = :email")
-    fun getByEmail(email: String): User?
+    @Query("SELECT * FROM UserEntity WHERE email = :email")
+    fun getByEmail(email: String): UserEntity?
 
     @Insert
-    fun insert(user: User)
+    fun insert(userEntity: UserEntity)
 
     @Update
-    fun update(user: User)
+    fun update(userEntity: UserEntity)
 }

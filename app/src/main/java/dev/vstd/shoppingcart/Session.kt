@@ -1,7 +1,8 @@
 package dev.vstd.shoppingcart
 
-object Session {
+import dev.vstd.shoppingcart.dataMock.entity.UserEntity
+import kotlinx.coroutines.flow.MutableStateFlow
 
-    // Token/user id
-    var userCredential: String? = null
+object Session {
+    var userEntity = MutableStateFlow<UserEntity?>(null)
 }

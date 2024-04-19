@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.vstd.shoppingcart.dataMock.dao.ProductDao
 import dev.vstd.shoppingcart.dataMock.dao.UserDao
-import dev.vstd.shoppingcart.dataMock.entity.Product
-import dev.vstd.shoppingcart.dataMock.entity.User
+import dev.vstd.shoppingcart.dataMock.entity.CardEntity
+import dev.vstd.shoppingcart.dataMock.entity.OrderEntity
+import dev.vstd.shoppingcart.dataMock.entity.ProductEntity
+import dev.vstd.shoppingcart.dataMock.entity.UserEntity
 
-@Database(entities = [User::class, Product::class], version = 1)
+@Database(entities = [UserEntity::class, ProductEntity::class, CardEntity::class, OrderEntity::class], version = 1)
 abstract class MockBackendDatabase: RoomDatabase() {
     abstract val productDao: ProductDao
     abstract val userDao: UserDao

@@ -8,8 +8,8 @@ import dev.vstd.shoppingcart.dataMock.entity.CardEntity
 @Dao
 interface CardDao {
     @Query("SELECT * FROM CardEntity WHERE userId = :userId")
-    fun getCard(userId: Long): CardEntity?
+    suspend fun getCard(userId: Long): CardEntity?
 
     @Insert
-    fun insert(cardEntity: CardEntity)
+    suspend fun insert(cardEntity: CardEntity)
 }

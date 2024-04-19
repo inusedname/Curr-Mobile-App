@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.payment
+package dev.vstd.shoppingcart.ui.shopping
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,13 +6,20 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.FragmentPaymentMethodsBinding
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import dev.vstd.shoppingcart.domain.PaymentMethod
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
+    @Inject
+    lateinit var userRepository: UserRepository
+
     private val cards = MutableStateFlow(listOf<PaymentMethod>())
 
     override fun onViewCreated(binding: FragmentPaymentMethodsBinding) {
@@ -23,7 +30,6 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     }
 
     private fun fetchData() {
-        val userRepository = (this.activity as PaymentActivity).userRepository
         viewLifecycleOwner.lifecycleScope.launch {
             val methods = mutableListOf(
                 PaymentMethod(type = PaymentMethod.Type.MOMO, "Số dư: 1.832đ"),

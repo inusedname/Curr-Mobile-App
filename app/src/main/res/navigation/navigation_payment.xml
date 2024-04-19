@@ -21,6 +21,6 @@
         android:label="UpdateAddressFragment" />
     <fragment
         android:id="@+id/paymentMethodsFragment"
-        android:name="dev.vstd.shoppingcart.ui.payment.PaymentMethodsFragment"
+        android:name="dev.vstd.shoppingcart.ui.shopping.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment" />
 </navigation>

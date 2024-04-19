@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.payment
+package dev.vstd.shoppingcart.ui.shopping
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

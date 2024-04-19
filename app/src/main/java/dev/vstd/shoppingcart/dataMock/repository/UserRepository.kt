@@ -5,6 +5,7 @@ import dev.vstd.shoppingcart.dataMock.dao.UserDao
 import dev.vstd.shoppingcart.dataMock.entity.CardEntity
 import dev.vstd.shoppingcart.dataMock.entity.UserEntity
 import dev.vstd.shoppingcart.domain.UserCredential
+import dev.vstd.shoppingcart.domain.UserInfo
 import java.util.UUID
 
 class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
@@ -14,6 +15,15 @@ class UserRepository(private val userDao: UserDao, private val cardDao: CardDao)
             Response.Success(UserCredential(user.id, user.username))
         } else {
             Response.Failed("Email or password is incorrect")
+        }
+    }
+
+    suspend fun getUserInfo(userId: Long): UserInfo? {
+        val user = userDao.getUserById(userId)
+        return if (user != null) {
+            UserInfo(username = user.username, email = user.email, balance = user.balance, address = user.address)
+        } else {
+            null
         }
     }
 

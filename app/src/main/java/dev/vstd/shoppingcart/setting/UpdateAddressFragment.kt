@@ -95,11 +95,7 @@ class UpdateAddressFragment : BaseFragment<FragmentUpdateAddressBinding>() {
                 setFragmentResult(
                     RESULT_OK,
                     bundleOf(
-                        EXTRA_FULL_ADDRESS to """
-                        ${city.value}
-                        ${district.value}
-                        ${binding.address.text}
-                        """
+                        EXTRA_FULL_ADDRESS to "${city.value}, ${district.value}, ${binding.address.text}"
                     )
                 )
                 findNavController().navigateUp()
@@ -144,7 +140,7 @@ class UpdateAddressFragment : BaseFragment<FragmentUpdateAddressBinding>() {
     }
 
     companion object {
-        const val RESULT_OK = "RESULT_OK"
+        const val RESULT_OK = "UpdateAddressFragment.RESULT_OK"
         const val EXTRA_FULL_ADDRESS = "EXTRA_FULL_ADDRESS"
     }
 }

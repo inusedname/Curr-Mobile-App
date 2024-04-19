@@ -1,10 +1,9 @@
-package dev.vstd.shoppingcart.shopping.data.dao
+package dev.vstd.shoppingcart.auth.data
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import dev.vstd.shoppingcart.shopping.data.entity.UserEntity
 
 @Dao
 interface UserDao {

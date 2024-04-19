@@ -12,12 +12,37 @@
             android:id="@+id/action_checkoutFragment_to_updateAddressFragment"
             app:destination="@id/updateAddressFragment" />
         <action
-            android:id="@+id/action_checkoutFragment_to_nav_payment_method"
-            app:destination="@id/nav_payment_method" />
+            android:id="@+id/action_checkoutFragment_to_successMakeOrderFragment"
+            app:destination="@id/successMakeOrderFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_askForCreditCardCredentialFragment"
+            app:destination="@id/askForCreditCardCredentialFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_selectPaymentMethodFragment"
+            app:destination="@id/selectPaymentMethodFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateAddressFragment"
         android:name="dev.vstd.shoppingcart.setting.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
-    <include app:graph="@navigation/nav_payment_method" />
+    <fragment
+        android:id="@+id/successMakeOrderFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.payment.checkout.SuccessMakeOrderFragment"
+        android:label="SuccessMakeOrderFragment" >
+        <action
+            android:id="@+id/action_successMakeOrderFragment_self"
+            app:destination="@id/successMakeOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/askForCreditCardCredentialFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.payment.checkout.AskForCreditCardCredentialFragment"
+        android:label="AskForCreditCardCredentialFragment" >
+        <action
+            android:id="@+id/action_askForCreditCardCredentialFragment_to_successMakeOrderFragment"
+            app:destination="@id/successMakeOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectPaymentMethodFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.payment.checkout.SelectPaymentMethodFragment"
+        android:label="SelectPaymentMethodFragment" />
 </navigation>

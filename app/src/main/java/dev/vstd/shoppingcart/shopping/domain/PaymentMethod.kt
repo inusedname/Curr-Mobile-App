@@ -1,9 +1,14 @@
 package dev.vstd.shoppingcart.shopping.domain
 
+import dev.vstd.shoppingcart.shopping.data.entity.OrderEntity
+import java.io.Serializable
+
 data class PaymentMethod(
+    val id: Int,
     val type: Type,
     val textDescription: String,
-) {
+    val balance: Int,
+) : Serializable {
     enum class Type(val imageUrl: String, val title: String) {
         CREDIT_CARD(
             imageUrl = "https://th.bing.com/th/id/OIP.xVREsbEnxpFwYsgl4hNO7QHaDA?rs=1&pid=ImgDetMain",
@@ -17,5 +22,18 @@ data class PaymentMethod(
             imageUrl = "https://img0.etsystatic.com/148/0/10872947/il_340x270.1101464894_r87w.jpg",
             title = "Cash On Delivery"
         ),
+    }
+
+    fun toPurchaseMethod(): OrderEntity.PurchaseMethod {
+        return if (type == Type.COD) return OrderEntity.PurchaseMethod.COD else OrderEntity.PurchaseMethod.OTHER
+    }
+
+    companion object {
+        fun getDefaultOptions(): List<PaymentMethod> {
+            return listOf(
+                PaymentMethod(1, Type.MOMO, "Số dư: 1.832đ", balance = 1832),
+                PaymentMethod(2, Type.COD, "Chuyển khoản khi nhận hàng", balance = 0),
+            )
+        }
     }
 }

@@ -1,21 +1,22 @@
 package dev.vstd.shoppingcart.shopping.domain
 
 import androidx.annotation.DrawableRes
+import dev.keego.shoppingcart.R
 
 data class Product(
     @DrawableRes val image: Int,
     val title: String,
     val category: String,
-    val price: String,
+    val price: Int,
     val quantity: Int,
     val id: Int
 ) {
     companion object {
         fun getFakeProduct() = Product(
-            0,
+            R.drawable.image,
             "Lenovo LP40 Pro Case",
             "Phân loại: Lenovo LP40 Pro",
-            "28.000d",
+            28000,
             1,
             0
         )

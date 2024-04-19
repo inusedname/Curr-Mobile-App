@@ -1,6 +1,6 @@
 package dev.vstd.shoppingcart.auth
 
-import dev.vstd.shoppingcart.shopping.domain.UserCredential
+import dev.vstd.shoppingcart.auth.domain.UserCredential
 import kotlinx.coroutines.flow.MutableStateFlow
 
 object Session {

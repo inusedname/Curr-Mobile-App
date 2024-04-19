@@ -11,7 +11,8 @@ data class CardEntity(
     val cardNumber: String,
     val cardHolder: CardHolder,
     val expirationDate: String,
-    val cvv: String
+    val cvv: String,
+    val balance: Int,
 ) {
     enum class CardHolder {
         VISA, MASTER_CARD, AMERICAN_EXPRESS

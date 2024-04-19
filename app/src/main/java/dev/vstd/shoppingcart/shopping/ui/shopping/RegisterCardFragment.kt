@@ -8,12 +8,13 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.FragmentRegisterCardBinding
 import dev.vstd.shoppingcart.auth.Session
+import dev.vstd.shoppingcart.auth.data.UserRepository
+import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
 import dev.vstd.shoppingcart.shopping.data.repository.Response
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
-import dev.vstd.shoppingcart.common.ui.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -29,7 +30,8 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
             cardNumber = UUID.randomUUID().toString().take(12),
             cardHolder = CardEntity.CardHolder.VISA,
             expirationDate = "12/25",
-            cvv = "123"
+            cvv = "123",
+            balance = 1000000
         )
         binding.apply {
             tvCVV.text = "CVV ${card.cvv}"
@@ -43,12 +45,17 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
             }
         }
         binding.checkboxConfirm.isChecked = false
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.btnRegisterCard.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val result = userRepository.registerCard(card)
                 if (result.isSuccessful) {
-                    Toast.makeText(context, "Card Register Success!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigateUp()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Card Register Success!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigateUp()
+                    }
                 } else {
                     Timber.e((result as Response.Failed).message)
                     Toast.makeText(context, "Card Register Failed!", Toast.LENGTH_SHORT).show()

@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.theme.ShoppingCartTheme
 import javax.inject.Inject
 

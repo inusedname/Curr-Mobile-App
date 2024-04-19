@@ -27,7 +27,7 @@ open class MainActivity : AppCompatActivity() {
             if (destination.id in listOf(
                     R.id.groupsFragment,
                     R.id.comparingFragment,
-                    R.id.ordersFragment,
+                    R.id.shoppingFragment,
                     R.id.settingFragment
                 )
             ) {

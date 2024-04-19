@@ -3,38 +3,36 @@ package dev.vstd.shoppingcart.ui.payment.checkout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.vstd.shoppingcart.data.remote.CheckoutRepository
-import dev.vstd.shoppingcart.data.remote.MakeOrderResp
-import dev.vstd.shoppingcart.data.remote.Order
-import dev.vstd.shoppingcart.data.remote.PaymentType
-import kotlinx.coroutines.Dispatchers
+import dev.vstd.shoppingcart.Session
+import dev.vstd.shoppingcart.dataMock.entity.CardEntity
+import dev.vstd.shoppingcart.dataMock.repository.OrderRepository
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
+import dev.vstd.shoppingcart.domain.Product
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckoutVimel @Inject constructor(private val repo: CheckoutRepository) : ViewModel() {
-    val orderAddress = Order.OrderAddress(
-        city = "",
-        district = "",
-        address = "",
-        telephone = ""
-    )
-    val products = mutableListOf<Order.OrderProduct>()
-    val paymentType = PaymentType.CASH_ON_DELIVERY
-    fun makeOrder(onComplete: (MakeOrderResp?) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val resp = repo.makeOrder(
-                Order(
-                    orderAddress,
-                    products,
-                    paymentType
-                )
-            )
-            when (resp.isSuccessful) {
-                true -> onComplete(resp.body())
-                false -> Timber.d("Error: ${resp.errorBody()}")
-            }
+class CheckoutVimel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val orderRepository: OrderRepository
+): ViewModel() {
+    val address = MutableStateFlow<String?>(null)
+    val card = MutableStateFlow<CardEntity?>(null)
+    val products = MutableStateFlow(listOf<Product>())
+
+    fun fetch() {
+        viewModelScope.launch {
+            address.value = userRepository.getAddress(Session.userEntity.value!!.id)
+            card.value = userRepository.getCards(Session.userEntity.value!!.id).firstOrNull()
+            products.value = listOf(Product.getFakeProduct())
+        }
+    }
+
+    fun setAddress(address: String) {
+        viewModelScope.launch {
+            userRepository.updateAddress(Session.userEntity.value!!.id, address)
+            this@CheckoutVimel.address.value = address
         }
     }
 }

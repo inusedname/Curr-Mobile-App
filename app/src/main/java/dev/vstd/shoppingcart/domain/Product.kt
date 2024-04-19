@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.ui.payment.checkout
+package dev.vstd.shoppingcart.domain
 
 import androidx.annotation.DrawableRes
 

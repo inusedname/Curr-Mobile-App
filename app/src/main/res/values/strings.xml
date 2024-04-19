@@ -22,4 +22,10 @@
     <string name="barcode">Barcode</string>
     <string name="save">Save</string>
     <string name="see_sellers">See sellers</string>
+    <string name="no_ship_address_available">Chưa thiết lập địa chỉ nhận hàng</string>
+    <string name="cart">Cart</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="shopping">Shopping</string>
 </resources>

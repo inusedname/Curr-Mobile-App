@@ -9,9 +9,9 @@
         android:icon="@drawable/ic_price"
         android:title="@string/price_check" />
     <item
-        android:id="@+id/ordersFragment"
+        android:id="@+id/shoppingFragment"
         android:icon="@drawable/ic_shipment"
-        android:title="@string/orders" />
+        android:title="@string/shopping" />
     <item
         android:id="@+id/settingFragment"
         android:icon="@drawable/ic_setting"

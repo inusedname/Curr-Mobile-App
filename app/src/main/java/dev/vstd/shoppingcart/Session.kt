@@ -1,7 +1,11 @@
 package dev.vstd.shoppingcart
 
-object Session {
+import dev.vstd.shoppingcart.domain.UserCredential
+import kotlinx.coroutines.flow.MutableStateFlow
 
-    // Token/user id
-    var userCredential: String? = null
+object Session {
+    var userEntity = MutableStateFlow<UserCredential?>(UserCredential(
+        id = 1,
+        username = "John Doe",
+    ))
 }

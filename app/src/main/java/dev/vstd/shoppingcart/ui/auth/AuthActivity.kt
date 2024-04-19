@@ -6,14 +6,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.ramcosta.composedestinations.DestinationsNavHost
-import dev.vstd.shoppingcart.dataMock.MockUserService
+import dagger.hilt.android.AndroidEntryPoint
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import dev.vstd.shoppingcart.theme.ShoppingCartTheme
+import javax.inject.Inject
 
 /**
  * Login, signup
  */
+@AndroidEntryPoint
 class AuthActivity : ComponentActivity() {
-    val userService = MockUserService()
+    @Inject
+    lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

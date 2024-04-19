@@ -1,5 +1,6 @@
 package dev.vstd.shoppingcart.ui.auth
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +25,9 @@ import coil.compose.rememberAsyncImagePainter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.data.APIErrorUtil
-import dev.vstd.shoppingcart.data.remote.user.LoginRequest
-import dev.vstd.shoppingcart.data.remote.user.UserService
+import dev.vstd.shoppingcart.Session
+import dev.vstd.shoppingcart.dataMock.repository.Response
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import dev.vstd.shoppingcart.ui.auth.destinations.signup_Destination
 import dev.vstd.shoppingcart.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.ui.base.InuTextField
@@ -61,7 +62,7 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
     var password by remember { mutableStateOf("") }
 
     val context = LocalContext.current
-    val userService = (context as AuthActivity).userService
+    val userRepository = (context as AuthActivity).userRepository
     val scope = rememberCoroutineScope()
 
     Box {
@@ -109,7 +110,10 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
                     val result =
                         LoginValidator.validate(email, password)
                     if (result.success) {
-                        login(userService, email, password)
+                        login(userRepository, email, password) {
+                            context.toast("Login successful")
+                            (context as Activity).finish()
+                        }
                     } else {
                         scope.launch { hostState.showSnackbar(result.message) }
                     }
@@ -146,19 +150,17 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
     }
 }
 
-private fun login(service: UserService, email: String, password: String) {
+private fun login(repo: UserRepository, email: String, password: String, onSuccess: () -> Unit) {
     GlobalScope.launch {
-        val resp = service.login(
-            LoginRequest(
-                email = email,
-                password = password
-            )
-        )
+        val resp = repo.login(email, password)
         if (resp.isSuccessful) {
-            Timber.d("Login successful: ${resp.body()}")
+            val user = (resp as Response.Success).data
+            Timber.d("Login successful, username=${user.username}")
+            Session.userEntity.value = user
+            onSuccess()
         } else {
-            val error = APIErrorUtil.getAPIError(resp)
-            Timber.e("Login failed: ${error.status} ${error.message}")
+            val error = (resp as Response.Failed).message
+            Timber.e("Login failed: $error")
         }
     }
 }

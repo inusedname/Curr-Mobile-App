@@ -1,6 +1,5 @@
 package dev.vstd.shoppingcart.ui.compare
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
@@ -13,7 +12,6 @@ import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentComparingBinding
 import dev.vstd.shoppingcart.ui.base.BaseFragment
 import dev.vstd.shoppingcart.ui.compare.adapter.ComparePriceAdapter
-import dev.vstd.shoppingcart.ui.payment.PaymentActivity
 import kotlinx.coroutines.launch
 
 class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
@@ -45,13 +43,6 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
     }
 
     private fun setOnClicks(binding: FragmentComparingBinding) {
-        binding.fabCheckout.setOnClickListener {
-            context?.let {
-                Intent(it, PaymentActivity::class.java).apply {
-                    startActivity(this)
-                }
-            }
-        }
         binding.searchView.setOnSearchClickListener {
             comparingVimel.searchProduct(binding.searchView.query.toString())
         }

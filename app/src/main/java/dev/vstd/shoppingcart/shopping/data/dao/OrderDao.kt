@@ -10,11 +10,11 @@ import dev.vstd.shoppingcart.shopping.data.entity.OrderEntity
 interface OrderDao {
 
     @Query("SELECT * FROM OrderEntity WHERE userId = :userId")
-    fun getAllOrders(userId: Long): List<OrderEntity>
+    suspend fun getAllOrders(userId: Long): List<OrderEntity>
 
     @Insert
-    fun insert(orderEntity: OrderEntity)
+    suspend fun insert(orderEntity: OrderEntity)
 
     @Update
-    fun update(orderEntity: OrderEntity)
+    suspend fun update(orderEntity: OrderEntity)
 }

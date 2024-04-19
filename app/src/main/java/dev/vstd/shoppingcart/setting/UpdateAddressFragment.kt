@@ -144,7 +144,7 @@ class UpdateAddressFragment : BaseFragment<FragmentUpdateAddressBinding>() {
     }
 
     companion object {
-        const val RESULT_OK = "RESULT_OK"
+        const val RESULT_OK = "UpdateAddressFragment.RESULT_OK"
         const val EXTRA_FULL_ADDRESS = "EXTRA_FULL_ADDRESS"
     }
 }

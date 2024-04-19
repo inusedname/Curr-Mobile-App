@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.keego.shoppingcart.databinding.ItemPaymentMethodBinding
-import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import dev.vstd.shoppingcart.common.ui.DiffUtils
+import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 
-class PaymentMethodsAdapter :
+class PaymentMethodsAdapter(private val onClick: (PaymentMethod) -> Unit) :
     ListAdapter<PaymentMethod, PaymentMethodsAdapter.ViewHolder>(DiffUtils.any<PaymentMethod>()) {
-    class ViewHolder(private val binding: ItemPaymentMethodBinding) :
+    inner class ViewHolder(private val binding: ItemPaymentMethodBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(paymentMethod: PaymentMethod) {
             Glide.with(binding.root.context)
@@ -20,6 +20,9 @@ class PaymentMethodsAdapter :
                 .into(binding.purchaseIcon)
             binding.purchaseName.text = paymentMethod.type.name
             binding.purchaseDesc.text = paymentMethod.textDescription
+            binding.root.setOnClickListener {
+                onClick(paymentMethod)
+            }
         }
     }
 

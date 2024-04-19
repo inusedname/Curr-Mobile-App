@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.shopping.data.entity
+package dev.vstd.shoppingcart.auth.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,6 +12,5 @@ data class UserEntity(
     val password: String,
     @ColumnInfo
     val email: String,
-    val balance: Int = 1000,
     val address: String? = null,
 )

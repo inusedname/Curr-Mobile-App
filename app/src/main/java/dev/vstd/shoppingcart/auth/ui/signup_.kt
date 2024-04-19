@@ -21,7 +21,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.shopping.data.repository.Response
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.theme.ButtonRadius
 import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField

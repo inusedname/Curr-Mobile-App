@@ -11,11 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentPaymentMethodsBinding
 import dev.vstd.shoppingcart.auth.Session
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
-import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.beGone
 import dev.vstd.shoppingcart.common.utils.beVisible
+import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,17 +52,16 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
 
     private fun fetchData(binding: FragmentPaymentMethodsBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val methods = mutableListOf(
-                PaymentMethod(type = PaymentMethod.Type.MOMO, "Số dư: 1.832đ"),
-                PaymentMethod(type = PaymentMethod.Type.COD, "Chuyển khoản khi nhận hàng"),
-            )
+            val methods = PaymentMethod.getDefaultOptions().toMutableList()
             val response =
                 userRepository.getCards(Session.userEntity.value!!.id)
             for (item in response) {
                 methods.add(
                     PaymentMethod(
+                        methods.size + 1,
                         type = PaymentMethod.Type.CREDIT_CARD,
-                        "**** **** **** ${item.cardNumber.takeLast(4)}"
+                        "**** **** **** ${item.cardNumber.takeLast(4)}",
+                        balance = item.balance
                     )
                 )
             }
@@ -86,7 +85,9 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     }
 
     private fun setOnClicks(binding: FragmentPaymentMethodsBinding) {
-        binding.rvAccountsAndCards.adapter = PaymentMethodsAdapter()
+        binding.rvAccountsAndCards.adapter = PaymentMethodsAdapter {
+
+        }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -94,4 +95,8 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPaymentMethodsBinding
         get() = FragmentPaymentMethodsBinding::inflate
+
+    companion object {
+
+    }
 }

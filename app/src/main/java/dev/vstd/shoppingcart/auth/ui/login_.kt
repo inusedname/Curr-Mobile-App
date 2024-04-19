@@ -26,12 +26,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.auth.Session
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.auth.ui.destinations.signup_Destination
 import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField
 import dev.vstd.shoppingcart.common.utils.toast
 import dev.vstd.shoppingcart.shopping.data.repository.Response
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber

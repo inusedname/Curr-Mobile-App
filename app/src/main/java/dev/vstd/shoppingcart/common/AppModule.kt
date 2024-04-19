@@ -6,12 +6,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.checklist.data.AppDatabase
 import dev.vstd.shoppingcart.checklist.data.BarcodeRepository
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
 import dev.vstd.shoppingcart.shopping.data.MockBackendDatabase
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import javax.inject.Singleton

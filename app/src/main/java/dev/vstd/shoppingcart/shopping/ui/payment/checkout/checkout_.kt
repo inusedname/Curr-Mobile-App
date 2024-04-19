@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,20 +26,26 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.shopping.domain.Product
 import dev.vstd.shoppingcart.common.theme.startPadding
+import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
+import dev.vstd.shoppingcart.shopping.domain.Product
 
 @Composable
-fun checkout_(navController: NavController) {
+fun checkout_(navController: NavController, onBack: () -> Unit) {
     val vimel = hiltViewModel<CheckoutVimel>()
     val address by vimel.address.collectAsState()
     val products by vimel.products.collectAsState()
-    val card by vimel.card.collectAsState()
+    val total by vimel.total.collectAsState()
+    val paymentMethod by vimel.paymentMethod.collectAsState()
 
-    Scaffold(topBar = topBar(onBack = navController::navigateUp)) {
+    LaunchedEffect(true) {
+        vimel.fetch()
+    }
+
+    Scaffold(topBar = topBar(onBack = onBack)) { paddingValues ->
         Box(
             Modifier
-                .padding(it)
+                .padding(paddingValues)
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -53,27 +60,33 @@ fun checkout_(navController: NavController) {
                 _shipping_option()
 
 
-                _voucher_and_purchase_option {
-                    navController.navigate(R.id.action_checkoutFragment_to_nav_payment_method)
+                _voucher_and_purchase_option(paymentMethod) {
+                    navController.navigate(R.id.action_checkoutFragment_to_selectPaymentMethodFragment)
                 }
 
-                _total_summary("28.000d", "15.000d", "43.000d")
+                _total_totalmary("$total đ", "15.000d", "43.000d")
             }
             _cta(
                 Modifier
                     .height(64.dp)
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth(),
-                sum = "28.000đ",
+                total = total,
                 onClickCta = {
-                    // TODO
+                    vimel.createOrder {
+                        when (it) {
+                            PaymentMethod.Type.COD -> navController.navigate(R.id.action_checkoutFragment_to_successMakeOrderFragment)
+                            PaymentMethod.Type.CREDIT_CARD -> navController.navigate(R.id.action_checkoutFragment_to_askForCreditCardCredentialFragment)
+                            PaymentMethod.Type.MOMO -> TODO("Not yet implemented")
+                        }
+                    }
                 })
         }
     }
 }
 
 @Composable
-private fun _total_summary(tienHang: String, tienVanChuyen: String, tongThanhToan: String) {
+private fun _total_totalmary(tienHang: String, tienVanChuyen: String, tongThanhToan: String) {
     Column(Modifier.padding(startPadding), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(imageVector = Icons.Default.EventNote, contentDescription = null)
@@ -101,7 +114,7 @@ private fun _total_summary(tienHang: String, tienVanChuyen: String, tongThanhToa
 }
 
 @Composable
-private fun _voucher_and_purchase_option(onClick: () -> Unit) {
+private fun _voucher_and_purchase_option(paymentMethod: PaymentMethod, onClick: () -> Unit) {
     Row(
         Modifier
             .clickable(onClick = onClick)
@@ -111,7 +124,7 @@ private fun _voucher_and_purchase_option(onClick: () -> Unit) {
         Icon(imageVector = Icons.Rounded.MonetizationOn, contentDescription = null)
         Text(text = "Phương thức thanh toán", modifier = Modifier.padding(start = 8.dp))
         Spacer(Modifier.weight(1f))
-        Text(text = "Ví ShopeePay")
+        Text(text = paymentMethod.type.title)
         Icon(Icons.Default.ArrowForwardIos, null, tint = Color.LightGray)
     }
 }
@@ -159,7 +172,7 @@ private fun _purchasing_list(products: List<Product>) {
                         Text(text = product.title)
                         Text(text = product.category)
                         Row {
-                            Text(text = product.price)
+                            Text(text = "${product.price} đ")
                             Spacer(modifier = Modifier.weight(1f))
                             Text(text = "x${product.quantity}")
                         }
@@ -199,7 +212,7 @@ private fun _shipping_address(text: String, modifier: Modifier = Modifier, onCli
 }
 
 @Composable
-private fun _cta(modifier: Modifier = Modifier, sum: String, onClickCta: () -> Unit) {
+private fun _cta(modifier: Modifier = Modifier, total: Int, onClickCta: () -> Unit) {
     Row(modifier) {
         Column(
             horizontalAlignment = Alignment.End,
@@ -210,7 +223,7 @@ private fun _cta(modifier: Modifier = Modifier, sum: String, onClickCta: () -> U
                 .fillMaxHeight()
         ) {
             Text(text = "Tổng thanh toán")
-            Text(text = sum, style = MaterialTheme.typography.titleLarge)
+            Text(text = "$total đ", style = MaterialTheme.typography.titleLarge)
         }
         Box(
             modifier = Modifier

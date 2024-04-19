@@ -8,13 +8,14 @@ data class OrderEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val userId: Long,
-    val status: Status,
+    val status: Status = Status.PENDING,
     val shippingAddress: String,
-    val purchaseMethod: PurchaseMethod
+    val purchaseMethodType: PurchaseMethod,
+    val purchaseMethodId: Int? = null,
 ) {
     enum class PurchaseMethod {
         COD,
-        CARD,
+        OTHER,
     }
     enum class Status {
         PENDING,

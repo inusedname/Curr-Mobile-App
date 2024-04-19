@@ -6,7 +6,7 @@ data class Product(
     @DrawableRes val image: Int,
     val title: String,
     val category: String,
-    val price: String,
+    val price: Int,
     val quantity: Int,
     val id: Int
 ) {
@@ -15,7 +15,7 @@ data class Product(
             0,
             "Lenovo LP40 Pro Case",
             "Phân loại: Lenovo LP40 Pro",
-            "28.000d",
+            28000,
             1,
             0
         )

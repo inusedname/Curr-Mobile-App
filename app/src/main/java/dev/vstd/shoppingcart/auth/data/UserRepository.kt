@@ -1,11 +1,10 @@
-package dev.vstd.shoppingcart.shopping.data.repository
+package dev.vstd.shoppingcart.auth.data
 
-import dev.vstd.shoppingcart.shopping.data.dao.CardDao
-import dev.vstd.shoppingcart.shopping.data.dao.UserDao
-import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
-import dev.vstd.shoppingcart.shopping.data.entity.UserEntity
-import dev.vstd.shoppingcart.shopping.domain.UserCredential
 import dev.vstd.shoppingcart.auth.domain.UserInfo
+import dev.vstd.shoppingcart.shopping.data.dao.CardDao
+import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
+import dev.vstd.shoppingcart.shopping.data.repository.Response
+import dev.vstd.shoppingcart.shopping.domain.UserCredential
 
 class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
     suspend fun login(email: String, password: String): Response<UserCredential> {
@@ -20,10 +19,18 @@ class UserRepository(private val userDao: UserDao, private val cardDao: CardDao)
     suspend fun getUserInfo(userId: Long): UserInfo? {
         val user = userDao.getUserById(userId)
         return if (user != null) {
-            UserInfo(username = user.username, email = user.email, balance = user.balance, address = user.address)
+            UserInfo(username = user.username, email = user.email, address = user.address)
         } else {
             null
         }
+    }
+
+    suspend fun cashOut(userId: Long, amount: Int) {
+        cardDao.cashOut(userId, amount)
+    }
+
+    suspend fun topUp(userId: Long, amount: Int) {
+        cardDao.topUp(userId, amount)
     }
 
     suspend fun getAddress(userId: Long): String? {

@@ -11,8 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentPersonalInfoBinding
 import dev.vstd.shoppingcart.auth.Session
+import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
-import dev.vstd.shoppingcart.shopping.data.repository.UserRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,7 +42,6 @@ class PersonalInfoFragment: BaseFragment<FragmentPersonalInfoBinding>() {
                         binding.apply {
                             username.text = user.username
                             email.text = user.email
-                            balance.text = user.balance.toString()
                             address.text = user.address ?: "Not set"
                         }
                     }

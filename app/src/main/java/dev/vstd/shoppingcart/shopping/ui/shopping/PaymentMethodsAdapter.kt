@@ -16,7 +16,6 @@ class PaymentMethodsAdapter(private val onClick: (PaymentMethod) -> Unit) :
         fun bind(paymentMethod: PaymentMethod) {
             Glide.with(binding.root.context)
                 .load(paymentMethod.type.imageUrl)
-                .centerCrop()
                 .into(binding.purchaseIcon)
             binding.purchaseName.text = paymentMethod.type.name
             binding.purchaseDesc.text = paymentMethod.textDescription

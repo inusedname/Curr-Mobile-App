@@ -45,9 +45,8 @@
         <activity
             android:name="dev.vstd.shoppingcart.shopping.ui.payment.PaymentActivity"
             android:exported="false"
-            android:label="@string/title_activity_payment"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.ShoppingCart" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="dev.vstd.shoppingcart.common.MainActivity"
             android:exported="true"

@@ -42,7 +42,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
                         putSerializable(EXTRA_PAYMENT_METHOD_SERIALIZE, it)
                     }
                     setFragmentResult(RESULT_OK, bundle)
-                    findNavController().navigateUp()
+                    findNavController().popBackStack()
                 }
                 .setNegativeButton("No") { dialog, _ ->
                     dialog.dismiss()

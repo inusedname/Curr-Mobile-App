@@ -47,7 +47,7 @@ class CheckoutVimel @Inject constructor(
             orderRepository.createOrder(OrderEntity(
                 userId = Session.userEntity.value!!.id,
                 shippingAddress = address.value!!,
-                purchaseMethodType = OrderEntity.PurchaseMethod.COD,
+                purchaseMethodType = paymentMethod.value.toPurchaseMethod(),
                 purchaseMethodId = paymentMethod.value.id
             ))
             goToPaymentFlow(paymentMethod.value.type)

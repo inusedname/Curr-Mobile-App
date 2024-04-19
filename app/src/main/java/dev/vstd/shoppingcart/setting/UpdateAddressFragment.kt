@@ -95,11 +95,7 @@ class UpdateAddressFragment : BaseFragment<FragmentUpdateAddressBinding>() {
                 setFragmentResult(
                     RESULT_OK,
                     bundleOf(
-                        EXTRA_FULL_ADDRESS to """
-                        ${city.value}
-                        ${district.value}
-                        ${binding.address.text}
-                        """
+                        EXTRA_FULL_ADDRESS to "${city.value}, ${district.value}, ${binding.address.text}"
                     )
                 )
                 findNavController().navigateUp()

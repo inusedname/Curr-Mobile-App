@@ -14,6 +14,7 @@ import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
 import dev.vstd.shoppingcart.shopping.data.repository.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -44,12 +45,17 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
             }
         }
         binding.checkboxConfirm.isChecked = false
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.btnRegisterCard.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val result = userRepository.registerCard(card)
                 if (result.isSuccessful) {
-                    Toast.makeText(context, "Card Register Success!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigateUp()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Card Register Success!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigateUp()
+                    }
                 } else {
                     Timber.e((result as Response.Failed).message)
                     Toast.makeText(context, "Card Register Failed!", Toast.LENGTH_SHORT).show()

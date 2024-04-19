@@ -27,7 +27,7 @@ class AskForCreditCardCredentialFragment :
     override fun onViewCreated(binding: FragmentAskForCreditCardCredentialBinding) {
         binding.etCreditCardCVV.addTextChangedListener { editable ->
             binding.btnNext.isEnabled = editable!!.isNotEmpty() && editable.length == 3
-            binding.etCreditCardCVV.setOnClickListener {
+            binding.btnNext.setOnClickListener {
                 lifecycleScope.launch {
                     val cards = userRepository.getCards(Session.userEntity.value!!.id)
                     cards.firstOrNull()?.let {

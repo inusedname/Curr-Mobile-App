@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
@@ -31,8 +30,7 @@ import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import dev.vstd.shoppingcart.shopping.domain.Product
 
 @Composable
-fun checkout_(navController: NavController, onBack: () -> Unit) {
-    val vimel = hiltViewModel<CheckoutVimel>()
+fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> Unit) {
     val address by vimel.address.collectAsState()
     val products by vimel.products.collectAsState()
     val total by vimel.total.collectAsState()
@@ -58,7 +56,6 @@ fun checkout_(navController: NavController, onBack: () -> Unit) {
                 _purchasing_list(products = products)
 
                 _shipping_option()
-
 
                 _voucher_and_purchase_option(paymentMethod) {
                     navController.navigate(R.id.action_checkoutFragment_to_selectPaymentMethodFragment)

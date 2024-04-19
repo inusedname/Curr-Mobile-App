@@ -38,7 +38,7 @@ class CheckoutFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setContent {
                     ShoppingCartTheme {
-                        checkout_(navController = findNavController()) {
+                        checkout_(vimel = vimel, navController = findNavController()) {
                             activity?.finish()
                         }
                     }

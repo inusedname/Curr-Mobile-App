@@ -13,26 +13,27 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.domain.Product
-import dev.vstd.shoppingcart.pref.AppPreferences
 import dev.vstd.shoppingcart.theme.startPadding
 
 @Composable
 fun checkout_(navController: NavController) {
-    val products = listOf(Product.getFakeProduct())
-    val address by remember { mutableStateOf(AppPreferences.userCredential) }
+    val vimel = hiltViewModel<CheckoutVimel>()
+    val address by vimel.address.collectAsState()
+    val products by vimel.products.collectAsState()
+    val card by vimel.card.collectAsState()
 
     Scaffold(topBar = topBar(onBack = navController::navigateUp)) {
         Box(

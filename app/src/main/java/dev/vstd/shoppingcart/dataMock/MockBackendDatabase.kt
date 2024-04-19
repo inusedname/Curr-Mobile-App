@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.vstd.shoppingcart.dataMock.dao.CardDao
+import dev.vstd.shoppingcart.dataMock.dao.OrderDao
 import dev.vstd.shoppingcart.dataMock.dao.ProductDao
 import dev.vstd.shoppingcart.dataMock.dao.UserDao
 import dev.vstd.shoppingcart.dataMock.entity.CardEntity
@@ -17,6 +18,7 @@ abstract class MockBackendDatabase: RoomDatabase() {
     abstract val productDao: ProductDao
     abstract val userDao: UserDao
     abstract val cardDao: CardDao
+    abstract val orderDao: OrderDao
 
     companion object {
         fun create(context: Context): MockBackendDatabase {

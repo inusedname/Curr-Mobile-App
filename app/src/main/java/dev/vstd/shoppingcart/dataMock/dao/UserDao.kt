@@ -10,14 +10,20 @@ import dev.vstd.shoppingcart.dataMock.entity.UserEntity
 interface UserDao {
 
     @Query("SELECT * FROM UserEntity WHERE email = :email")
-    fun getByEmail(email: String): UserEntity?
+    suspend fun getByEmail(email: String): UserEntity?
 
     @Query("SELECT * FROM UserEntity WHERE email = :email OR username = :username")
-    fun findByEmailOrUsername(email: String, username: String): UserEntity?
+    suspend fun findByEmailOrUsername(email: String, username: String): UserEntity?
 
     @Insert
-    fun insert(userEntity: UserEntity)
+    suspend fun insert(userEntity: UserEntity)
 
     @Update
-    fun update(userEntity: UserEntity)
+    suspend fun update(userEntity: UserEntity)
+
+    @Query("SELECT address FROM UserEntity WHERE id = :userId")
+    suspend fun getAddress(userId: Long): String?
+    
+    @Query("UPDATE UserEntity SET address = :address WHERE id = :userId")
+    suspend fun updateAddress(userId: Long, address: String)
 }

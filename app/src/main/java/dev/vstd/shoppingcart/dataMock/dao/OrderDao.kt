@@ -4,9 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import dev.vstd.shoppingcart.dataMock.entity.OrderEntity
 
 @Dao
-interface OrderEntity {
+interface OrderDao {
 
     @Query("SELECT * FROM OrderEntity WHERE userId = :userId")
     fun getAllOrders(userId: Long): List<OrderEntity>

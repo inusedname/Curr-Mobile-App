@@ -13,4 +13,5 @@ data class UserEntity(
     @ColumnInfo
     val email: String,
     val balance: Int = 1000,
+    val address: String? = null,
 )

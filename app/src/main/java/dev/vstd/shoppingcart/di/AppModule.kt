@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.vstd.shoppingcart.data.local.*
 import dev.vstd.shoppingcart.dataMock.MockBackendDatabase
+import dev.vstd.shoppingcart.dataMock.repository.OrderRepository
 import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -48,6 +49,12 @@ class AppModule {
     @Singleton
     fun providesUserRepository(backendDatabase: MockBackendDatabase): UserRepository {
         return UserRepository(backendDatabase.userDao, backendDatabase.cardDao)
+    }
+
+    @Provides
+    @Singleton
+    fun providesOrderRepository(backendDatabase: MockBackendDatabase): OrderRepository {
+        return OrderRepository(backendDatabase.orderDao)
     }
 
     @Provides

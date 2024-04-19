@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="dev.vstd.shoppingcart.MyApplication"
+        android:name="dev.vstd.shoppingcart.common.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,34 +22,34 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
-            android:name="dev.vstd.shoppingcart.ui.notification.NotificationActivity"
+            android:name="dev.vstd.shoppingcart.common.ui.notification.NotificationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.addItem.AddItemActivity"
+            android:name="dev.vstd.shoppingcart.checklist.ui.addItem.AddItemActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.barcode.BarcodeActivity"
+            android:name="dev.vstd.shoppingcart.checklist.ui.barcode.BarcodeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.barcode.FindBarcodeActivity"
+            android:name="dev.vstd.shoppingcart.checklist.ui.barcode.FindBarcodeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.auth.AuthActivity"
+            android:name="dev.vstd.shoppingcart.auth.ui.AuthActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="dev.vstd.shoppingcart.ui.payment.PaymentActivity"
+            android:name="dev.vstd.shoppingcart.shopping.ui.payment.PaymentActivity"
             android:exported="false"
             android:label="@string/title_activity_payment"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ShoppingCart" />
         <activity
-            android:name="dev.vstd.shoppingcart.MainActivity"
+            android:name="dev.vstd.shoppingcart.common.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/paymentMethodsFragment"
-        android:name="dev.vstd.shoppingcart.ui.shopping.PaymentMethodsFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.shopping.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment" >
         <action
             android:id="@+id/action_paymentMethodsFragment_to_registerCardFragment"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/registerCardFragment"
-        android:name="dev.vstd.shoppingcart.ui.shopping.RegisterCardFragment"
+        android:name="dev.vstd.shoppingcart.shopping.ui.shopping.RegisterCardFragment"
         android:label="RegisterCardFragment" />
 </navigation>

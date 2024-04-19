@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="dev.vstd.shoppingcart.ui.addItem.AddItemActivity">
+    tools:context="dev.vstd.shoppingcart.checklist.ui.addItem.AddItemActivity">
 
     <ImageView
         android:id="@+id/btnBack"

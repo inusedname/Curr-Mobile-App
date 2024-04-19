@@ -12,6 +12,9 @@ interface UserDao {
     @Query("SELECT * FROM UserEntity WHERE email = :email")
     fun getByEmail(email: String): UserEntity?
 
+    @Query("SELECT * FROM UserEntity WHERE email = :email OR username = :username")
+    fun findByEmailOrUsername(email: String, username: String): UserEntity?
+
     @Insert
     fun insert(userEntity: UserEntity)
 

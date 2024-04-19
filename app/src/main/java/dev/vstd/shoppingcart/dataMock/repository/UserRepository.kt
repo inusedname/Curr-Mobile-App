@@ -4,22 +4,25 @@ import dev.vstd.shoppingcart.dataMock.dao.CardDao
 import dev.vstd.shoppingcart.dataMock.dao.UserDao
 import dev.vstd.shoppingcart.dataMock.entity.CardEntity
 import dev.vstd.shoppingcart.dataMock.entity.UserEntity
+import dev.vstd.shoppingcart.domain.UserCredential
 import java.util.UUID
 
 class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
-    fun login(email: String, password: String): Response<UserEntity> {
+    fun login(email: String, password: String): Response<UserCredential> {
         val user = userDao.getByEmail(email) ?: return Response.Failed("User not found")
         return if (password == user.password) {
-            Response.Success(user)
+            Response.Success(UserCredential(user.id, user.username))
         } else {
             Response.Failed("Email or password is incorrect")
         }
     }
 
-    fun signUp(username: String, email: String, password: String): Boolean {
+    fun signUp(username: String, email: String, password: String): Response<Unit> {
+        val existedUser = userDao.findByEmailOrUsername(email, username = username)
+        if (existedUser != null) return Response.Failed("User already exists")
         val user = UserEntity(username = username, email = email, password = password)
         userDao.insert(user)
-        return true
+        return Response.Success(Unit)
     }
 
     fun getCards(userId: Long): List<CardEntity> {

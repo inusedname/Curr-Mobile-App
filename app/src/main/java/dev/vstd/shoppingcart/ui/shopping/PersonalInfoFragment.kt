@@ -7,7 +7,6 @@ import dev.vstd.shoppingcart.ui.base.BaseFragment
 
 class PersonalInfoFragment: BaseFragment<FragmentPersonalInfoBinding>() {
     override fun onViewCreated(binding: FragmentPersonalInfoBinding) {
-        TODO("Not yet implemented")
     }
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPersonalInfoBinding

@@ -15,6 +15,7 @@ fun InuTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    singleLine: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     label: @Composable (() -> Unit)? = null
@@ -24,6 +25,7 @@ fun InuTextField(
         onValueChange = onValueChange,
         modifier = modifier,
         label = label,
+        singleLine = singleLine,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors(

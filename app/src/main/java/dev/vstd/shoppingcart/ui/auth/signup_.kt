@@ -20,9 +20,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.data.APIErrorUtil
-import dev.vstd.shoppingcart.data.remote.user.SignupRequest
-import dev.vstd.shoppingcart.data.remote.user.UserService
+import dev.vstd.shoppingcart.dataMock.repository.Response
+import dev.vstd.shoppingcart.dataMock.repository.UserRepository
 import dev.vstd.shoppingcart.theme.ButtonRadius
 import dev.vstd.shoppingcart.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.ui.base.InuTextField
@@ -54,7 +53,7 @@ fun signup_(navigator: DestinationsNavigator) {
 private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val userService = (context as AuthActivity).userService
+    val userRepository = (context as AuthActivity).userRepository
 
     var email by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
@@ -130,7 +129,9 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
                     val result =
                         SignUpValidator.validate(username, email, password, reconfirmPassword)
                     if (result.success) {
-                        signup(userService, email = email, username = username, password)
+                        signup(userRepository, email = email, username = username, password) {
+                            navigator.navigateUp()
+                        }
                     } else {
                         scope.launch { hostState.showSnackbar(result.message) }
                     }
@@ -150,20 +151,19 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
     }
 }
 
-private fun signup(userService: UserService, email: String, username: String, password: String) {
+private fun signup(userService: UserRepository, email: String, username: String, password: String, onSuccess: () -> Unit) {
     GlobalScope.launch {
-        val resp = userService.signup(
-            SignupRequest(
-                email = email,
-                username = username,
-                password = password
-            )
+        val resp = userService.signUp(
+            username = username,
+            email = email,
+            password = password
         )
         if (resp.isSuccessful) {
-            Timber.d("Signup successful: ${resp.body()}")
+            Timber.d("Signup successful")
+            onSuccess()
         } else {
-            val error = APIErrorUtil.getAPIError(resp)
-            Timber.e("Signup failed: ${error.status} ${error.message}")
+            val error = (resp as Response.Failed).message
+            Timber.e("Signup failed: $error")
         }
     }
 }

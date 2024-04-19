@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
+import dev.vstd.shoppingcart.domain.Product
 import dev.vstd.shoppingcart.pref.AppPreferences
 import dev.vstd.shoppingcart.theme.startPadding
 

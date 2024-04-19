@@ -3,12 +3,11 @@ package dev.vstd.shoppingcart.shopping.ui.order
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.keego.shoppingcart.databinding.FragmentOrdersBinding
 import dev.vstd.shoppingcart.common.ui.BaseFragment
+import dev.vstd.shoppingcart.shopping.domain.Status
 import dev.vstd.shoppingcart.shopping.ui.order.adapter.FragmentPageAdapter
-import dev.vstd.shoppingcart.shopping.ui.payment.PaymentActivity
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     private lateinit var adapter: FragmentPageAdapter
@@ -23,37 +22,16 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         }
 
         adapter = FragmentPageAdapter(childFragmentManager, lifecycle)
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Chờ xác nhận"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Chờ lấy hàng"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Chờ giao hàng"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Đã giao"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Đã hủy"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Trả hàng"))
         binding.viewPager.adapter = adapter
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-                if (p0 != null) {
-                    binding.viewPager.currentItem = p0.position
-                }
-            }
 
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when(position) {
+                0 -> tab.text = Status.PENDING.displayName
+                1 -> tab.text = Status.DELIVERED.displayName
+                2 -> tab.text = Status.SHIPPED.displayName
+                3 -> tab.text = Status.CANCELLED.displayName
             }
-
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-            }
-        })
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
-            }
-        })
-        binding.fabCheckout.setOnClickListener {
-            context?.let {
-                PaymentActivity.start(requireContext())
-            }
-        }
+        }.attach()
     }
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentOrdersBinding

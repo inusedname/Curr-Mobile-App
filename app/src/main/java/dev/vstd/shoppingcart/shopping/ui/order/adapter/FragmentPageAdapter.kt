@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import dev.keego.shoppingcart.R
+import dev.vstd.shoppingcart.shopping.domain.Status
 import dev.vstd.shoppingcart.shopping.ui.order.fragment.OrderListFragment
 
 class FragmentPageAdapter(
@@ -12,28 +12,18 @@ class FragmentPageAdapter(
     lifecycle: Lifecycle
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return 6
+        return Status.entries.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = OrderListFragment()
-        fragment.setOrders(getFakeOrders())
-        return fragment
-    }
 
-    private fun getFakeOrders(): List<Order> {
-        val orders = mutableListOf<Order>()
-        for (i in 1..10) {
-            orders.add(
-                Order(
-                    image = R.drawable.image,
-                    title = "TỔNG KHO LINH ĐÀM",
-                    name = "Bột thông cống cực mạnh",
-                    description = "Hộp 250g",
-                    price = "đ17.000"
-                )
-            )
+        val status = when (position) {
+            0 -> Status.PENDING
+            1 -> Status.DELIVERED
+            2 -> Status.SHIPPED
+            3 -> Status.CANCELLED
+            else -> throw IllegalArgumentException("Invalid position")
         }
-        return orders
+        return OrderListFragment(status)
     }
 }

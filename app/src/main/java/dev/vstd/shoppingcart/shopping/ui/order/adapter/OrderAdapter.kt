@@ -1,48 +1,93 @@
 package dev.vstd.shoppingcart.shopping.ui.order.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.keego.shoppingcart.R
+import androidx.viewbinding.ViewBinding
+import dev.keego.shoppingcart.databinding.ItemOrdersHeaderBinding
+import dev.keego.shoppingcart.databinding.ItemOrdersProductBinding
+import dev.vstd.shoppingcart.common.ui.DiffUtils
+import dev.vstd.shoppingcart.shopping.domain.Order
+import dev.vstd.shoppingcart.shopping.domain.Product
+import timber.log.Timber
 
-class OrderAdapter(private var dataList: List<Order> = emptyList()) :
-    RecyclerView.Adapter<OrderAdapter.ViewHolderClass>() {
+class OrderAdapter:
+    ListAdapter<OrderAdapter.DataWrapper, OrderAdapter.ViewHolderWrapper>(DiffUtils.any<DataWrapper>()
+) {
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateList(newList: List<Order>) {
-        dataList = newList
-        notifyDataSetChanged()
+    fun submitListt(data: List<Order>) {
+        val list = mutableListOf<DataWrapper>()
+        data.forEach { order ->
+            list.add(DataWrapper.Seller(order))
+            order.products.forEach { product ->
+                list.add(DataWrapper.Product(product))
+            }
+        }
+        Timber.d("list size=${list.size}")
+        submitList(list)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_layout_purchase_order_list, parent, false)
-        return ViewHolderClass(itemView)
+    sealed class DataWrapper {
+        data class Seller(val order: Order) : DataWrapper()
+        data class Product(val product: dev.vstd.shoppingcart.shopping.domain.Product) : DataWrapper()
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
+    sealed class ViewHolderWrapper(binding: ViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        class SellerViewHolder(private val binding: ItemOrdersHeaderBinding) :
+            ViewHolderWrapper(binding) {
+            fun bind(order: Order) {
+                binding.tvTitleItemLayout.text = order.sellerName
+            }
+        }
+
+        class ProductViewHolder(private val binding: ItemOrdersProductBinding) :
+            ViewHolderWrapper(binding) {
+            fun bind(product: Product) {
+                binding.imageViewItemLayout.setImageResource(product.image)
+                binding.tvNameItemLayout.text = product.title
+                binding.tvNumber.text = product.quantity.toString()
+                binding.tvPriceItemLayout.text = product.price.toString() + "đ"
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-        val currentItem =dataList[position]
-        holder.imageViewItemLayout.setImageResource(currentItem.image)
-        holder.tvTitleItemLayout.text = currentItem.title
-        holder.tvNameItemLayout.text = currentItem.name
-        holder.tvDescriptionItemLayout.text = currentItem.description
-        holder.tvPriceItemLayout.text = currentItem.price
-
+    override fun getItemViewType(position: Int): Int {
+        return when (currentList[position]) {
+            is DataWrapper.Seller -> 1
+            is DataWrapper.Product -> 2
+        }
     }
 
-    class ViewHolderClass(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val imageViewItemLayout: ImageView = itemView.findViewById(R.id.imageViewItemLayout)
-        val tvTitleItemLayout: TextView = itemView.findViewById(R.id.tvTitleItemLayout)
-        val tvNameItemLayout: TextView = itemView.findViewById(R.id.tvNameItemLayout)
-        val tvDescriptionItemLayout: TextView = itemView.findViewById(R.id.tvDescriptionItemLayout)
-        val tvPriceItemLayout: TextView = itemView.findViewById(R.id.tvPriceItemLayout)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderWrapper {
+        return when (viewType) {
+            1 -> ViewHolderWrapper.SellerViewHolder(
+                ItemOrdersHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            2 -> ViewHolderWrapper.ProductViewHolder(
+                ItemOrdersProductBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolderWrapper, position: Int) {
+        when (val item = currentList[position]) {
+            is DataWrapper.Seller -> {
+                (holder as ViewHolderWrapper.SellerViewHolder).bind(item.order)
+            }
+            is DataWrapper.Product -> {
+                (holder as ViewHolderWrapper.ProductViewHolder).bind(item.product)
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ import dev.vstd.shoppingcart.auth.domain.UserInfo
 import dev.vstd.shoppingcart.shopping.data.dao.CardDao
 import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
 import dev.vstd.shoppingcart.shopping.data.repository.Response
-import dev.vstd.shoppingcart.shopping.domain.UserCredential
+import dev.vstd.shoppingcart.auth.domain.UserCredential
 
 class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
     suspend fun login(email: String, password: String): Response<UserCredential> {

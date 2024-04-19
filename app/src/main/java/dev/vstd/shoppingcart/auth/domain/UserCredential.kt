@@ -1,4 +1,4 @@
-package dev.vstd.shoppingcart.shopping.domain
+package dev.vstd.shoppingcart.auth.domain
 
 data class UserCredential(
     val id: Long,

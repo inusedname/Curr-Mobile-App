@@ -34,7 +34,7 @@ class AskForCreditCardCredentialFragment :
                         if (it.cvv == binding.etCreditCardCVV.text.toString()) {
                             userRepository.cashOut(
                                 Session.userEntity.value!!.id,
-                                checkoutVimel.total.value
+                                checkoutVimel.getTotal()
                             )
                             Toast.makeText(requireContext(), "Payment success", Toast.LENGTH_SHORT)
                                 .show()

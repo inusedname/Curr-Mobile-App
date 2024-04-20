@@ -7,29 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/gray"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintWidth="parent">-->
-
-<!--        <android.widget.SearchView-->
-<!--            android:id="@+id/search_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:background="@drawable/rounded_field_50dp"-->
-<!--            android:iconifiedByDefault="false"-->
-<!--            android:queryHint="@string/search"-->
-<!--            android:textAlignment="center" />-->
-<!--    </RelativeLayout>-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/compare_price_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_card_view_vertical"
-        />
+        app:spanCount="3"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_view" />
 </LinearLayout>

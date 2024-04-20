@@ -20,12 +20,12 @@ import coil.compose.rememberAsyncImagePainter
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.shopping.data.repository.Response
 import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.theme.ButtonRadius
 import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField
-import kotlinx.coroutines.GlobalScope
+import dev.vstd.shoppingcart.shopping.data.repository.Response
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -129,7 +129,7 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
                     val result =
                         SignUpValidator.validate(username, email, password, reconfirmPassword)
                     if (result.success) {
-                        signup(userRepository, email = email, username = username, password) {
+                        signup(scope, userRepository, email = email, username = username, password) {
                             navigator.navigateUp()
                         }
                     } else {
@@ -151,8 +151,8 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
     }
 }
 
-private fun signup(userService: UserRepository, email: String, username: String, password: String, onSuccess: () -> Unit) {
-    GlobalScope.launch {
+private fun signup(scope: CoroutineScope, userService: UserRepository, email: String, username: String, password: String, onSuccess: () -> Unit) {
+    scope.launch {
         val resp = userService.signUp(
             username = username,
             email = email,

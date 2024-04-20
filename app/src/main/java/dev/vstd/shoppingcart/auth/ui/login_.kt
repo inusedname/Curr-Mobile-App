@@ -32,7 +32,7 @@ import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField
 import dev.vstd.shoppingcart.common.utils.toast
 import dev.vstd.shoppingcart.shopping.data.repository.Response
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -58,8 +58,8 @@ fun login_(navigator: DestinationsNavigator) {
 
 @Composable
 private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("admin@gmail.com") }
+    var password by remember { mutableStateOf("12345678") }
 
     val context = LocalContext.current
     val userRepository = (context as AuthActivity).userRepository
@@ -110,7 +110,7 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
                     val result =
                         LoginValidator.validate(email, password)
                     if (result.success) {
-                        login(userRepository, email, password) {
+                        login(scope, userRepository, email, password) {
                             context.toast("Login successful")
                             (context as Activity).finish()
                         }
@@ -150,8 +150,14 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
     }
 }
 
-private fun login(repo: UserRepository, email: String, password: String, onSuccess: () -> Unit) {
-    GlobalScope.launch {
+private fun login(
+    scope: CoroutineScope,
+    repo: UserRepository,
+    email: String,
+    password: String,
+    onSuccess: () -> Unit
+) {
+    scope.launch {
         val resp = repo.login(email, password)
         if (resp.isSuccessful) {
             val user = (resp as Response.Success).data

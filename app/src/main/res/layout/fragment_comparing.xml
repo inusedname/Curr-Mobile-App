@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,20 +10,23 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:padding="16dp"
             android:layout_height="wrap_content">
 
             <android.widget.SearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:background="@drawable/rounded_field_50dp"
+                android:backgroundTint="#e9ecf5"
                 android:iconifiedByDefault="false"
-                android:queryHint="@string/search"
-                android:textAlignment="center" />
+                android:queryBackground="@null"
+                android:queryHint="@string/search" />
         </RelativeLayout>
 
-        <include android:id="@+id/mainContent" layout="@layout/fragment_price_compare_tab"/>
+        <include
+            android:id="@+id/mainContent"
+            layout="@layout/fragment_price_compare_tab" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

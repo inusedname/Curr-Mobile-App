@@ -12,10 +12,7 @@ import androidx.compose.material.icons.filled.EventNote
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,8 +30,14 @@ import dev.vstd.shoppingcart.shopping.domain.Product
 fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> Unit) {
     val address by vimel.address.collectAsState()
     val products by vimel.products.collectAsState()
-    val total by vimel.total.collectAsState()
     val paymentMethod by vimel.paymentMethod.collectAsState()
+    val ableToPurchase by vimel.ableToPurchase.collectAsState(false)
+    val shipFee by vimel.shipFee.collectAsState()
+    var productPrice by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(products) {
+        productPrice = products.fold(0) { sum, it -> sum + it.price }
+    }
 
     LaunchedEffect(true) {
         vimel.fetch()
@@ -46,8 +49,9 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Column(modifier = Modifier.padding(bottom = 64.dp).verticalScroll(rememberScrollState())) {
                 _shipping_address(
+                    highlight = address == null,
                     text = address ?: stringResource(R.string.no_ship_address_available)
                 ) {
                     navController.navigate(R.id.action_checkoutFragment_to_updateAddressFragment)
@@ -61,14 +65,19 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
                     navController.navigate(R.id.action_checkoutFragment_to_selectPaymentMethodFragment)
                 }
 
-                _total_totalmary("$total đ", "15.000d", "43.000d")
+                _total_totalmary(
+                    "$productPrice đ",
+                    "$shipFee đ",
+                    "${productPrice + shipFee} đ"
+                )
             }
             _cta(
                 Modifier
                     .height(64.dp)
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth(),
-                total = total,
+                total = productPrice + shipFee,
+                enabled = ableToPurchase,
                 onClickCta = {
                     vimel.createOrder {
                         when (it) {
@@ -165,7 +174,7 @@ private fun _purchasing_list(products: List<Product>) {
                         contentDescription = null,
                         modifier = Modifier.size(72.dp)
                     )
-                    Column {
+                    Column(Modifier.padding(start = 12.dp)) {
                         Text(text = product.title)
                         Text(text = product.category)
                         Row {
@@ -182,7 +191,12 @@ private fun _purchasing_list(products: List<Product>) {
 }
 
 @Composable
-private fun _shipping_address(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun _shipping_address(
+    highlight: Boolean,
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Row(
         modifier = modifier
             .clickable(onClick = onClick)
@@ -195,7 +209,7 @@ private fun _shipping_address(text: String, modifier: Modifier = Modifier, onCli
         )
         Column(Modifier.padding(start = 8.dp)) {
             Text(text = "Địa chỉ nhận hàng")
-            Text(text = text)
+            Text(text = text, color = if (highlight) Color.Red else Color.Black)
         }
         Spacer(modifier = Modifier.weight(1f))
         Icon(
@@ -209,7 +223,12 @@ private fun _shipping_address(text: String, modifier: Modifier = Modifier, onCli
 }
 
 @Composable
-private fun _cta(modifier: Modifier = Modifier, total: Int, onClickCta: () -> Unit) {
+private fun _cta(
+    modifier: Modifier = Modifier,
+    total: Int,
+    enabled: Boolean,
+    onClickCta: () -> Unit
+) {
     Row(modifier) {
         Column(
             horizontalAlignment = Alignment.End,
@@ -225,8 +244,8 @@ private fun _cta(modifier: Modifier = Modifier, total: Int, onClickCta: () -> Un
         Box(
             modifier = Modifier
                 .weight(3f)
-                .clickable(onClick = onClickCta)
-                .background(MaterialTheme.colorScheme.primary)
+                .clickable(enabled = enabled, onClick = onClickCta)
+                .background(if (enabled) MaterialTheme.colorScheme.primary else Color.DarkGray)
                 .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ) {

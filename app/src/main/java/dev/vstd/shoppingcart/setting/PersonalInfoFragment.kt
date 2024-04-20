@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentPersonalInfoBinding
@@ -29,6 +30,9 @@ class PersonalInfoFragment: BaseFragment<FragmentPersonalInfoBinding>() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+        Glide.with(binding.avatar)
+            .load(R.drawable.img_person)
+            .into(binding.avatar)
     }
 
     private fun loadInfo(binding: FragmentPersonalInfoBinding) {

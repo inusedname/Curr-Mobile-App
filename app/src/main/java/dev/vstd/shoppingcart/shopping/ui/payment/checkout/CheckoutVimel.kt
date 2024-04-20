@@ -10,6 +10,7 @@ import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
 import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import dev.vstd.shoppingcart.shopping.domain.Product
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,13 +22,19 @@ class CheckoutVimel @Inject constructor(
     val address = MutableStateFlow<String?>(null)
     val paymentMethod = MutableStateFlow(PaymentMethod.getDefaultOptions()[1])
     val products = MutableStateFlow(listOf<Product>())
-    val total = MutableStateFlow(0)
+    val shipFee = MutableStateFlow(15000)
+    val ableToPurchase = combine(address, paymentMethod, products) { address, paymentMethod, products ->
+        address != null && paymentMethod.type != PaymentMethod.Type.MOMO && products.isNotEmpty()
+    }
+
+    fun getTotal(): Int {
+        return products.value.fold(0) { sum, it -> sum + it.price } + shipFee.value
+    }
 
     fun fetch() {
         viewModelScope.launch {
             address.value = userRepository.getAddress(Session.userEntity.value!!.id)
-            products.value = listOf(Product.getFakeProduct())
-            total.value = products.value.sumOf { it.price } + 15000
+            products.value = List(3) { Product.getFakeProduct() }
         }
     }
 

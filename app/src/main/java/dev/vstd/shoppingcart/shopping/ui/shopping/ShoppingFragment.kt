@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentShoppingBinding
 import dev.vstd.shoppingcart.auth.Session
@@ -18,6 +19,9 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
         observeStates(binding)
 
         binding.greetings.text = "Good afternoon, ${Session.userEntity.value?.username ?: "Guest"}!"
+        Glide.with(binding.avatar)
+            .load(R.drawable.img_person)
+            .into(binding.avatar)
     }
 
     private fun observeStates(binding: FragmentShoppingBinding) {

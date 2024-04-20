@@ -43,9 +43,6 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
     }
 
     private fun setOnClicks(binding: FragmentComparingBinding) {
-        binding.searchView.setOnSearchClickListener {
-            comparingVimel.searchProduct(binding.searchView.query.toString())
-        }
         binding.searchView.setOnQueryTextListener(object: OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrBlank()) return false

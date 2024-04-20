@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +26,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
     fun searchProduct(productName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             compareRepo.searchProduct(productName).let {
+                Timber.d("Search product completed!")
                 if (it.isSuccessful) {
                     products.value = it.body()!!
                 }
@@ -37,6 +39,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
         searchingProductImageUrl = product.image
         viewModelScope.launch(Dispatchers.IO) {
             compareRepo.getProductSeller(product.id).let {
+                Timber.d("Search sellers completed!")
                 if (it.isSuccessful) {
                     sellers.value = it.body()!!
                 }

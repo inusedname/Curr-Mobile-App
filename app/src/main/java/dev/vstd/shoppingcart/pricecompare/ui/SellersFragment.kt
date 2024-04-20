@@ -42,12 +42,10 @@ class SellersFragment : BaseFragment<FragmentSellersBinding>() {
 
     private fun observeStates(binding: FragmentSellersBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
-            launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    comparingVimel.sellers.collect {
-                        Timber.d("Sellers: ${it.size}")
-                        (binding.rvSellers.adapter as SellerAdapter).setData(it, comparingVimel.searchingProductImageUrl)
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                comparingVimel.sellers.collect {
+                    Timber.d("Sellers: ${it.size}")
+                    (binding.rvSellers.adapter as SellerAdapter).setData(it, comparingVimel.searchingProductImageUrl)
                 }
             }
         }

@@ -2,9 +2,7 @@ package dev.vstd.shoppingcart.checklist.ui.addItem
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.ActivityAddItemBinding
 import dev.vstd.shoppingcart.common.MainActivity
 import kotlinx.coroutines.GlobalScope
@@ -22,8 +20,8 @@ class AddItemActivity : AppCompatActivity() {
 
     private fun initViews() {
         var groups = listOf("Group1", "Group2", "Group3")
-        var adapterGroup = ArrayAdapter(this, R.layout.list_group,groups)
-        binding.autoCompleteTxt.setAdapter(adapterGroup)
+//        var adapterGroup = ArrayAdapter(this, R.layout.list_group,groups)
+//        binding.autoCompleteTxt.setAdapter(adapterGroup)
 
         binding.btnBack.setOnClickListener {
             GlobalScope.launch {

@@ -14,6 +14,7 @@ import dev.vstd.shoppingcart.shopping.data.MockBackendDatabase
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import timber.log.Timber
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -43,6 +44,16 @@ class AppModule {
     fun providesOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val cache = context.cacheDir
         return OkHttpClient.Builder()
+            .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            .addInterceptor {
+                val request = it.request()
+                val response = it.proceed(request)
+                Timber.d("Request: ${request.url}")
+                Timber.d("Response:${response.code}\n${response.peekBody(Long.MAX_VALUE).string()}")
+                response
+            }
             .cache(Cache(cache, 10 * 1024 * 1024))
             .build()
     }

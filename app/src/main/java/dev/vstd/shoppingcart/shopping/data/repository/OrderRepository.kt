@@ -1,14 +1,15 @@
 package dev.vstd.shoppingcart.shopping.data.repository
 
-import dev.vstd.shoppingcart.auth.Session
-import dev.vstd.shoppingcart.shopping.data.dao.OrderDao
 import dev.vstd.shoppingcart.shopping.data.entity.OrderEntity
+import dev.vstd.shoppingcart.shopping.data.service.CreateOrderBodyDto
+import dev.vstd.shoppingcart.shopping.data.service.OrderService
+import retrofit2.Response
 
-class OrderRepository(private val orderDao: OrderDao) {
-    suspend fun getAllOrders(): List<OrderEntity> {
-        return orderDao.getAllOrders(Session.userEntity.value!!.id)
+class OrderRepository(private val orderService: OrderService) {
+    suspend fun getAllOrders(): Response<List<OrderEntity>> {
+        return orderService.getOrders()
     }
-    suspend fun createOrder(orderEntity: OrderEntity) {
-        orderDao.insert(orderEntity)
+    suspend fun createOrder(body: CreateOrderBodyDto): Response<OrderEntity> {
+        return orderService.makeOrder(body)
     }
 }

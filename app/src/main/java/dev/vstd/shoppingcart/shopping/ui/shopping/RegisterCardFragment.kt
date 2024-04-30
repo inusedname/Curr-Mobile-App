@@ -11,7 +11,6 @@ import dev.vstd.shoppingcart.auth.Session
 import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
-import dev.vstd.shoppingcart.shopping.data.repository.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,14 +49,14 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
         }
         binding.btnRegisterCard.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val result = userRepository.registerCard(card)
+                val result = userRepository.registerCard()
                 if (result.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "Card Register Success!", Toast.LENGTH_SHORT).show()
                         findNavController().navigateUp()
                     }
                 } else {
-                    Timber.e((result as Response.Failed).message)
+                    Timber.e("${result.code()} ${result.errorBody().toString()}")
                     Toast.makeText(context, "Card Register Failed!", Toast.LENGTH_SHORT).show()
                 }
             }

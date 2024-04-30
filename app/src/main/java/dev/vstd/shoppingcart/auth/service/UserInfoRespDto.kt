@@ -1,6 +1,6 @@
-package dev.vstd.shoppingcart.auth.domain
+package dev.vstd.shoppingcart.auth.service
 
-data class UserInfo(
+data class UserInfoRespDto(
     val username: String,
     val email: String,
     val address: String?,

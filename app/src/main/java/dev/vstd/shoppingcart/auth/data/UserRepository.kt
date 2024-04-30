@@ -1,63 +1,50 @@
 package dev.vstd.shoppingcart.auth.data
 
-import dev.vstd.shoppingcart.auth.domain.UserInfo
-import dev.vstd.shoppingcart.shopping.data.dao.CardDao
+import dev.vstd.beshoppingcart.dto.SignupBodyDto
+import dev.vstd.shoppingcart.auth.Session
+import dev.vstd.shoppingcart.auth.service.LoginBodyDto
+import dev.vstd.shoppingcart.auth.service.LoginResponseDto
+import dev.vstd.shoppingcart.auth.service.UserInfoRespDto
+import dev.vstd.shoppingcart.auth.service.UserService
 import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
-import dev.vstd.shoppingcart.shopping.data.repository.Response
-import dev.vstd.shoppingcart.auth.domain.UserCredential
+import dev.vstd.shoppingcart.shopping.data.service.CardService
+import retrofit2.Response
 
-class UserRepository(private val userDao: UserDao, private val cardDao: CardDao) {
-    suspend fun login(email: String, password: String): Response<UserCredential> {
-        val user = userDao.getByEmail(email) ?: return Response.Failed("User not found")
-        return if (password == user.password) {
-            Response.Success(UserCredential(user.id, user.username))
-        } else {
-            Response.Failed("Email or password is incorrect")
-        }
+class UserRepository(private val userService: UserService, private val cardService: CardService) {
+    suspend fun login(email: String, password: String): Response<LoginResponseDto> {
+        val body = LoginBodyDto(email, password)
+        return userService.login(body)
     }
 
-    suspend fun getUserInfo(userId: Long): UserInfo? {
-        val user = userDao.getUserById(userId)
-        return if (user != null) {
-            UserInfo(username = user.username, email = user.email, address = user.address)
-        } else {
-            null
-        }
-    }
-
-    suspend fun cashOut(userId: Long, amount: Int) {
-        cardDao.cashOut(userId, amount)
-    }
-
-    suspend fun topUp(userId: Long, amount: Int) {
-        cardDao.topUp(userId, amount)
+    suspend fun getUserInfo(userId: Long): UserInfoRespDto? {
+        return userService.getUserInfo(userId)
     }
 
     suspend fun getAddress(userId: Long): String? {
-        return userDao.getAddress(userId)
+        return userService.getUserInfo(userId)?.address
     }
     
     suspend fun updateAddress(userId: Long, address: String) {
-        userDao.updateAddress(userId, address)
+        userService.updateAddress(userId, address)
     }
 
-    suspend fun signUp(username: String, email: String, password: String): Response<Unit> {
-        val existedUser = userDao.findByEmailOrUsername(email, username = username)
-        if (existedUser != null) return Response.Failed("User already exists")
-        val user = UserEntity(username = username, email = email, password = password)
-        userDao.insert(user)
-        return Response.Success(Unit)
+    suspend fun signUp(username: String, email: String, password: String): Response<String> {
+        val body = SignupBodyDto(username, email, password)
+        return userService.signUp(body)
     }
 
-    suspend fun getCards(userId: Long): List<CardEntity> {
-        val cards = mutableListOf<CardEntity>()
-        cardDao.getCard(userId)?.let { cards.add(it) }
-        return cards
+    suspend fun getCard(): Response<CardEntity> {
+        val userId = Session.userEntity.value!!.id
+        return cardService.getCard(userId)
     }
 
-    suspend fun registerCard(cardEntity: CardEntity): Response<Unit> {
-        if (cardDao.getCard(cardEntity.userId) != null) return Response.Failed("Card already exists")
-        cardDao.insert(cardEntity)
-        return Response.Success(Unit)
+    suspend fun registerCard(): Response<CardEntity> {
+        val userId = Session.userEntity.value!!.id
+        return cardService.registerCard(userId)
+    }
+
+    suspend fun validateCvv(cvv: String): Response<String> {
+        val userId = Session.userEntity.value!!.id
+        return cardService.validateCVV(userId, cvv)
     }
 }

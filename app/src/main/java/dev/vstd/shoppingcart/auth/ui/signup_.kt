@@ -1,11 +1,27 @@
 package dev.vstd.shoppingcart.auth.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +40,6 @@ import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.theme.ButtonRadius
 import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField
-import dev.vstd.shoppingcart.shopping.data.repository.Response
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -162,8 +177,7 @@ private fun signup(scope: CoroutineScope, userService: UserRepository, email: St
             Timber.d("Signup successful")
             onSuccess()
         } else {
-            val error = (resp as Response.Failed).message
-            Timber.e("Signup failed: $error")
+            Timber.e("${resp.code()}: ${resp.errorBody()?.string()}")
         }
     }
 }

@@ -7,11 +7,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.vstd.shoppingcart.auth.data.UserRepository
+import dev.vstd.shoppingcart.auth.service.UserService
 import dev.vstd.shoppingcart.checklist.data.AppDatabase
 import dev.vstd.shoppingcart.checklist.data.BarcodeRepository
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
-import dev.vstd.shoppingcart.shopping.data.MockBackendDatabase
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
+import dev.vstd.shoppingcart.shopping.data.service.CardService
+import dev.vstd.shoppingcart.shopping.data.service.OrderService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import timber.log.Timber
@@ -60,19 +62,31 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesUserRepository(backendDatabase: MockBackendDatabase): UserRepository {
-        return UserRepository(backendDatabase.userDao, backendDatabase.cardDao)
+    fun pvUserService(okHttpClient: OkHttpClient): UserService {
+        return UserService.create(okHttpClient)
     }
 
     @Provides
     @Singleton
-    fun providesOrderRepository(backendDatabase: MockBackendDatabase): OrderRepository {
-        return OrderRepository(backendDatabase.orderDao)
+    fun pvCardService(okHttpClient: OkHttpClient): CardService {
+        return CardService.create(okHttpClient)
     }
 
     @Provides
     @Singleton
-    fun createBackendDatabase(@ApplicationContext context: Context): MockBackendDatabase {
-        return MockBackendDatabase.create(context)
+    fun pvOrderService(okHttpClient: OkHttpClient): OrderService {
+        return OrderService.create(okHttpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(userService: UserService, cardService: CardService): UserRepository {
+        return UserRepository(userService, cardService)
+    }
+
+    @Provides
+    @Singleton
+    fun pvOrderRepository(orderService: OrderService): OrderRepository {
+        return OrderRepository(orderService)
     }
 }

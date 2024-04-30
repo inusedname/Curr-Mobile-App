@@ -26,8 +26,13 @@ class OrderListFragment(private val status: Status) : BaseFragment<FragmentOrder
         binding.rvOrders.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val orders = repository.getAllOrders().filter { it.status == status }
-            adapter.submitListt(orders.map(OrderEntity::toOrder))
+            val resp = repository.getAllOrders()
+            if (resp.isSuccessful) {
+                val orders = resp.body()!!.filter { it.status == status }
+                adapter.submitListt(orders.map(OrderEntity::toOrder))
+            } else {
+                // TODO
+            }
         }
     }
 

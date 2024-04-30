@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentPaymentMethodsBinding
-import dev.vstd.shoppingcart.auth.Session
 import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.beGone
@@ -53,9 +52,9 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     private fun fetchData(binding: FragmentPaymentMethodsBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
             val methods = PaymentMethod.getDefaultOptions().toMutableList()
-            val response =
-                userRepository.getCards(Session.userEntity.value!!.id)
-            for (item in response) {
+            val response = userRepository.getCard()
+            if (response.isSuccessful) {
+                val item = response.body()!!
                 methods.add(
                     PaymentMethod(
                         methods.size + 1,
@@ -65,7 +64,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
                     )
                 )
             }
-            if (response.isEmpty()) {
+            if (methods.size == PaymentMethod.getDefaultOptions().size) {
                 binding.sectionAddNewCard.root.beVisible()
             }
             cards.value = methods

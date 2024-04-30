@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.FragmentSelectPaymentMethodBinding
-import dev.vstd.shoppingcart.auth.Session
 import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
@@ -51,9 +50,9 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
         }
         viewLifecycleOwner.lifecycleScope.launch {
             val methods = PaymentMethod.getDefaultOptions().toMutableList()
-            val response =
-                userRepository.getCards(Session.userEntity.value!!.id)
-            for (item in response) {
+            val response = userRepository.getCard()
+            if (response.isSuccessful) {
+                val item = response.body()!!
                 methods.add(
                     PaymentMethod(
                         methods.size + 1,

@@ -9,7 +9,7 @@ data class Product(
     val category: String,
     val price: Int,
     val quantity: Int,
-    val id: Int
+    val id: Long
 ) {
     companion object {
         fun getFakeProduct() = Product(

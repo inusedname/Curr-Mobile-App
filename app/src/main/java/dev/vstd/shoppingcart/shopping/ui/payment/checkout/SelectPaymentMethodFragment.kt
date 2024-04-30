@@ -36,7 +36,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Confirm Payment Method")
                 .setMessage("Are you sure you want to select ${it.type.title} as Payment Method?")
-                .setPositiveButton("Yes") { dialog, _ ->
+                .setPositiveButton("Yes") { _, _ ->
                     val bundle = Bundle().apply {
                         putSerializable(EXTRA_PAYMENT_METHOD_SERIALIZE, it)
                     }
@@ -55,7 +55,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
                 val item = response.body()!!
                 methods.add(
                     PaymentMethod(
-                        methods.size + 1,
+                        item.id,
                         type = PaymentMethod.Type.CREDIT_CARD,
                         "**** **** **** ${item.cardNumber.takeLast(4)}",
                         balance = item.balance

@@ -70,7 +70,7 @@ fun login_(navigator: DestinationsNavigator) {
 @Composable
 private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState) {
     var email by remember { mutableStateOf("admin@gmail.com") }
-    var password by remember { mutableStateOf("12345678") }
+    var password by remember { mutableStateOf("123456") }
 
     val context = LocalContext.current
     val userRepository = (context as AuthActivity).userRepository
@@ -121,7 +121,9 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
                     val result =
                         LoginValidator.validate(email, password)
                     if (result.success) {
-                        login(scope, userRepository, email, password) {
+                        login(scope, userRepository, email, password, onFailed = {
+                            scope.launch { hostState.showSnackbar(it) }
+                        }) {
                             context.toast("Login successful")
                             (context as Activity).finish()
                         }
@@ -166,7 +168,8 @@ private fun login(
     repo: UserRepository,
     email: String,
     password: String,
-    onSuccess: () -> Unit
+    onFailed: (String) -> Unit,
+    onSuccess: () -> Unit,
 ) {
     scope.launch {
         val resp = repo.login(email, password)
@@ -176,7 +179,9 @@ private fun login(
             Session.userEntity.value = loggedInInfo
             onSuccess()
         } else {
-            Timber.e("Login failed: ${resp.code()}: ${resp.errorBody()?.string()}")
+            val errorBody = resp.errorBody()?.string()
+            Timber.e("Login failed: ${resp.code()}: ${errorBody}")
+            onFailed(errorBody ?: "Unknown error")
         }
     }
 }

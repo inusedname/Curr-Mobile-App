@@ -16,8 +16,8 @@ object LoginValidator {
                 result = Result("Invalid email address")
             }
 
-            password.length < 8 -> {
-                result = Result("Password must be at least 8 characters long")
+            password.length < 6 -> {
+                result = Result("Password must be at least 6 characters long")
             }
 
             else -> {

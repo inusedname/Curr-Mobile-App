@@ -92,7 +92,7 @@ android {
     }
 
     lint {
-        disable += "ComposableNaming"
+        disable += ["ComposableNaming", "UseCompoundDrawables"]
     }
 
     def apikeyPropertiesFile = rootProject.file(".env")

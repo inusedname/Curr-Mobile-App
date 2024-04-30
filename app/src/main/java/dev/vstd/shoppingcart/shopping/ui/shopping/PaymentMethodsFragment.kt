@@ -57,7 +57,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
                 val item = response.body()!!
                 methods.add(
                     PaymentMethod(
-                        methods.size + 1,
+                        item.id,
                         type = PaymentMethod.Type.CREDIT_CARD,
                         "**** **** **** ${item.cardNumber.takeLast(4)}",
                         balance = item.balance

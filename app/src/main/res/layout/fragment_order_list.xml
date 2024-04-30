@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,4 +13,17 @@
         android:orientation="vertical"
         tools:listitem="@layout/item_orders_header" />
 
-</FrameLayout>
+    <include layout="@layout/layout_ui_error"
+        android:layout_width="match_parent"
+        android:id="@+id/layoutUiError"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
+
+    <include layout="@layout/layout_ui_loading"
+        android:layout_width="match_parent"
+        android:id="@+id/layoutUiLoading"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

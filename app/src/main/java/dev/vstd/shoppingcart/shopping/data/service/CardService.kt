@@ -1,7 +1,6 @@
 package dev.vstd.shoppingcart.shopping.data.service
 
 import dev.vstd.shoppingcart.common.Constants
-import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.http.GET
@@ -10,10 +9,10 @@ import retrofit2.http.Query
 
 interface CardService {
     @GET("card")
-    suspend fun getCard(@Query("userId") userId: Long): Response<CardEntity>
+    suspend fun getCard(@Query("userId") userId: Long): Response<CardRespDto>
 
     @POST("card")
-    suspend fun registerCard(@Query("userId") userId: Long): Response<CardEntity>
+    suspend fun registerCard(@Query("userId") userId: Long): Response<CardRespDto>
 
     @POST("validate-cvv")
     suspend fun validateCVV(@Query("userId") userId: Long, @Query("cvv") cvv: String): Response<String>

@@ -40,6 +40,7 @@ import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.theme.ButtonRadius
 import dev.vstd.shoppingcart.common.ui.base.InuFullWidthButton
 import dev.vstd.shoppingcart.common.ui.base.InuTextField
+import dev.vstd.shoppingcart.common.utils.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -145,6 +146,7 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
                         SignUpValidator.validate(username, email, password, reconfirmPassword)
                     if (result.success) {
                         signup(scope, userRepository, email = email, username = username, password) {
+                            context.toast("Sign up successful. Please sign in.")
                             navigator.navigateUp()
                         }
                     } else {

@@ -6,18 +6,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vstd.shoppingcart.auth.Session
 import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
+import dev.vstd.shoppingcart.shopping.data.repository.ProductRepository
 import dev.vstd.shoppingcart.shopping.data.service.CreateOrderBodyDto
+import dev.vstd.shoppingcart.shopping.data.service.ProductDto
 import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import dev.vstd.shoppingcart.shopping.domain.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CheckoutVimel @Inject constructor(
     private val userRepository: UserRepository,
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val productRepository: ProductRepository
 ) : ViewModel() {
     val address = MutableStateFlow<String?>(null)
     val paymentMethod = MutableStateFlow(PaymentMethod.getDefaultOptions()[1])
@@ -28,14 +32,19 @@ class CheckoutVimel @Inject constructor(
             address != null && paymentMethod.type != PaymentMethod.Type.MOMO && products.isNotEmpty()
         }
 
-    fun getTotal(): Int {
-        return products.value.fold(0) { sum, it -> sum + it.price } + shipFee.value
+    fun getTotal(): Long {
+        return products.value.fold(0L) { sum, it -> sum + it.price } + shipFee.value
     }
 
     fun fetch() {
         viewModelScope.launch {
             address.value = userRepository.getAddress(Session.userEntity.value!!.id)
-            products.value = List(3) { Product.getFakeProduct() }
+            val resp = productRepository.getProducts()
+            if (resp.isSuccessful) {
+                products.value = resp.body()!!.map(ProductDto::toProduct)
+            } else {
+                // TODO
+            }
         }
     }
 
@@ -50,13 +59,15 @@ class CheckoutVimel @Inject constructor(
         }
     }
 
-    fun createOrder(goToPaymentFlow: (PaymentMethod.Type) -> Unit) {
+    fun createOrder(onError: (String) -> Unit, goToPaymentFlow: (PaymentMethod.Type) -> Unit) {
         viewModelScope.launch {
+            val purchaseMethod = CreateOrderBodyDto.PurchaseMethod.fromPaymentMethod(paymentMethod.value)
             val resp = orderRepository.createOrder(
                 CreateOrderBodyDto(
                     address = address.value!!,
-                    purchaseMethod = TODO(),
-                    purchaseMethodId = TODO(),
+                    purchaseMethod = purchaseMethod,
+                    purchaseMethodId = if (purchaseMethod == CreateOrderBodyDto.PurchaseMethod.CARD)
+                        paymentMethod.value.id else null,
                     products = products.value.map {
                         CreateOrderBodyDto.ProductOfOrderDto(
                             productId = it.id,
@@ -68,7 +79,9 @@ class CheckoutVimel @Inject constructor(
             if (resp.isSuccessful) {
                 goToPaymentFlow(paymentMethod.value.type)
             } else {
-                // TODO
+                val errorBody = resp.errorBody()?.string()
+                Timber.e("${resp.code()} $errorBody")
+                onError(errorBody ?: "Unknown error")
             }
         }
     }

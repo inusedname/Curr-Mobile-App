@@ -6,7 +6,7 @@ import dev.vstd.shoppingcart.auth.service.LoginBodyDto
 import dev.vstd.shoppingcart.auth.service.LoginResponseDto
 import dev.vstd.shoppingcart.auth.service.UserInfoRespDto
 import dev.vstd.shoppingcart.auth.service.UserService
-import dev.vstd.shoppingcart.shopping.data.entity.CardEntity
+import dev.vstd.shoppingcart.shopping.data.service.CardRespDto
 import dev.vstd.shoppingcart.shopping.data.service.CardService
 import retrofit2.Response
 
@@ -28,17 +28,17 @@ class UserRepository(private val userService: UserService, private val cardServi
         userService.updateAddress(userId, address)
     }
 
-    suspend fun signUp(username: String, email: String, password: String): Response<String> {
+    suspend fun signUp(username: String, email: String, password: String): Response<LoginResponseDto> {
         val body = SignupBodyDto(username, email, password)
         return userService.signUp(body)
     }
 
-    suspend fun getCard(): Response<CardEntity> {
+    suspend fun getCard(): Response<CardRespDto> {
         val userId = Session.userEntity.value!!.id
         return cardService.getCard(userId)
     }
 
-    suspend fun registerCard(): Response<CardEntity> {
+    suspend fun registerCard(): Response<CardRespDto> {
         val userId = Session.userEntity.value!!.id
         return cardService.registerCard(userId)
     }

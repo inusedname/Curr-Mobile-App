@@ -12,8 +12,10 @@ import dev.vstd.shoppingcart.checklist.data.AppDatabase
 import dev.vstd.shoppingcart.checklist.data.BarcodeRepository
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
+import dev.vstd.shoppingcart.shopping.data.repository.ProductRepository
 import dev.vstd.shoppingcart.shopping.data.service.CardService
 import dev.vstd.shoppingcart.shopping.data.service.OrderService
+import dev.vstd.shoppingcart.shopping.data.service.ProductService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import timber.log.Timber
@@ -88,5 +90,17 @@ class AppModule {
     @Singleton
     fun pvOrderRepository(orderService: OrderService): OrderRepository {
         return OrderRepository(orderService)
+    }
+
+    @Provides
+    @Singleton
+    fun pvProductService(okHttpClient: OkHttpClient): ProductService {
+        return ProductService.create(okHttpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun pvProductRepository(productService: ProductService): ProductRepository {
+        return ProductRepository(productService)
     }
 }

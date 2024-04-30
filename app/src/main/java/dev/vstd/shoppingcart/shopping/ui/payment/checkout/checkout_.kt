@@ -2,7 +2,17 @@ package dev.vstd.shoppingcart.shopping.ui.payment.checkout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -11,11 +21,25 @@ import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.EventNote
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.rounded.MonetizationOn
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,6 +47,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
 import dev.vstd.shoppingcart.common.theme.startPadding
+import dev.vstd.shoppingcart.common.utils.toast
 import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import dev.vstd.shoppingcart.shopping.domain.Product
 
@@ -33,10 +58,11 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
     val paymentMethod by vimel.paymentMethod.collectAsState()
     val ableToPurchase by vimel.ableToPurchase.collectAsState(false)
     val shipFee by vimel.shipFee.collectAsState()
-    var productPrice by remember { mutableIntStateOf(0) }
+    var productPrice by remember { mutableLongStateOf(0) }
+    val context = LocalContext.current
 
     LaunchedEffect(products) {
-        productPrice = products.fold(0) { sum, it -> sum + it.price }
+        productPrice = products.fold(0L) { sum, it -> sum + it.price }
     }
 
     LaunchedEffect(true) {
@@ -79,11 +105,13 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
                 total = productPrice + shipFee,
                 enabled = ableToPurchase,
                 onClickCta = {
-                    vimel.createOrder {
+                    vimel.createOrder(
+                        onError = context::toast
+                    ) {
                         when (it) {
                             PaymentMethod.Type.COD -> navController.navigate(R.id.action_checkoutFragment_to_successMakeOrderFragment)
                             PaymentMethod.Type.CREDIT_CARD -> navController.navigate(R.id.action_checkoutFragment_to_askForCreditCardCredentialFragment)
-                            PaymentMethod.Type.MOMO -> TODO("Not yet implemented")
+                            PaymentMethod.Type.MOMO -> throw IllegalStateException("Momo is not supported")
                         }
                     }
                 })
@@ -176,11 +204,11 @@ private fun _purchasing_list(products: List<Product>) {
                     )
                     Column(Modifier.padding(start = 12.dp)) {
                         Text(text = product.title)
-                        Text(text = product.category)
+                        Text(text = product.description)
                         Row {
                             Text(text = "${product.price} đ")
                             Spacer(modifier = Modifier.weight(1f))
-                            Text(text = "x${product.quantity}")
+                            Text(text = "TODO" /*TODO*/)
                         }
                     }
                 }
@@ -225,7 +253,7 @@ private fun _shipping_address(
 @Composable
 private fun _cta(
     modifier: Modifier = Modifier,
-    total: Int,
+    total: Long,
     enabled: Boolean,
     onClickCta: () -> Unit
 ) {

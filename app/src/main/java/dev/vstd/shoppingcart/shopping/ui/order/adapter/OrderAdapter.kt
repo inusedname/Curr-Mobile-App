@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
 import dev.keego.shoppingcart.databinding.ItemOrdersHeaderBinding
 import dev.keego.shoppingcart.databinding.ItemOrdersProductBinding
 import dev.vstd.shoppingcart.common.ui.DiffUtils
 import dev.vstd.shoppingcart.shopping.domain.Order
-import dev.vstd.shoppingcart.shopping.domain.Product
+import dev.vstd.shoppingcart.shopping.domain.ProductOfOrder
 import timber.log.Timber
 
 class OrderAdapter:
@@ -30,7 +31,7 @@ class OrderAdapter:
 
     sealed class DataWrapper {
         data class Seller(val order: Order) : DataWrapper()
-        data class Product(val product: dev.vstd.shoppingcart.shopping.domain.Product) : DataWrapper()
+        data class Product(val productOfOrder: ProductOfOrder) : DataWrapper()
     }
 
     sealed class ViewHolderWrapper(binding: ViewBinding) :
@@ -44,11 +45,13 @@ class OrderAdapter:
 
         class ProductViewHolder(private val binding: ItemOrdersProductBinding) :
             ViewHolderWrapper(binding) {
-            fun bind(product: Product) {
-                binding.imageViewItemLayout.setImageResource(product.image)
-                binding.tvNameItemLayout.text = product.title
+            fun bind(product: ProductOfOrder) {
+                Glide.with(binding.root.context)
+                    .load(product.product.image)
+                    .into(binding.imageViewItemLayout)
+                binding.tvNameItemLayout.text = product.product.title
                 binding.tvNumber.text = product.quantity.toString()
-                binding.tvPriceItemLayout.text = product.price.toString() + "đ"
+                binding.tvPriceItemLayout.text = product.product.price.toString() + "đ"
             }
         }
     }
@@ -86,7 +89,7 @@ class OrderAdapter:
                 (holder as ViewHolderWrapper.SellerViewHolder).bind(item.order)
             }
             is DataWrapper.Product -> {
-                (holder as ViewHolderWrapper.ProductViewHolder).bind(item.product)
+                (holder as ViewHolderWrapper.ProductViewHolder).bind(item.productOfOrder)
             }
         }
     }

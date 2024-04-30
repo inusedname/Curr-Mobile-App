@@ -30,7 +30,7 @@ class AskForCreditCardCredentialFragment :
                 lifecycleScope.launch {
                     val cvv = binding.etCreditCardCVV.text.toString()
                     val verifyResponse = userRepository.validateCvv(cvv)
-                    if (verifyResponse.isSuccessful) {
+                    if (!verifyResponse.isSuccessful) {
                         requireContext().toast("Invalid CVV")
                         return@launch
                     }

@@ -1,10 +1,9 @@
 package dev.vstd.shoppingcart.shopping.domain
 
-import dev.vstd.shoppingcart.shopping.data.entity.OrderEntity
 import java.io.Serializable
 
 data class PaymentMethod(
-    val id: Int,
+    val id: Long,
     val type: Type,
     val textDescription: String,
     val balance: Int,
@@ -24,15 +23,11 @@ data class PaymentMethod(
         ),
     }
 
-    fun toPurchaseMethod(): OrderEntity.PurchaseMethod {
-        return if (type == Type.COD) return OrderEntity.PurchaseMethod.COD else OrderEntity.PurchaseMethod.OTHER
-    }
-
     companion object {
         fun getDefaultOptions(): List<PaymentMethod> {
             return listOf(
-                PaymentMethod(1, Type.MOMO, "Số dư: 1.832đ", balance = 1832),
-                PaymentMethod(2, Type.COD, "Chuyển khoản khi nhận hàng", balance = 0),
+                PaymentMethod(-1, Type.MOMO, "Số dư: 1.832đ", balance = 1832),
+                PaymentMethod(-2, Type.COD, "Chuyển khoản khi nhận hàng", balance = 0),
             )
         }
     }

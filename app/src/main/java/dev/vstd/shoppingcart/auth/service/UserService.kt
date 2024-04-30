@@ -15,7 +15,7 @@ interface UserService {
     suspend fun login(@Body loginBodyDto: LoginBodyDto): Response<LoginResponseDto>
 
     @POST("auth/signup")
-    suspend fun signUp(@Body body: SignupBodyDto): Response<String>
+    suspend fun signUp(@Body body: SignupBodyDto): Response<LoginResponseDto>
 
     @GET("/user/detail")
     suspend fun getUserInfo(@Query("userId") userId: Long): UserInfoRespDto?

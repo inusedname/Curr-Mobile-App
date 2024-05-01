@@ -8,7 +8,8 @@ import retrofit2.Response
 
 class OrderRepository(private val orderService: OrderService) {
     suspend fun getAllOrders(): Response<List<OrderRespDto>> {
-        return orderService.getOrders()
+        val userId = Session.userEntity.value!!.id
+        return orderService.getOrders(userId)
     }
     suspend fun createOrder(body: CreateOrderBodyDto): Response<OrderRespDto> {
         val userId = Session.userEntity.value!!.id

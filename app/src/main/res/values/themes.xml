@@ -5,6 +5,9 @@
         <item name="color">@color/white</item>
     </style>
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="checkedIcon">@drawable/checkbox</item>
+
+
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>

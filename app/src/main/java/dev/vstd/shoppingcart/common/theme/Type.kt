@@ -11,7 +11,8 @@ import dev.keego.shoppingcart.R
 private val ralewayFontFamily = FontFamily(
     Font(R.font.raleway_regular, FontWeight.Normal),
     Font(R.font.raleway_medium, FontWeight.Medium),
-    Font(R.font.raleway_bold, FontWeight.Bold)
+    Font(R.font.raleway_bold, FontWeight.Bold),
+    Font(R.font.raleway_extrabold, FontWeight.ExtraBold)
 )
 
 val AppTypography = Typography(
@@ -24,4 +25,7 @@ val AppTypography = Typography(
     headlineLarge = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.Medium, fontSize = 24.sp),
     headlineMedium = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.Medium, fontSize = 20.sp),
     headlineSmall = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.Medium, fontSize = 16.sp),
+    displayLarge = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.ExtraBold, fontSize = 42.sp),
+    displayMedium = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.ExtraBold, fontSize = 36.sp),
+    displaySmall = TextStyle(fontFamily = ralewayFontFamily, fontWeight = FontWeight.ExtraBold, fontSize = 32.sp),
 )

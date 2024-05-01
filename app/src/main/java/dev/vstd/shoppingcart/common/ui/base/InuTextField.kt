@@ -30,10 +30,10 @@ fun InuTextField(
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color(0xFFF8F8F8),
-            focusedLabelColor = Color(0xFFD2D2D2),
+            focusedLabelColor = Color(0xFF979797),
             focusedTextColor = Color(0xFF000000),
             unfocusedContainerColor = Color(0xFFF8F8F8),
-            unfocusedLabelColor = Color(0xFFD2D2D2),
+            unfocusedLabelColor = Color(0xFF979797),
             unfocusedTextColor = Color(0xFF000000),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent

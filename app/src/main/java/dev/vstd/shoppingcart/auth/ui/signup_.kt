@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -102,7 +102,6 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
         Text(
             text = "Create\nAccount",
             style = MaterialTheme.typography.displayLarge,
-            fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 96.dp, start = 16.dp)
         )
         Column(
@@ -112,6 +111,11 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
                 .padding(horizontal = 16.dp)
                 .align(Alignment.BottomCenter)
         ) {
+            Image(
+                painterResource(id = R.drawable.ic_upload_photo),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(0.2f)
+            )
             InuTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -145,7 +149,13 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
                     val result =
                         SignUpValidator.validate(username, email, password, reconfirmPassword)
                     if (result.success) {
-                        signup(scope, userRepository, email = email, username = username, password) {
+                        signup(
+                            scope,
+                            userRepository,
+                            email = email,
+                            username = username,
+                            password
+                        ) {
                             context.toast("Sign up successful. Please sign in.")
                             navigator.navigateUp()
                         }
@@ -168,7 +178,14 @@ private fun body_(hostState: SnackbarHostState, navigator: DestinationsNavigator
     }
 }
 
-private fun signup(scope: CoroutineScope, userService: UserRepository, email: String, username: String, password: String, onSuccess: () -> Unit) {
+private fun signup(
+    scope: CoroutineScope,
+    userService: UserRepository,
+    email: String,
+    username: String,
+    password: String,
+    onSuccess: () -> Unit
+) {
     scope.launch {
         val resp = userService.signUp(
             username = username,

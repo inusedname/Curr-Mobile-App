@@ -4,16 +4,9 @@
     android:id="@+id/navigation_main"
     app:startDestination="@id/groupsFragment">
     <fragment
-        android:id="@+id/groupDetailFragment"
-        android:name="dev.vstd.shoppingcart.checklist.ui.groupDetail.GroupDetailFragment"
-        android:label="GroupDetailFragment" />
-    <fragment
         android:id="@+id/groupsFragment"
         android:name="dev.vstd.shoppingcart.checklist.ui.groups.GroupsFragment"
         android:label="GroupsFragment">
-        <action
-            android:id="@+id/action_groupsFragment_to_groupDetailFragment"
-            app:destination="@id/groupDetailFragment" />
         <action
             android:id="@+id/action_groupsFragment_to_comparingFragment"
             app:destination="@id/comparingFragment" />
@@ -39,6 +32,15 @@
         <action
             android:id="@+id/action_settingFragment_to_updateAddressFragment"
             app:destination="@id/updateAddressFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_nav_payment_method"
+            app:destination="@id/nav_payment_method" />
+        <action
+            android:id="@+id/action_settingFragment_to_personalInfoFragment"
+            app:destination="@id/personalInfoFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_authActivity"
+            app:destination="@id/authActivity" />
     </fragment>
     <fragment
         android:id="@+id/updateAddressFragment"

@@ -32,4 +32,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
+    fun getBinding(): T? {
+        return binding
+    }
 }

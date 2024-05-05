@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShoppingCart</string>
+    <string name="app_name">Shopping Assistant</string>
     <string name="title_activity_payment">PaymentActivity</string>
     <string name="search">Search</string>
     <string name="submit">Submit</string>

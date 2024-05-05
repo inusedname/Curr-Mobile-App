@@ -71,6 +71,7 @@ class OrderListFragment(private val status: Status) : BaseFragment<FragmentOrder
                             }
                         }
 
+                        is UiStatus.Initial -> {}
                     }
                 }
             }

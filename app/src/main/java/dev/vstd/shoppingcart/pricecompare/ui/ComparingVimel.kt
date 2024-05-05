@@ -8,6 +8,7 @@ import dev.vstd.shoppingcart.pricecompare.data.ComparingPriceService
 import dev.vstd.shoppingcart.pricecompare.data.model.ComparingProduct
 import dev.vstd.shoppingcart.pricecompare.data.model.SellerInfo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -21,7 +22,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
     private var searchingProductId: String? = null
     var searchingProductImageUrl: String? = null
         private set
-    val sellers = MutableStateFlow(listOf<SellerInfo>())
+    val sellers = MutableSharedFlow<List<SellerInfo>>()
 
     fun searchProduct(productName: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,7 +42,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
             compareRepo.getProductSeller(product.id).let {
                 Timber.d("Search sellers completed!")
                 if (it.isSuccessful) {
-                    sellers.value = it.body()!!
+                    sellers.emit(it.body()!!)
                 }
             }
         }

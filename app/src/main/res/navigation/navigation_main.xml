@@ -46,7 +46,7 @@
         android:label="UpdateAddressFragment" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="dev.vstd.shoppingcart.pricecompare.ui.SellersFragment"
+        android:name="dev.vstd.shoppingcart.pricecompare.ui.DetailsFragment"
         android:label="DetailFragment" />
     <fragment
         android:id="@+id/shoppingFragment"

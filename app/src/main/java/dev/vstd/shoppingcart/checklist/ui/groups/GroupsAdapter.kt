@@ -46,7 +46,7 @@ class GroupsAdapter(private val onCheckClick: (TodoItem) -> Unit):
             ViewHolderWrapper(binding) {
             fun bind(item: TodoItem) {
                 binding.title.text = item.title
-                binding.checkBox.isChecked = item.isCompleted
+                binding.checkBox.isActivated = item.isCompleted
                 binding.checkBox.setOnClickListener {
                     onCheckClick(item)
                 }

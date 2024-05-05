@@ -12,28 +12,48 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.BotSheetRecyclerViewBinding
 import dev.keego.shoppingcart.databinding.FragmentUpdateAddressBinding
+import dev.vstd.shoppingcart.auth.Session
+import dev.vstd.shoppingcart.auth.service.UserService
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.VietnamAdministrationProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
+
 
 /**
  * Get result by using
  *
  * RESULT_OK -> bundle.getString(EXTRA_FULL_ADDRESS)
  * */
+@AndroidEntryPoint
 class UpdateAddressFragment : BaseFragment<FragmentUpdateAddressBinding>() {
     private lateinit var administrationProvider: VietnamAdministrationProvider
     private val city = MutableStateFlow<String?>(null)
     private val district = MutableStateFlow<String?>(null)
 
+    @Inject
+    lateinit var userService: UserService
+
     override fun onViewCreated(binding: FragmentUpdateAddressBinding) {
         administrationProvider = VietnamAdministrationProvider(requireContext())
         setOnClicks(binding)
         observeState(binding)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewLifecycleOwner.lifecycleScope.launch {
+            userService.getUserInfo(Session.userEntity.value!!.id).let {
+                getBinding()?.apply {
+                    tvOldAddress.text = it?.address
+                }
+            }
+        }
     }
 
     private fun observeState(binding: FragmentUpdateAddressBinding) {

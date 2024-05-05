@@ -33,7 +33,6 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
                             binding.apply {
                                 btnCart.isEnabled = false
                                 btnOrders.isEnabled = false
-                                btnPersonalInfo.isEnabled = false
                                 btnLoginLogout.text = getString(R.string.login)
                                 btnLoginLogout.setOnClickListener {
                                     findNavController().navigate(R.id.action_shoppingFragment_to_authActivity)
@@ -44,7 +43,6 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
                             binding.apply {
                                 btnCart.isEnabled = true
                                 btnOrders.isEnabled = true
-                                btnPersonalInfo.isEnabled = true
                                 btnLoginLogout.text = getString(R.string.logout)
                                 btnLoginLogout.setOnClickListener {
                                     Session.userEntity.value = null
@@ -63,9 +61,6 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
         }
         binding.btnOrders.setOnClickListener {
             findNavController().navigate(R.id.action_shoppingFragment_to_ordersFragment)
-        }
-        binding.btnPersonalInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_shoppingFragment_to_personalInfoFragment)
         }
     }
 

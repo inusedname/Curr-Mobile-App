@@ -188,6 +188,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     implementation 'com.google.android.material:material:1.0.0'
     implementation "com.google.accompanist:accompanist-themeadapter-material3:0.35.0-alpha"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }
 
 /*

@@ -51,6 +51,16 @@ data class ProductResults (
         }
         return null
     }
+
+    fun getAllImage() : List<Media> {
+        val list = mutableListOf<Media>()
+        for (m : Media in media) {
+            if (m.type == "image") {
+                list.add(m)
+            }
+        }
+        return list
+    }
 }
 
 data class Media (

@@ -9,6 +9,10 @@ import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.ActivityMainBinding
 import dev.vstd.shoppingcart.common.utils.beGone
 import dev.vstd.shoppingcart.common.utils.beVisible
+import dev.vstd.shoppingcart.pricecompare.retrofit.model.Filter
+import dev.vstd.shoppingcart.pricecompare.retrofit.model.SerpResult
+import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterDrawerAdapter
+
 
 @AndroidEntryPoint
 open class MainActivity : AppCompatActivity() {
@@ -22,7 +26,7 @@ open class MainActivity : AppCompatActivity() {
         val navController =
             (supportFragmentManager.findFragmentById(R.id.container_main) as NavHostFragment).navController
         binding.botNav.setupWithNavController(navController)
-
+        closeDrawer()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in listOf(
                     R.id.groupsFragment,
@@ -36,5 +40,32 @@ open class MainActivity : AppCompatActivity() {
                 binding.botNav.beGone()
             }
         }
+
     }
+
+    fun closeDrawer() {
+        binding.filterDrawer.close()
+    }
+
+    fun openDrawer() {
+        binding.filterDrawer.open()
+
+    }
+
+    fun initAdapterDrawer() {
+//        binding.itemFilterRecyclerView.adapter = ItemFilterDrawerAdapter {
+//
+//        }
+    }
+
+    fun setFilterAdapter(adapter: ItemFilterDrawerAdapter) {
+        binding.itemFilterRecyclerView.adapter = adapter
+
+    }
+
+    fun setFilterDrawerData(filters: List<Filter>) {
+        (binding.itemFilterRecyclerView.adapter as ItemFilterDrawerAdapter).setData(filters)
+    }
+
+
 }

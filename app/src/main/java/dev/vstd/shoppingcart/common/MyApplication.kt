@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import dagger.hilt.android.HiltAndroidApp
 import dev.keego.shoppingcart.R
-import dev.vstd.shoppingcart.common.pref.Preferences
 import timber.log.Timber
 import java.lang.reflect.Field
 
@@ -14,7 +13,6 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         plantLog()
-        initAppPreferences()
         overrideFonts()
     }
 
@@ -24,10 +22,6 @@ class MyApplication : Application() {
                 super.log(priority, tag, ">> $message", t)
             }
         })
-    }
-
-    private fun initAppPreferences() {
-        Preferences.init(this)
     }
 
     private fun overrideFonts() {

@@ -6,9 +6,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.keego.shoppingcart.databinding.FragmentRegisterCardBinding
-import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.toast
+import dev.vstd.shoppingcart.shopping.data.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,11 +18,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
     @Inject
-    lateinit var userRepository: UserRepository
+    lateinit var cardRepository: CardRepository
 
     override fun onViewCreated(binding: FragmentRegisterCardBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val resp = userRepository.registerCard()
+            val resp = cardRepository.registerCard()
             if (resp.isSuccessful) {
                 val card = resp.body()!!
                 binding.apply {
@@ -41,7 +41,7 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
         binding.checkboxConfirm.isChecked = false
         binding.btnRegisterCard.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val result = userRepository.registerCard()
+                val result = cardRepository.registerCard()
                 if (result.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         requireContext().toast("Card Register Success!")

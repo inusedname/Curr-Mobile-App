@@ -11,6 +11,7 @@ import dev.vstd.shoppingcart.auth.service.UserService
 import dev.vstd.shoppingcart.checklist.data.AppDatabase
 import dev.vstd.shoppingcart.checklist.data.BarcodeRepository
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
+import dev.vstd.shoppingcart.shopping.data.repository.CardRepository
 import dev.vstd.shoppingcart.shopping.data.repository.OrderRepository
 import dev.vstd.shoppingcart.shopping.data.repository.ProductRepository
 import dev.vstd.shoppingcart.shopping.data.service.CardService
@@ -102,5 +103,11 @@ class AppModule {
     @Singleton
     fun pvProductRepository(productService: ProductService): ProductRepository {
         return ProductRepository(productService)
+    }
+
+    @Provides
+    @Singleton
+    fun pvCardRepository(cardService: CardService): CardRepository {
+        return CardRepository(cardService)
     }
 }

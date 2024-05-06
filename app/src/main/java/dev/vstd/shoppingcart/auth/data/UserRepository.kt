@@ -1,12 +1,10 @@
 package dev.vstd.shoppingcart.auth.data
 
 import dev.vstd.beshoppingcart.dto.SignupBodyDto
-import dev.vstd.shoppingcart.auth.Session
 import dev.vstd.shoppingcart.auth.service.LoginBodyDto
 import dev.vstd.shoppingcart.auth.service.LoginResponseDto
 import dev.vstd.shoppingcart.auth.service.UserInfoRespDto
 import dev.vstd.shoppingcart.auth.service.UserService
-import dev.vstd.shoppingcart.shopping.data.service.CardRespDto
 import dev.vstd.shoppingcart.shopping.data.service.CardService
 import retrofit2.Response
 
@@ -31,20 +29,5 @@ class UserRepository(private val userService: UserService, private val cardServi
     suspend fun signUp(username: String, email: String, password: String): Response<LoginResponseDto> {
         val body = SignupBodyDto(username, email, password)
         return userService.signUp(body)
-    }
-
-    suspend fun getCard(): Response<CardRespDto> {
-        val userId = Session.userEntity.value!!.id
-        return cardService.getCard(userId)
-    }
-
-    suspend fun registerCard(): Response<CardRespDto> {
-        val userId = Session.userEntity.value!!.id
-        return cardService.registerCard(userId)
-    }
-
-    suspend fun validateCvv(cvv: String): Response<String> {
-        val userId = Session.userEntity.value!!.id
-        return cardService.validateCVV(userId, cvv)
     }
 }

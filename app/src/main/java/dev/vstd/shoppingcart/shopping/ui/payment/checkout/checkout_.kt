@@ -43,6 +43,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import dev.keego.shoppingcart.R
@@ -75,7 +76,11 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            Column(modifier = Modifier.padding(bottom = 64.dp).verticalScroll(rememberScrollState())) {
+            Column(
+                modifier = Modifier
+                    .padding(bottom = 64.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
                 _shipping_address(
                     highlight = address == null,
                     text = address ?: stringResource(R.string.no_ship_address_available)
@@ -107,10 +112,14 @@ fun checkout_(navController: NavController, vimel: CheckoutVimel, onBack: () -> 
                 onClickCta = {
                     vimel.createOrder(
                         onError = context::toast
-                    ) {
-                        when (it) {
+                    ) { type, orderId ->
+                        when (type) {
                             PaymentMethod.Type.COD -> navController.navigate(R.id.action_checkoutFragment_to_successMakeOrderFragment)
-                            PaymentMethod.Type.CREDIT_CARD -> navController.navigate(R.id.action_checkoutFragment_to_askForCreditCardCredentialFragment)
+                            PaymentMethod.Type.CREDIT_CARD -> navController.navigate(
+                                R.id.action_checkoutFragment_to_askForCreditCardCredentialFragment,
+                                bundleOf("orderId" to orderId)
+                            )
+
                             PaymentMethod.Type.MOMO -> throw IllegalStateException("Momo is not supported")
                         }
                     }

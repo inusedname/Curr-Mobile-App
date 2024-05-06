@@ -59,7 +59,7 @@ class CheckoutVimel @Inject constructor(
         }
     }
 
-    fun createOrder(onError: (String) -> Unit, goToPaymentFlow: (PaymentMethod.Type) -> Unit) {
+    fun createOrder(onError: (String) -> Unit, goToPaymentFlow: (PaymentMethod.Type, Long) -> Unit) {
         viewModelScope.launch {
             val purchaseMethod = CreateOrderBodyDto.PurchaseMethod.fromPaymentMethod(paymentMethod.value)
             val resp = orderRepository.createOrder(
@@ -77,7 +77,7 @@ class CheckoutVimel @Inject constructor(
                 )
             )
             if (resp.isSuccessful) {
-                goToPaymentFlow(paymentMethod.value.type)
+                goToPaymentFlow(paymentMethod.value.type, resp.body()!!.id)
             } else {
                 val errorBody = resp.errorBody()?.string()
                 Timber.e("${resp.code()} $errorBody")

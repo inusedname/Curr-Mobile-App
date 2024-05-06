@@ -13,8 +13,14 @@ data class OrderRespDto(
     val shippingAddress: String,
     val status: Status,
     val purchaseMethodId: Long?,
+    val purchaseMethod: PurchaseMethod,
     val products: List<ProductsOfOrderEntity>
 ) {
+    enum class PurchaseMethod {
+        COD,
+        CARD,
+        OTHER,
+    }
     class ProductsOfOrderEntity(
         val id: Long = 0,
         val productEntity: ProductEntity,

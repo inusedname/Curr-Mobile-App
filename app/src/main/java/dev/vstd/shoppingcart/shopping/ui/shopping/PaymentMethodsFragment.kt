@@ -91,6 +91,9 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
         binding.rvAccountsAndCards.adapter = PaymentMethodsAdapter {
 
         }
+        binding.btnShowBalance.setOnClickListener {
+            (binding.rvAccountsAndCards.adapter as PaymentMethodsAdapter).toggleBalance()
+        }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }

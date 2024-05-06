@@ -13,10 +13,10 @@ object EditTextAlertDialog {
     fun create(
         _context: Context,
         dialogTitle: String,
-        scanable: Boolean = true,
+        scanable: Boolean = false,
         editTextValue: String? = null,
+        onBarcodeIconClick: () -> Unit = {},
         onCreateClicked: (String) -> Unit,
-        onBarcodeIconClick: () -> Unit
     ): AlertDialog {
         val builder = MaterialAlertDialogBuilder(_context)
         val context = builder.context

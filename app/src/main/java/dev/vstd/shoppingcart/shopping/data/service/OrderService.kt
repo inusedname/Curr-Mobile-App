@@ -16,7 +16,7 @@ interface OrderService {
     suspend fun makeOrder(@Query("userId") userId: Long, @Body body: CreateOrderBodyDto): Response<OrderRespDto>
 
     @GET("order/all")
-    suspend fun getOrders(): Response<List<OrderRespDto>>
+    suspend fun getOrders(@Query("userId") userId: Long): Response<List<OrderRespDto>>
 
     companion object {
         fun create(okHttpClient: OkHttpClient): OrderService {

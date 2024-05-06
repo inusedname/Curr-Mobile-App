@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -91,12 +91,11 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
             Text(
                 text = "Login",
                 style = MaterialTheme.typography.displayLarge,
-                fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Good to see you back! ❤",
                 modifier = Modifier.padding(top = 12.dp),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
             InuTextField(
                 modifier = Modifier
@@ -137,27 +136,19 @@ private fun body_(navigator: DestinationsNavigator, hostState: SnackbarHostState
             }
             TextButton(
                 modifier = Modifier
-                    .padding(top = 4.dp)
-                    .fillMaxWidth(),
-                onClick = {
-                    context.toast("This feature is not yet implemented")
-                }
-            ) {
-                Text("Use app without login")
-            }
-            TextButton(
-                modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
                     navigator.navigate(signup_Destination)
                 }
             ) {
-                Text("Sign up")
-                Icon(
-                    imageVector = Icons.Default.NavigateNext,
-                    contentDescription = null,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Sign up")
+                    Icon(
+                        imageVector = Icons.Default.NavigateNext,
+                        contentDescription = null,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
             }
         }
     }

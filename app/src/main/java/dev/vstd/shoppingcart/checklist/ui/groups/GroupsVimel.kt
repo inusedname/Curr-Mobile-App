@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vstd.shoppingcart.checklist.data.TodoGroup
+import dev.vstd.shoppingcart.checklist.data.TodoItem
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
+import dev.vstd.shoppingcart.checklist.domain.GroupWithTodos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -12,11 +14,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupsVimel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
-    val groups = MutableStateFlow(emptyList<TodoGroup>())
+    val groupsWithTodos = MutableStateFlow(emptyList<GroupWithTodos>())
 
     fun fetch() {
         viewModelScope.launch(Dispatchers.IO) {
-            groups.value = repository.getAllGroups()
+            groupsWithTodos.value = repository.getAllGroupsWithTodos()
+        }
+    }
+
+    fun toggleDoneUndone(todo: TodoItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateTodoItem(todo.copy(isCompleted = !todo.isCompleted))
+            fetch()
         }
     }
 

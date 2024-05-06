@@ -43,7 +43,9 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
         val list = mutableListOf<Filter>()
         for (filter in selectedFilters.value) {
             if (filter.options.isEmpty()) {
-                list.add(Filter(filter.type, filters.value.find { it.type == filter.type }!!.options))
+                list.add(Filter(filter.type,
+                    filters.value.find { it.type == filter.type }?.options ?: listOf()))
+
             }
             else {
                 list.add(filter)

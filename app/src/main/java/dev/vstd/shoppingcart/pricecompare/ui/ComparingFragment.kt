@@ -12,7 +12,12 @@ import androidx.navigation.fragment.findNavController
 import dev.keego.shoppingcart.R
 import dev.keego.shoppingcart.databinding.FragmentComparingBinding
 import dev.vstd.shoppingcart.common.MainActivity
+import dev.vstd.shoppingcart.common.UiStatus
 import dev.vstd.shoppingcart.common.ui.BaseFragment
+import dev.vstd.shoppingcart.common.utils.beGone
+import dev.vstd.shoppingcart.common.utils.beVisible
+import dev.vstd.shoppingcart.common.utils.hideSoftKeyboard
+import dev.vstd.shoppingcart.pricecompare.data.model.ComparingProduct
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.Filter
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.SerpResult
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ComparePriceAdapter
@@ -20,12 +25,14 @@ import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterBarAdapter
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterDrawerAdapter
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterOptionAdapter
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.logging.Handler
 
 class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
     private val comparingVimel by activityViewModels<ComparingVimel>()
+    private val uiStatus = MutableStateFlow<UiStatus<SerpResult?>>(UiStatus.Initial())
 
     private lateinit var progressDialog: ProgressDialog
 
@@ -79,6 +86,8 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
 
         (activity as? MainActivity)?.setFilterDrawerData(comparingVimel.filters.value)
 
+
+        uiStatus.value = UiStatus.Loading()
         comparingVimel.searchProductWithFilter()
     }
 
@@ -100,17 +109,10 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    comparingVimel.serpResult.collect() {
-                        setProductData(binding,it)
-                        if (comparingVimel.selectedFilters.value.isEmpty()) {
-                            setFilterData(binding, it?.filters ?: listOf())
-                        }
-                        else {
-                            (binding.filterBar.itemFilterBarRecyclerView.adapter as ItemFilterBarAdapter)
-                                .setData(comparingVimel.createFilterData())
 
-                            (activity as? MainActivity)?.setFilterDrawerData(comparingVimel.filters.value)
-                        }
+                    comparingVimel.serpResult.collect() {
+
+                        uiStatus.value = UiStatus.Success(it)
                     }
                 }
             }
@@ -119,7 +121,60 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     comparingVimel.serpResultFilter.collect {
                         if (it != null) {
+                            binding.layoutLoading.root.beGone()
                             setProductData(binding,it)
+                        }
+                    }
+                }
+            }
+
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    uiStatus.collect {
+                        when (it) {
+                            is UiStatus.Initial -> {
+                                binding.mainContent.root.beGone()
+                                binding.layoutEmpty.root.beVisible()
+                            }
+
+                            is UiStatus.Loading -> {
+                                binding.layoutEmpty.root.beGone()
+                                binding.layoutLoading.root.beVisible()
+                            }
+
+                            is UiStatus.Success -> {
+                                binding.layoutLoading.root.beGone()
+                                if (it.data?.shoppingResults?.isEmpty() == true) {
+                                    binding.layoutEmpty.root.beVisible()
+                                    binding.mainContent.root.beGone()
+                                } else {
+                                    binding.layoutEmpty.root.beGone()
+                                    binding.mainContent.root.beVisible()
+//                                    val adapter =
+//                                        binding.mainContent.comparePriceRecyclerView.adapter as ComparePriceAdapter
+//                                    adapter.setData(it.data)
+
+                                    setProductData(binding, it.data)
+
+                                    if (comparingVimel.selectedFilters.value.isEmpty()) {
+                                        setFilterData(binding, it.data?.filters ?: listOf())
+                                    } else {
+                                        (binding.filterBar.itemFilterBarRecyclerView.adapter as ItemFilterBarAdapter)
+                                            .setData(comparingVimel.createFilterData())
+
+                                        (activity as? MainActivity)?.setFilterDrawerData(
+                                            comparingVimel.filters.value
+                                        )
+                                    }
+                                }
+                            }
+
+                            is UiStatus.Error -> {
+                                binding.layoutLoading.root.beGone()
+                                binding.mainContent.root.beGone()
+                                binding.layoutError.root.beVisible()
+                                binding.layoutError.tvError.text = it.message
+                            }
                         }
                     }
                 }
@@ -131,6 +186,8 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
         binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrBlank()) return false
+                uiStatus.value = UiStatus.Loading()
+                binding.searchView.hideSoftKeyboard()
                 comparingVimel.searchProduct(query)
                 return true
             }

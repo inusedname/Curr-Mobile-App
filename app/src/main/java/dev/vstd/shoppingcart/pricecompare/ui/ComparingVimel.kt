@@ -11,8 +11,8 @@ import dev.vstd.shoppingcart.pricecompare.retrofit.model.ShoppingResult
 import dev.vstd.shoppingcart.pricecompare.retrofit.repository.ProductRepository
 import dev.vstd.shoppingcart.pricecompare.retrofit.service.ProductService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import timber.log.Timber
@@ -23,8 +23,8 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
     private val productSerpRepo = ProductRepository(ProductService.build(okHttpClient))
     val products = MutableStateFlow(listOf<ShoppingResult>())
     var serpProductResult: SerpProduct? = null
-    val serpResult: MutableStateFlow<SerpResult?> = MutableStateFlow(null)
-    val serpResultFilter: MutableStateFlow<SerpResult?> = MutableStateFlow(null)
+    val serpResult: MutableSharedFlow<SerpResult?> = MutableSharedFlow()
+    val serpResultFilter: MutableSharedFlow<SerpResult?> = MutableSharedFlow()
 
 
     val filters = MutableStateFlow(listOf<Filter>())
@@ -112,7 +112,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
             productSerpRepo.search(productName).let {
                 if (it.isSuccessful) {
                     Timber.d("Search product completed!" + it.body())
-                    serpResult.value = it.body()!!
+                    serpResult.emit(it.body()!!)
                     filters.value = it.body()!!.filters
                     createSelectedFilters()
                     products.value = it.body()!!.shoppingResults
@@ -124,8 +124,8 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
         }
     }
 
-    fun searchProductWithFilter() {
-        val productName = serpResult.value?.searchParameters?.q
+    fun searchProductWithFilter(serpResult: SerpResult?) {
+        val productName = serpResult?.searchParameters?.q
         val filter = createFilterString()
         timber.log.Timber.d("Filter: $filter $productName" )
 //        return
@@ -134,7 +134,7 @@ class ComparingVimel @Inject constructor(okHttpClient: OkHttpClient): ViewModel(
                 productSerpRepo.searchWithFilter(productName, filter).let {
                     if (it.isSuccessful) {
                         Timber.d("Search product with filter completed!" + it.body())
-                        serpResultFilter.value = it.body()!!
+                        serpResultFilter.emit(it.body())
                     } else {
                         Timber.d("Search product with filter failed!")
                     }

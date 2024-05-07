@@ -14,6 +14,7 @@ import dev.vstd.shoppingcart.auth.data.UserRepository
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.beGone
 import dev.vstd.shoppingcart.common.utils.beVisible
+import dev.vstd.shoppingcart.shopping.data.repository.CardRepository
 import dev.vstd.shoppingcart.shopping.domain.PaymentMethod
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -23,6 +24,9 @@ import javax.inject.Inject
 class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     @Inject
     lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var cardRepository: CardRepository
 
     private val cards = MutableStateFlow(listOf<PaymentMethod>())
 
@@ -52,7 +56,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     private fun fetchData(binding: FragmentPaymentMethodsBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
             val methods = PaymentMethod.getDefaultOptions().toMutableList()
-            val response = userRepository.getCard()
+            val response = cardRepository.getCard()
             if (response.isSuccessful) {
                 val item = response.body()!!
                 methods.add(
@@ -86,6 +90,9 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     private fun setOnClicks(binding: FragmentPaymentMethodsBinding) {
         binding.rvAccountsAndCards.adapter = PaymentMethodsAdapter {
 
+        }
+        binding.btnShowBalance.setOnClickListener {
+            (binding.rvAccountsAndCards.adapter as PaymentMethodsAdapter).toggleBalance()
         }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()

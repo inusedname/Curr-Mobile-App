@@ -52,6 +52,7 @@ data class OrderRespDto(
         return Order(
             id = id,
             status = status,
+            sellerName = products.random().productEntity.seller,
             products = products.map {
                 ProductOfOrder(
                     quantity = it.quantity,

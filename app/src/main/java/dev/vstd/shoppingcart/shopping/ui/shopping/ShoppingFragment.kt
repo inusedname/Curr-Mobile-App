@@ -17,14 +17,28 @@ class ShoppingFragment: BaseFragment<FragmentShoppingBinding>() {
     override fun onViewCreated(binding: FragmentShoppingBinding) {
         setOnClicks(binding)
         observeStates(binding)
-
-        binding.greetings.text = "Good afternoon, ${Session.userEntity.value?.username ?: "Guest"}!"
-        Glide.with(binding.avatar)
-            .load(R.drawable.img_person)
-            .into(binding.avatar)
     }
 
     private fun observeStates(binding: FragmentShoppingBinding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                Session.userEntity.collect {
+                    binding.apply {
+                        if (it != null) {
+                            greetings.text = "Good afternoon, ${it.username}!"
+                            Glide.with(avatar)
+                                .load(R.drawable.img_person)
+                                .into(avatar)
+                        } else {
+                            greetings.text = "Good afternoon, Guest!"
+                            Glide.with(avatar)
+                                .load(R.drawable.ic_person)
+                                .into(avatar)
+                        }
+                    }
+                }
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 Session.userEntity.collect {

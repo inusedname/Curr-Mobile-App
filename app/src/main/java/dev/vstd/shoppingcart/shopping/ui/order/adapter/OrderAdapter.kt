@@ -40,6 +40,7 @@ class OrderAdapter:
             ViewHolderWrapper(binding) {
             fun bind(order: Order) {
                 binding.tvTitleItemLayout.text = order.sellerName
+                binding.tvState.text = order.status.displayName
             }
         }
 

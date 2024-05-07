@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import dev.keego.shoppingcart.databinding.FragmentDetailsBinding
 import dev.vstd.shoppingcart.common.ui.BaseFragment
@@ -18,6 +19,7 @@ import dev.vstd.shoppingcart.pricecompare.retrofit.model.ProductResults
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.SerpProduct
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.ShoppingResult
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.BuyingOptionAdapter
+import dev.vstd.shoppingcart.pricecompare.ui.adapter.DetailViewPagerAdapter
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -35,7 +37,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
         val product: ProductResults? = comparingVimel.serpProductResult?.productResults
 
         binding.apply {
-            Glide.with(fragmentDetails).load(product?.getFirstImage()?.link).into(binding.ivProduct)
+
 
             binding.tvTitle.text = product?.title
             binding.ratingText.text = product?.rating?.toString() ?: "0"
@@ -61,6 +63,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browserIntent)
         }
+
+        binding.vpImageSlider.adapter = DetailViewPagerAdapter()
     }
 
     private fun observeStates(binding: FragmentDetailsBinding) {
@@ -69,6 +73,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
                 comparingVimel.serpProductResult.let {
                     Timber.d("Sellers: $it")
                     (binding.rvBuyingOptions.adapter as BuyingOptionAdapter).setData(it?.sellersResults?.onlineSellers)
+
+                    (binding.vpImageSlider.adapter as DetailViewPagerAdapter).setData(it?.productResults?.getAllImage())
                 }
             }
         }
@@ -76,5 +82,10 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
 
     override val viewCreator: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailsBinding
         get() = FragmentDetailsBinding::inflate
+
+//    private fun setUpViewPager(binding: FragmentDetailsBinding) {
+//        val currentPageIndex = 1
+//        binding.vpImageSlider.currentItem = currentPageIndex
+//    }
 
 }

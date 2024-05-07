@@ -8,17 +8,17 @@ import dev.vstd.shoppingcart.checklist.data.TodoItem
 import dev.vstd.shoppingcart.checklist.data.TodoRepository
 import dev.vstd.shoppingcart.checklist.domain.GroupWithTodos
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GroupsVimel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
-    val groupsWithTodos = MutableStateFlow(emptyList<GroupWithTodos>())
+    val groupsWithTodos = MutableSharedFlow<List<GroupWithTodos>>()
 
     fun fetch() {
         viewModelScope.launch(Dispatchers.IO) {
-            groupsWithTodos.value = repository.getAllGroupsWithTodos()
+            groupsWithTodos.emit(repository.getAllGroupsWithTodos())
         }
     }
 

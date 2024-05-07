@@ -17,18 +17,15 @@ import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.beGone
 import dev.vstd.shoppingcart.common.utils.beVisible
 import dev.vstd.shoppingcart.common.utils.hideSoftKeyboard
-import dev.vstd.shoppingcart.pricecompare.data.model.ComparingProduct
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.Filter
 import dev.vstd.shoppingcart.pricecompare.retrofit.model.SerpResult
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ComparePriceAdapter
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterBarAdapter
 import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterDrawerAdapter
-import dev.vstd.shoppingcart.pricecompare.ui.adapter.ItemFilterOptionAdapter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.logging.Handler
 
 class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
     private val comparingVimel by activityViewModels<ComparingVimel>()
@@ -88,7 +85,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
 
 
         uiStatus.value = UiStatus.Loading()
-        comparingVimel.searchProductWithFilter()
+        comparingVimel.searchProductWithFilter((uiStatus.value as UiStatus.Success<SerpResult?>).data)
     }
 
     private fun setProductData(binding: FragmentComparingBinding,it: SerpResult?) {
@@ -109,9 +106,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                    comparingVimel.serpResult.collect() {
-
+                    comparingVimel.serpResult.collect {
                         uiStatus.value = UiStatus.Success(it)
                     }
                 }
@@ -131,6 +126,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
             launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     uiStatus.collect {
+                        Timber.d("UiStatus: $it")
                         when (it) {
                             is UiStatus.Initial -> {
                                 binding.mainContent.root.beGone()

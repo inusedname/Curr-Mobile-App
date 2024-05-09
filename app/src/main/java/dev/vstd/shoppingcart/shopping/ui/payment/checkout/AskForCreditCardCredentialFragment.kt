@@ -41,10 +41,7 @@ class AskForCreditCardCredentialFragment :
                         val resp = cardRepository.payByCard(orderId!!, cvv)
                         if (resp.isSuccessful) {
                             requireContext().toast("Payment success!")
-                            findNavController().popBackStack(
-                                R.id.shoppingFragment,
-                                false
-                            )
+                            requireActivity().finish()
                         } else {
                             requireContext().toast(resp.errorBody()!!.string())
                         }

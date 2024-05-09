@@ -30,6 +30,7 @@ import timber.log.Timber
 class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
     private val comparingVimel by activityViewModels<ComparingVimel>()
     private val uiStatus = MutableStateFlow<UiStatus<SerpResult?>>(UiStatus.Initial())
+    private var tmp: SerpResult? = null
 
     private lateinit var progressDialog: ProgressDialog
 
@@ -84,8 +85,8 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
         (activity as? MainActivity)?.setFilterDrawerData(comparingVimel.filters.value)
 
 
+        comparingVimel.searchProductWithFilter(tmp)
         uiStatus.value = UiStatus.Loading()
-        comparingVimel.searchProductWithFilter((uiStatus.value as UiStatus.Success<SerpResult?>).data)
     }
 
     private fun setProductData(binding: FragmentComparingBinding,it: SerpResult?) {
@@ -108,6 +109,7 @@ class ComparingFragment : BaseFragment<FragmentComparingBinding>() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     comparingVimel.serpResult.collect {
                         uiStatus.value = UiStatus.Success(it)
+                        tmp = it
                     }
                 }
             }

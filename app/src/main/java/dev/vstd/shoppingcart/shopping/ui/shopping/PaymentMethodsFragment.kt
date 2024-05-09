@@ -55,7 +55,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
 
     private fun fetchData(binding: FragmentPaymentMethodsBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val methods = PaymentMethod.getDefaultOptions().toMutableList()
+            val methods = PaymentMethod.getDefaultOptions().dropLast(1).toMutableList()
             val response = cardRepository.getCard()
             if (response.isSuccessful) {
                 val item = response.body()!!
@@ -68,7 +68,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
                     )
                 )
             }
-            if (methods.size == PaymentMethod.getDefaultOptions().size) {
+            if (methods.size == PaymentMethod.getDefaultOptions().size - 1) {
                 binding.sectionAddNewCard.root.beVisible()
             }
             cards.value = methods

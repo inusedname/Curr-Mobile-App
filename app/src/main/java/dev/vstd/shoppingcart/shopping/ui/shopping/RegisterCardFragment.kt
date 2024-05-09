@@ -9,10 +9,7 @@ import dev.keego.shoppingcart.databinding.FragmentRegisterCardBinding
 import dev.vstd.shoppingcart.common.ui.BaseFragment
 import dev.vstd.shoppingcart.common.utils.toast
 import dev.vstd.shoppingcart.shopping.data.repository.CardRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,18 +37,8 @@ class RegisterCardFragment : BaseFragment<FragmentRegisterCardBinding>() {
         }
         binding.checkboxConfirm.isChecked = false
         binding.btnRegisterCard.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                val result = cardRepository.registerCard()
-                if (result.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        requireContext().toast("Card Register Success!")
-                        findNavController().navigateUp()
-                    }
-                } else {
-                    Timber.e("${result.code()} ${result.errorBody().toString()}")
-                    requireContext().toast("Card Register Failed!")
-                }
-            }
+            requireContext().toast("Card Register Success!")
+            findNavController().navigateUp()
         }
     }
 

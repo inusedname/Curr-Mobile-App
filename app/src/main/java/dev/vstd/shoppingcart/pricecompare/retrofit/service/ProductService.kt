@@ -11,7 +11,7 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 const val BASE_URL = "https://serpapi.com/"
-const val API_KEY = "d478911bdf9770d0c538bece1d06c29c9476ed28e3899b976a242349c53cf699"
+const val API_KEY = "1d76dd932f774b1867acc87772b9a95fe293aa787a4894e93b02d30fc0c385a6"
 
 interface ProductService {
     @GET("search.json?engine=google&location=Vietnam&google_domain=google.com.vn&gl=vn&hl=vi&tbm=shop&device=desktop&api_key=$API_KEY")

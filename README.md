@@ -11,3 +11,7 @@
   - Cho phép user tạo thẻ mới ở chỗ này
   - Thêm tiền vào các thẻ có hai cách: từ tk này chuyển qua tk kia hoặc mình sẽ vào admin của backend
 - Màn hình success/failed
+
+# Lá thư cho người đến sau
+- Phần payment thầy HA bảo code API VnPay khó hơn code backend. nên là ai làm thì làm đi nhé.
+- Phần checklist thầy bắt phải có thêm trường giá tiền + filter sắp xếp các thứ
